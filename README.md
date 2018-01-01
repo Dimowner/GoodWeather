@@ -1,7 +1,7 @@
 # Good Weather
 <p>Simple weather application</p>
 
-![Good Weather Logo](https://github.com/Dimowner/GoodWeather/blob/master/app/src/main/res/drawable/weather_loadscreen2.png)
+![Good Weather Logo](https://github.com/Dimowner/GoodWeather/blob/master/app/src/main/res/drawable-hdpi/weather_loadscreen.png)
 
 
 ### License
