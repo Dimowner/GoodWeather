@@ -21,6 +21,7 @@
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:background="@drawable/main_background"
 		tools:context="com.dimowner.goodweather.MainActivity">
 
 	<!--<TextView-->
@@ -31,5 +32,18 @@
 			<!--app:layout_constraintLeft_toLeftOf="parent"-->
 			<!--app:layout_constraintRight_toRightOf="parent"-->
 			<!--app:layout_constraintTop_toTopOf="parent"/>-->
+
+	<com.dimowner.goodweather.TouchLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+		<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:contentDescription="@null"
+				android:src="@drawable/weather_loadscreen"
+				android:layout_gravity="center"/>
+
+	</com.dimowner.goodweather.TouchLayout>
 
 </android.support.constraint.ConstraintLayout>
