@@ -17,7 +17,7 @@
  * the License.
  */
 
-package com.dimowner.goodweather;
+package com.dimowner.goodweather.presentation.view;
 
 import android.content.Context;
 import android.support.animation.DynamicAnimation;
@@ -25,15 +25,13 @@ import android.support.animation.FloatPropertyCompat;
 import android.support.animation.SpringAnimation;
 import android.support.animation.SpringForce;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.FrameLayout;
+import timber.log.Timber;
 
 public class TouchLayout extends FrameLayout implements ScaleGestureDetector.OnScaleGestureListener {
-
-	private static final String TAG = "TouchLayout";
 
 	private static final int ACTION_NONE = -1;
 	private static final int ACTION_DRAG = 1;
@@ -96,92 +94,89 @@ public class TouchLayout extends FrameLayout implements ScaleGestureDetector.OnS
 
 	private void init(Context context) {
 		final ScaleGestureDetector scaleDetector = new ScaleGestureDetector(context, this);
-		setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View view, MotionEvent motionEvent) {
-				switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-					case MotionEvent.ACTION_DOWN:
-						Log.v(TAG, "DOWN");
-						performClick();
-						action = ACTION_DRAG;
-						startX = motionEvent.getX();
-						startY = motionEvent.getY();
+		setOnTouchListener((view, motionEvent) -> {
+			switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+				case MotionEvent.ACTION_DOWN:
+					Timber.v("DOWN");
+					performClick();
+					action = ACTION_DRAG;
+					startX = motionEvent.getX();
+					startY = motionEvent.getY();
 
-						if (moveAnimationX != null) {
-							if (moveAnimationX.canSkipToEnd()) {
-								moveAnimationX.skipToEnd();
-							} else {
-								moveAnimationX.cancel();
-							}
+					if (moveAnimationX != null) {
+						if (moveAnimationX.canSkipToEnd()) {
+							moveAnimationX.skipToEnd();
+						} else {
+							moveAnimationX.cancel();
 						}
-						if (moveAnimationY != null) {
-							if (moveAnimationY.canSkipToEnd()) {
-								moveAnimationY.skipToEnd();
-							} else {
-								moveAnimationY.cancel();
-							}
+					}
+					if (moveAnimationY != null) {
+						if (moveAnimationY.canSkipToEnd()) {
+							moveAnimationY.skipToEnd();
+						} else {
+							moveAnimationY.cancel();
 						}
-						if (scaleAnimation != null) {
-							if (scaleAnimation.canSkipToEnd()) {
-								scaleAnimation.skipToEnd();
-							} else {
-								scaleAnimation.cancel();
-							}
+					}
+					if (scaleAnimation != null) {
+						if (scaleAnimation.canSkipToEnd()) {
+							scaleAnimation.skipToEnd();
+						} else {
+							scaleAnimation.cancel();
 						}
-						break;
-					case MotionEvent.ACTION_MOVE:
-						if (action == ACTION_DRAG) {
-							realDx = motionEvent.getX() - startX;
-							realDy = motionEvent.getY() - startY;
+					}
+					break;
+				case MotionEvent.ACTION_MOVE:
+					if (action == ACTION_DRAG) {
+						realDx = motionEvent.getX() - startX;
+						realDy = motionEvent.getY() - startY;
 
-							dx =(float) (k * Math.atan(realDx/k));
-							dy =(float) (k * Math.atan(realDy/k));
+						dx =(float) (k * Math.atan(realDx/k));
+						dy =(float) (k * Math.atan(realDy/k));
 
-							childView.setTranslationX(dx);
-							childView.setTranslationY(dy);
-							Log.v(TAG, "DRAG x = " + dx + " y = " + dy);
-						}
-						break;
-					case MotionEvent.ACTION_POINTER_DOWN:
-						Log.v(TAG, "ZOOM");
-						action = ACTION_ZOOM;
-						break;
-					case MotionEvent.ACTION_POINTER_UP:
-						Log.v(TAG, "DRAG");
-						action = ACTION_NONE;
-						break;
-					case MotionEvent.ACTION_UP:
-						Log.v(TAG, "UP");
-						if (viewScale == 1) {
-							//Spring animation moves child view to start position
-							moveAnimationX = new SpringAnimation(childView, DynamicAnimation.TRANSLATION_X, 0);
-							moveAnimationX.getSpring().setStiffness(SpringForce.STIFFNESS_LOW)
-									.setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY);
+						childView.setTranslationX(dx);
+						childView.setTranslationY(dy);
+						Timber.v("DRAG x = " + dx + " y = " + dy);
+					}
+					break;
+				case MotionEvent.ACTION_POINTER_DOWN:
+					Timber.v("ZOOM");
+					action = ACTION_ZOOM;
+					break;
+				case MotionEvent.ACTION_POINTER_UP:
+					Timber.v("DRAG");
+					action = ACTION_NONE;
+					break;
+				case MotionEvent.ACTION_UP:
+					Timber.v("UP");
+					if (viewScale == 1) {
+						//Spring animation moves child view to start position
+						moveAnimationX = new SpringAnimation(childView, DynamicAnimation.TRANSLATION_X, 0);
+						moveAnimationX.getSpring().setStiffness(SpringForce.STIFFNESS_LOW)
+								.setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY);
 
-							moveAnimationY = new SpringAnimation(childView, DynamicAnimation.TRANSLATION_Y, 0);
-							moveAnimationY.getSpring().setStiffness(SpringForce.STIFFNESS_LOW)
-									.setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY);
+						moveAnimationY = new SpringAnimation(childView, DynamicAnimation.TRANSLATION_Y, 0);
+						moveAnimationY.getSpring().setStiffness(SpringForce.STIFFNESS_LOW)
+								.setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY);
 
-							moveAnimationX.start();
-							moveAnimationY.start();
-						}
-						dx = 0f;
-						dy = 0f;
-						break;
-				}
-				scaleDetector.onTouchEvent(motionEvent);
-				if (viewScale >= MIN_ZOOM || action == ACTION_ZOOM) {
-					childView.setScaleX(viewScale);
-					childView.setScaleY(viewScale);
-				}
-				return true;
+						moveAnimationX.start();
+						moveAnimationY.start();
+					}
+					dx = 0f;
+					dy = 0f;
+					break;
 			}
+			scaleDetector.onTouchEvent(motionEvent);
+			if (viewScale >= MIN_ZOOM || action == ACTION_ZOOM) {
+				childView.setScaleX(viewScale);
+				childView.setScaleY(viewScale);
+			}
+			return true;
 		});
 	}
 
 	@Override
 	public boolean onScaleBegin(ScaleGestureDetector scaleDetector) {
-		Log.v(TAG, "onScaleBegin");
+		Timber.v("onScaleBegin");
 		return true;
 	}
 
@@ -192,13 +187,13 @@ public class TouchLayout extends FrameLayout implements ScaleGestureDetector.OnS
 		viewScale = (MAX_ZOOM * realScale - (MAX_ZOOM - 1))/realScale;
 		viewScale = Math.max(MIN_ZOOM, Math.min(viewScale, MAX_ZOOM));
 
-		Log.v(TAG, "onScale" + scaleFactor + " scale = " + viewScale + " realScale = " + realScale);
+		Timber.v("onScale" + scaleFactor + " scale = " + viewScale + " realScale = " + realScale);
 		return true;
 	}
 
 	@Override
 	public void onScaleEnd(ScaleGestureDetector scaleDetector) {
-		Log.v(TAG, "onScaleEnd");
+		Timber.v("onScaleEnd");
 
 		//Spring animation scales child view to start size.
 		scaleAnimation = physicsBasedScaleAnimation(childView, viewScale);

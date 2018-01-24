@@ -1,9 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
+apply plugin: 'kotlin-kapt'
 
 ext.versions = [
 		// Android
@@ -34,7 +32,7 @@ ext.versions = [
 		butterKnife     : "8.7.0",
 
 		//Timber
-		timber          : "4.5.1",
+		timber          : "4.6.0",
 
 		logInterceptor  : "3.8.1"
 ]
@@ -92,6 +90,10 @@ repositories {
 	mavenCentral()
 }
 
+kapt {
+	generateStubs = true
+}
+
 // Remove not needed buildVariants.
 android.variantFilter { variant ->
 	if (variant.buildType.name == 'release'
@@ -135,9 +137,13 @@ dependencies {
 	//Dagger2
 	implementation "com.google.dagger:dagger:$versions.dagger2"
 	annotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger2"
+	kapt "com.google.dagger:dagger-compiler:$versions.dagger2"
+	compile 'com.google.dagger:dagger:2.14.1'
 
 	//Glide
 	implementation "com.github.bumptech.glide:glide:$versions.glide"
+
+	//Architecture components
 	implementation "android.arch.lifecycle:runtime:$versions.archComp"
 	implementation "android.arch.lifecycle:extensions:$versions.archComp"
 	annotationProcessor "android.arch.lifecycle:compiler:$versions.archComp"
@@ -151,7 +157,7 @@ dependencies {
 	implementation "com.jakewharton.timber:timber:$versions.timber"
 
 	testCompile 'junit:junit:4.12'
-	testCompile 'org.mockito:mockito-core:2.8.47'
+	testCompile 'org.mockito:mockito-core:2.9.0'
 
 	testImplementation 'junit:junit:4.12'
 	androidTestImplementation 'com.android.support.test:runner:1.0.1'

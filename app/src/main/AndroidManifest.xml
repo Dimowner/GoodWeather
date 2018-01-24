@@ -27,18 +27,19 @@
 			android:label="@string/app_name"
 			android:roundIcon="@mipmap/ic_weather_round"
 			android:supportsRtl="true"
+			android:name=".GWApplication"
 			android:theme="@style/AppTheme">
 
 		<activity-alias
 				android:name="com.dimowner.goodweather.Launcher"
-				android:targetActivity="com.dimowner.goodweather.MainActivity" >
+				android:targetActivity="com.dimowner.goodweather.presentation.ui.MainActivity" >
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity-alias>
 
-		<activity android:name="com.dimowner.goodweather.MainActivity"
+		<activity android:name="com.dimowner.goodweather.presentation.ui.MainActivity"
 					 android:theme="@style/AppTheme.BrandedLaunch"/>
 
 	</application>
