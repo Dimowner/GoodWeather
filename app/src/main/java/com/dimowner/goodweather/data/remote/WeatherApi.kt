@@ -19,7 +19,7 @@
 
 package com.dimowner.goodweather.data.remote
 
-import com.dimowner.goodweather.data.remote.model.Weather
+import com.dimowner.goodweather.data.remote.model.WeatherResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -31,5 +31,5 @@ import retrofit2.http.Query
 interface WeatherApi {
 
 	@GET("weather")
-	fun getWeather(@Query("q") city: String, @Query("APPID") apiKey: String): Single<Array<Weather>>
+	fun getWeather(@Query("q") city: String, @Query("APPID") apiKey: String): Single<WeatherResponse>
 }

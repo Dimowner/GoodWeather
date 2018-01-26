@@ -19,7 +19,7 @@
 
 package com.dimowner.goodweather.data.repository
 
-import com.dimowner.goodweather.data.remote.model.Weather
+import com.dimowner.goodweather.data.remote.model.WeatherResponse
 import io.reactivex.Single
 
 /**
@@ -27,5 +27,5 @@ import io.reactivex.Single
  * @author Dimowner
  */
 interface Repository {
-	fun getWeather(): Single<Array<Weather>>
+	fun getWeather(): Single<WeatherResponse>
 }

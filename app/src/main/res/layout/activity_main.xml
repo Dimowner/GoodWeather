@@ -15,30 +15,22 @@
   ~  limitations under the License.
   -->
 
-<android.support.constraint.ConstraintLayout
+<LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:background="@drawable/main_background"
+		android:orientation="vertical"
 		tools:context="com.dimowner.goodweather.presentation.ui.MainActivity">
-
-	<!--<TextView-->
-			<!--android:layout_width="wrap_content"-->
-			<!--android:layout_height="wrap_content"-->
-			<!--android:text="@string/app_name"-->
-			<!--app:layout_constraintBottom_toBottomOf="parent"-->
-			<!--app:layout_constraintLeft_toLeftOf="parent"-->
-			<!--app:layout_constraintRight_toRightOf="parent"-->
-			<!--app:layout_constraintTop_toTopOf="parent"/>-->
 
 	<com.dimowner.goodweather.presentation.view.TouchLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:layout_marginTop="20dp">
 
-		<android.support.constraint.ConstraintLayout
+		<FrameLayout
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center">
@@ -51,33 +43,17 @@
 					/>
 
 			<TextView
+					android:id="@+id/txtTemp"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginBottom="8dp"
-					android:text="-126°F"
+					tools:text="-126°F"
 					android:textColor="@color/colorPrimaryDark"
-					android:textSize="32dp"
-					app:layout_constraintBottom_toBottomOf="parent"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toTopOf="parent"/>
+					android:layout_gravity="center"
+					android:textSize="32sp"/>
 
-			<!--<TextView-->
-					<!--android:layout_width="wrap_content"-->
-					<!--android:layout_height="wrap_content"-->
-					<!--android:layout_marginBottom="32dp"-->
-					<!--android:layout_marginEnd="28dp"-->
-					<!--android:layout_marginRight="32dp"-->
-					<!--android:layout_marginStart="0dp"-->
-					<!--android:layout_marginLeft="0dp"-->
-					<!--android:text="^C"-->
-					<!--android:textSize="20dp"-->
-					<!--app:layout_constraintBottom_toBottomOf="parent"-->
-					<!--app:layout_constraintEnd_toEndOf="parent"/>-->
-		</android.support.constraint.ConstraintLayout>
-
+		</FrameLayout>
 
 	</com.dimowner.goodweather.presentation.view.TouchLayout>
 
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

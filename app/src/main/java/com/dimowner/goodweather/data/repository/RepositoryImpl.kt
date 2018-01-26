@@ -21,7 +21,7 @@ package com.dimowner.goodweather.data.repository
 
 import com.dimowner.goodweather.Constants
 import com.dimowner.goodweather.data.remote.WeatherApi
-import com.dimowner.goodweather.data.remote.model.Weather
+import com.dimowner.goodweather.data.remote.model.WeatherResponse
 import io.reactivex.Single
 import timber.log.Timber
 
@@ -29,7 +29,7 @@ class RepositoryImpl(
 		val weatherApi: WeatherApi
 	) : Repository {
 
-	override fun getWeather(): Single<Array<Weather>> {
+	override fun getWeather(): Single<WeatherResponse> {
 		Timber.v("getWeather")
 		return weatherApi.getWeather("Kyiv", Constants.OPEN_WEATHER_MAP_API_KEY)
 	}

@@ -19,10 +19,17 @@
 
 package com.dimowner.goodweather.data.remote.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Main(
+		@SerializedName("temp")
 		val temp : Float,
+		@SerializedName("pressure")
 		val pressure : Int,
+		@SerializedName("humadity")
 		val humidity : Int,
+		@SerializedName("temp_min")
 		val temp_min : Float,
+		@SerializedName("temp_max")
 		val temp_max: Float
 	)

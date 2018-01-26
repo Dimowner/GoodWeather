@@ -17,17 +17,21 @@
  * the License.
  */
 
-package com.dimowner.goodweather.data.remote.model
+package com.dimowner.goodweather.util;
 
-import com.google.gson.annotations.SerializedName
+/**
+ * Created on 27.01.2018.
+ * @author Dimowner
+ */
+public class WeatherUtils {
 
-data class Weather(
-		@SerializedName("id")
-		val id : Int,
-		@SerializedName("main")
-		val main : String,
-		@SerializedName("description")
-		val description : String,
-		@SerializedName("icon")
-		val icon: String
-)
+	public static float kelvinToCelsius(float tempKelvin) {
+		return tempKelvin - 273.16f;
+	}
+
+	public static String formatTemp(float tempKelvin) {
+		return (int)(tempKelvin - 273.16f) + "°C";
+	}
+
+
+}

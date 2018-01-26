@@ -27,8 +27,10 @@ import com.dimowner.goodweather.R
 import com.dimowner.goodweather.data.Prefs
 import com.dimowner.goodweather.data.remote.RestClient
 import com.dimowner.goodweather.data.repository.RepositoryImpl
+import com.dimowner.goodweather.util.WeatherUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -38,6 +40,7 @@ class MainActivity : AppCompatActivity() {
 	//TODO: Show progress bar in cloud
 	//TODO: Swipe sun to update data
 	//TODO: After start scale up icon
+	//TODO: Do not request weather from server more often than 5 min
 
 	@Inject lateinit var prefs: Prefs
 
@@ -61,7 +64,13 @@ class MainActivity : AppCompatActivity() {
 		repository.getWeather()
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe({Timber.v("Weather " + it.toString())},{Timber.e(it)})
+				.subscribe({
+					Timber.v("WeatherResponse $it")
+
+					txtTemp.text = WeatherUtils.formatTemp(it.main.temp).toString()
+				},{Timber.e(it)})
+
+
 	}
 
 	fun AppCompatActivity.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {

@@ -21,13 +21,33 @@ package com.dimowner.goodweather.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Weather(
+/**
+ * Created on 27.01.2018.
+ * @author Dimowner
+ */
+data class WeatherResponse(
 		@SerializedName("id")
-		val id : Int,
+		val id : Long,
+		@SerializedName("name")
+		val name : String,
+		@SerializedName("coord")
+		val coord: Coord,
+		@SerializedName("weather")
+		val weather: Array<Weather>,
+		@SerializedName("base")
+		val base: String,
 		@SerializedName("main")
-		val main : String,
-		@SerializedName("description")
-		val description : String,
-		@SerializedName("icon")
-		val icon: String
+		val main: Main,
+		@SerializedName("visibility")
+		val visibility: String,
+		@SerializedName("wind")
+		val wind: Wind,
+		@SerializedName("clouds")
+		val clouds: Clouds,
+		@SerializedName("dt")
+		val dt: Long,
+		@SerializedName("sys")
+		val sys: Sys,
+		@SerializedName("cod")
+		val cod: Int
 )
