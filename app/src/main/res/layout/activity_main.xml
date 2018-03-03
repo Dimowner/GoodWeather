@@ -15,7 +15,7 @@
   ~  limitations under the License.
   -->
 
-<LinearLayout
+<android.support.constraint.ConstraintLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
@@ -25,35 +25,88 @@
 		android:orientation="vertical"
 		tools:context="com.dimowner.goodweather.presentation.ui.MainActivity">
 
+	<include layout="@layout/toolbar_transparent"/>
+
+	<TextView
+			android:id="@+id/txtDate"
+			style="@style/Widget.NormalText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginTop="@dimen/spacing_double"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/toolbar"
+			tools:text="May 8, 14:00"
+			/>
+
+	<TextView
+			android:id="@+id/txtTemp"
+			style="@style/Widget.TemperatureText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/txtDate"
+			tools:text="+24°C"
+			/>
+
+	<TextView
+			android:id="@+id/txtWind"
+			style="@style/Widget.NormalText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginStart="@dimen/spacing_double"
+			android:layout_marginEnd="@dimen/spacing_double"
+			android:layout_marginBottom="@dimen/spacing_small"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintBottom_toTopOf="@+id/txtHumidity"
+			tools:text="Wind: 5 Km/h"
+			/>
+
+	<TextView
+			android:id="@+id/txtHumidity"
+			style="@style/Widget.NormalText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginStart="@dimen/spacing_double"
+			android:layout_marginEnd="@dimen/spacing_double"
+			android:layout_marginBottom="@dimen/spacing_small"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintBottom_toTopOf="@+id/txtPressure"
+			tools:text="Humidity: 80%"
+			/>
+
+	<TextView
+			android:id="@+id/txtPressure"
+			style="@style/Widget.NormalText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginStart="@dimen/spacing_double"
+			android:layout_marginEnd="@dimen/spacing_double"
+			android:layout_marginBottom="140dp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			tools:text="Pressure: 758 mmHg"
+			/>
+
 	<com.dimowner.goodweather.presentation.view.TouchLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:layout_marginTop="20dp">
 
-		<FrameLayout
+		<ImageView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_gravity="center">
-
-			<ImageView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:contentDescription="@null"
-					android:src="@drawable/weather_loadscreen"
-					/>
-
-			<TextView
-					android:id="@+id/txtTemp"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginBottom="8dp"
-					tools:text="-126°F"
-					android:textColor="@color/colorPrimaryDark"
-					android:layout_gravity="center"
-					android:textSize="32sp"/>
-
-		</FrameLayout>
+				android:layout_gravity="center"
+				android:contentDescription="@null"
+				android:src="@drawable/weather_loadscreen"
+				/>
 
 	</com.dimowner.goodweather.presentation.view.TouchLayout>
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

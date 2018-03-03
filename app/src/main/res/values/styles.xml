@@ -26,7 +26,9 @@
 		<item name="windowNoTitle">true</item>
 		<item name="android:windowActionBarOverlay">true</item>
 
-		<item name="actionBarInsetStart">@dimen/padding_huge</item>
+		<item name="actionBarInsetStart">@dimen/spacing_huge</item>
+
+		<item name="android:navigationBarColor">@color/colorPrimaryDark</item>
 	</style>
 
 	<style name="TransparentStatusBar" parent="AppTheme" >
@@ -41,18 +43,24 @@
 		<item name="android:windowBackground">@drawable/branded_logo</item>
 	</style>
 
-	<!-- TextView -->
-	<style name="TextView" />
-
-	<style name="TextView.Subheader">
-		<item name="android:gravity">center_vertical</item>
-		<item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
-		<item name="android:textColor">?android:attr/textColorSecondary</item>
+	<style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+		<item name="android:textSize">20sp</item>
+		<item name="android:fontFamily">sans-serif-light</item>
 	</style>
 
-	<style name="TextView.Label">
-		<item name="android:gravity">center_vertical</item>
-		<item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+	<style name="Widget"/>
+
+	<style name="Widget.Text">
+		<item name="android:textColor">@color/text_primary_light</item>
+		<item name="android:fontFamily">sans-serif-light</item>
+	</style>
+
+	<style name="Widget.NormalText" parent="Widget.Text">
+		<item name="android:textSize">@dimen/text_xmedium</item>
+	</style>
+
+	<style name="Widget.TemperatureText" parent="Widget.Text">
+		<item name="android:textSize">@dimen/temperature_text_size</item>
 	</style>
 
 </resources>

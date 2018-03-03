@@ -27,8 +27,10 @@ import com.dimowner.goodweather.R
 import com.dimowner.goodweather.data.Prefs
 import com.dimowner.goodweather.data.remote.RestClient
 import com.dimowner.goodweather.data.repository.RepositoryImpl
+import com.dimowner.goodweather.util.TimeUtils
 import com.dimowner.goodweather.util.WeatherUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
@@ -43,6 +45,8 @@ class MainActivity : AppCompatActivity() {
 	//TODO: Do not request weather from server more often than 5 min
 
 	@Inject lateinit var prefs: Prefs
+
+	lateinit var disposable: Disposable
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		setTheme(R.style.AppTheme)
@@ -61,13 +65,19 @@ class MainActivity : AppCompatActivity() {
 		val repository = RepositoryImpl(restClient.weatherApi)
 
 		Timber.v("getWeather")
-		repository.getWeather()
+		disposable = repository.getWeather()
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe({
 					Timber.v("WeatherResponse $it")
 
 					txtTemp.text = WeatherUtils.formatTemp(it.main.temp).toString()
+					txtDate.text = TimeUtils.formatTime(it.dt*1000)
+
+					txtWind.text = getString(R.string.wind, it.wind.speed)
+					txtHumidity.text = getString(R.string.humidity, it.main.humidity)
+					txtPressure.text = getString(R.string.pressure, it.main.pressure)
+
 				},{Timber.e(it)})
 
 
@@ -75,6 +85,11 @@ class MainActivity : AppCompatActivity() {
 
 	fun AppCompatActivity.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
 		Toast.makeText(applicationContext, message, duration).show()
+	}
+
+	override fun onPause() {
+		super.onPause()
+		disposable.dispose()
 	}
 }
 
