@@ -17,8 +17,11 @@
 <resources>
 	<string name="app_name">Good Weather</string>
 
-	<string name="wind">Wind: %d meter/sec</string>
-	<string name="humidity">Humidity: %d %%</string>
-	<string name="pressure">Pressure: %d hPa</string>
+	<string name="wind">Wind:</string>
+	<string name="humidity">Humidity:</string>
+	<string name="pressure">Pressure:</string>
+	<string name="wind_val">%d m/sec</string>
+	<string name="humidity_val">%d %%</string>
+	<string name="pressure_val">%d hPa</string>
 
 </resources>

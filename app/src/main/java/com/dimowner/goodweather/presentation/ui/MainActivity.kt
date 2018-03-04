@@ -74,9 +74,9 @@ class MainActivity : AppCompatActivity() {
 					txtTemp.text = WeatherUtils.formatTemp(it.main.temp).toString()
 					txtDate.text = TimeUtils.formatTime(it.dt*1000)
 
-					txtWind.text = getString(R.string.wind, it.wind.speed)
-					txtHumidity.text = getString(R.string.humidity, it.main.humidity)
-					txtPressure.text = getString(R.string.pressure, it.main.pressure)
+					txtWind.text = getString(R.string.wind_val, it.wind.speed)
+					txtHumidity.text = getString(R.string.humidity_val, it.main.humidity)
+					txtPressure.text = getString(R.string.pressure_val, it.main.pressure)
 
 				},{Timber.e(it)})
 

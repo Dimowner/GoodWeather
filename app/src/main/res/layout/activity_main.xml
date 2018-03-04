@@ -29,7 +29,7 @@
 
 	<TextView
 			android:id="@+id/txtDate"
-			style="@style/Widget.NormalText"
+			style="@style/Text.NormalLabel"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center"
@@ -42,7 +42,7 @@
 
 	<TextView
 			android:id="@+id/txtTemp"
-			style="@style/Widget.TemperatureText"
+			style="@style/Text.TemperatureText"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center"
@@ -53,45 +53,90 @@
 			/>
 
 	<TextView
-			android:id="@+id/txtWind"
-			style="@style/Widget.NormalText"
+			android:id="@+id/windLabel"
+			style="@style/Text.NormalLabel"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_gravity="center"
+			android:text="@string/wind"
 			android:layout_marginStart="@dimen/spacing_double"
 			android:layout_marginEnd="@dimen/spacing_double"
-			android:layout_marginBottom="@dimen/spacing_small"
+			android:layout_marginBottom="@dimen/spacing_double"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintBottom_toTopOf="@+id/txtHumidity"
-			tools:text="Wind: 5 Km/h"
+			app:layout_constraintTop_toTopOf="@+id/txtWind"
+			/>
+
+	<TextView
+			android:id="@+id/humidityLabel"
+			style="@style/Text.NormalLabel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/humidity"
+			android:layout_marginStart="@dimen/spacing_double"
+			android:layout_marginEnd="@dimen/spacing_double"
+			android:layout_marginBottom="@dimen/spacing_double"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="@+id/txtHumidity"
+			/>
+
+	<TextView
+			android:id="@+id/pressureLabel"
+			style="@style/Text.NormalLabel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/pressure"
+			android:layout_marginStart="@dimen/spacing_double"
+			android:layout_marginEnd="@dimen/spacing_double"
+			android:layout_marginBottom="@dimen/spacing_double"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="@+id/txtPressure"
+			/>
+
+	<android.support.constraint.Barrier
+			android:id="@+id/barrier"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/spacing_small"
+			app:barrierDirection="end"
+			app:constraint_referenced_ids="windLabel, humidityLabel, pressureLabel"
+			/>
+
+	<TextView
+			android:id="@+id/txtWind"
+			style="@style/Text.NormalValue"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/spacing_normal"
+			android:layout_marginEnd="@dimen/spacing_normal"
+			android:layout_marginBottom="@dimen/spacing_small"
+			app:layout_constraintStart_toEndOf="@id/barrier"
+			app:layout_constraintBottom_toTopOf="@id/txtHumidity"
+			tools:text="5 m/s"
 			/>
 
 	<TextView
 			android:id="@+id/txtHumidity"
-			style="@style/Widget.NormalText"
+			style="@style/Text.NormalValue"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_gravity="center"
-			android:layout_marginStart="@dimen/spacing_double"
-			android:layout_marginEnd="@dimen/spacing_double"
+			android:layout_marginStart="@dimen/spacing_normal"
+			android:layout_marginEnd="@dimen/spacing_normal"
 			android:layout_marginBottom="@dimen/spacing_small"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintBottom_toTopOf="@+id/txtPressure"
-			tools:text="Humidity: 80%"
+			tools:text="90 %"
+			app:layout_constraintStart_toEndOf="@id/barrier"
+			app:layout_constraintBottom_toTopOf="@id/txtPressure"
 			/>
 
 	<TextView
 			android:id="@+id/txtPressure"
-			style="@style/Widget.NormalText"
+			style="@style/Text.NormalValue"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_gravity="center"
-			android:layout_marginStart="@dimen/spacing_double"
-			android:layout_marginEnd="@dimen/spacing_double"
-			android:layout_marginBottom="140dp"
-			app:layout_constraintStart_toStartOf="parent"
+			android:layout_marginStart="@dimen/spacing_normal"
+			android:layout_marginEnd="@dimen/spacing_normal"
+			android:layout_marginBottom="120dp"
+			app:layout_constraintStart_toEndOf="@id/barrier"
 			app:layout_constraintBottom_toBottomOf="parent"
-			tools:text="Pressure: 758 mmHg"
+			tools:text="932 hPa"
 			/>
 
 	<com.dimowner.goodweather.presentation.view.TouchLayout

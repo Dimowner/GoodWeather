@@ -48,18 +48,21 @@
 		<item name="android:fontFamily">sans-serif-light</item>
 	</style>
 
-	<style name="Widget"/>
-
-	<style name="Widget.Text">
+	<style name="Text">
 		<item name="android:textColor">@color/text_primary_light</item>
 		<item name="android:fontFamily">sans-serif-light</item>
 	</style>
 
-	<style name="Widget.NormalText" parent="Widget.Text">
+	<style name="Text.NormalLabel" parent="Text">
 		<item name="android:textSize">@dimen/text_xmedium</item>
 	</style>
 
-	<style name="Widget.TemperatureText" parent="Widget.Text">
+	<style name="Text.NormalValue" parent="Text">
+		<item name="android:textSize">@dimen/text_xmedium</item>
+		<item name="android:fontFamily">sans-serif</item>
+	</style>
+
+	<style name="Text.TemperatureText" parent="Text">
 		<item name="android:textSize">@dimen/temperature_text_size</item>
 	</style>
 

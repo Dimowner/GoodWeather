@@ -11,7 +11,7 @@ ext.versions = [
 		support         : "27.0.2",
 
 		// Components
-		constraintlayout: "1.0.2",
+		constraintlayout: "1.1.+",
 
 		//Rx
 		rxJava          : "2.0.1",
