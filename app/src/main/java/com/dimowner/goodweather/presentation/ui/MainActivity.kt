@@ -25,8 +25,7 @@ import android.widget.Toast
 import com.dimowner.goodweather.GWApplication
 import com.dimowner.goodweather.R
 import com.dimowner.goodweather.data.Prefs
-import com.dimowner.goodweather.data.remote.RestClient
-import com.dimowner.goodweather.data.repository.RepositoryImpl
+import com.dimowner.goodweather.data.repository.Repository
 import com.dimowner.goodweather.util.TimeUtils
 import com.dimowner.goodweather.util.WeatherUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -46,6 +45,8 @@ class MainActivity : AppCompatActivity() {
 
 	@Inject lateinit var prefs: Prefs
 
+	@Inject lateinit var repository: Repository
+
 	lateinit var disposable: Disposable
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,9 +61,6 @@ class MainActivity : AppCompatActivity() {
 		Timber.v("isFirsRun = " + prefs.isFirstRun())
 //		prefs.firstRunExecuted()
 //		Timber.v("isFirsRun = " + prefs.isFirstRun())
-
-		val restClient = RestClient()
-		val repository = RepositoryImpl(restClient.weatherApi)
 
 		Timber.v("getWeather")
 		disposable = repository.getWeather()
@@ -79,8 +77,6 @@ class MainActivity : AppCompatActivity() {
 					txtPressure.text = getString(R.string.pressure_val, it.main.pressure)
 
 				},{Timber.e(it)})
-
-
 	}
 
 	fun AppCompatActivity.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {

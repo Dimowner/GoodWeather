@@ -21,6 +21,9 @@ package com.dimowner.goodweather.dagger.application
 
 import android.content.Context
 import com.dimowner.goodweather.data.Prefs
+import com.dimowner.goodweather.data.remote.RestClient
+import com.dimowner.goodweather.data.repository.Repository
+import com.dimowner.goodweather.data.repository.RepositoryImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -44,5 +47,17 @@ class AppModule(
 	@Singleton
 	internal fun providePrefs(context: Context): Prefs {
 		return Prefs(context)
+	}
+
+	@Provides
+	@Singleton
+	internal fun provideRestClient(): RestClient{
+		return RestClient()
+	}
+
+	@Provides
+	@Singleton
+	internal fun provideRepository(restClient: RestClient): Repository {
+		return RepositoryImpl(restClient.weatherApi)
 	}
 }
