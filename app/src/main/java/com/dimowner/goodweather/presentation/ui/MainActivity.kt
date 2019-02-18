@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 	//TODO: Swipe sun to update data
 	//TODO: After start scale up icon
 	//TODO: Do not request weather from server more often than 5 min
+	//TODO: Read device accelerometer and move weather icon according to device orientation
 
 	@Inject lateinit var prefs: Prefs
 
