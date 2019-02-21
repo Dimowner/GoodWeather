@@ -41,6 +41,8 @@ public class TouchLayout extends FrameLayout implements ScaleGestureDetector.OnS
 	private static final float MIN_ZOOM = 1f;
 	private static final float MAX_ZOOM = 2.0f;
 
+	private static final int MAX_ACCELERATION = 50;
+
 	private SpringAnimation moveAnimationX;
 	private SpringAnimation moveAnimationY;
 	private SpringAnimation scaleAnimation;
@@ -57,6 +59,11 @@ public class TouchLayout extends FrameLayout implements ScaleGestureDetector.OnS
 
 	private float dx = 0f;
 	private float dy = 0f;
+
+	private float x1 = 0;
+	private float y1 = 0;
+	private float accelerationX = 0;
+	private float accelerationY = 0;
 
 	//Converted value from pixels to coefficient used in function which describes move.
 	private final float k = (float) (MAX_MOVE / (Math.PI/2));
@@ -133,8 +140,8 @@ public class TouchLayout extends FrameLayout implements ScaleGestureDetector.OnS
 						dx =(float) (k * Math.atan(realDx/k));
 						dy =(float) (k * Math.atan(realDy/k));
 
-						childView.setTranslationX(dx);
-						childView.setTranslationY(dy);
+						childView.setTranslationX(dx + accelerationX);
+						childView.setTranslationY(dy + accelerationY);
 						Timber.v("DRAG x = " + dx + " y = " + dy);
 					}
 					break;
@@ -200,6 +207,27 @@ public class TouchLayout extends FrameLayout implements ScaleGestureDetector.OnS
 
 		viewScale = 1f;
 		realScale = 1f;
+	}
+
+//	public void setOrientation(float x1, float y1) {
+//		this.x1 = -800 * 0.37f * (float) Math.cos(Math.toRadians(90 - x1));
+//		this.y1 = 800 * 0.37f * (float) Math.cos(Math.toRadians(90 - y1));
+//		Timber.v("setOrientation x1 = " + this.x1 + " y1 = " + this.y1);
+//	}
+
+	public void setAcceleration(float x, float y) {
+		//This if added for view invalidation optimization to make view less often invalidated.
+//		TODO: need better optimization
+		Timber.v("x1 = " + (int)x1 + " x = "+ (int)(x*1000) + " y1 = " + (int)y1 + " y = " + (int)(y*1000));
+		if ((int) x1 != (int)(x*1000) && (int) y1 != (int)(y*1000)) {
+			this.x1 = x * 1000;
+			this.y1 = y * 1000;
+			this.accelerationX = (float) -(k * Math.atan(x * MAX_ACCELERATION / k));
+			this.accelerationY = (float) (k * Math.atan(y * MAX_ACCELERATION / k));
+			Timber.v("setAcceleration X = " + this.accelerationX + " Y = " + accelerationY);
+			childView.setTranslationX(dx + this.accelerationX);
+			childView.setTranslationY(dy + this.accelerationY);
+		}
 	}
 
 	private SpringAnimation physicsBasedScaleAnimation(View view, float s) {

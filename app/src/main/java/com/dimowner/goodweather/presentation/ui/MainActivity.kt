@@ -26,6 +26,9 @@ import com.dimowner.goodweather.GWApplication
 import com.dimowner.goodweather.R
 import com.dimowner.goodweather.data.Prefs
 import com.dimowner.goodweather.data.repository.Repository
+import com.dimowner.goodweather.sensor.SensorsContract
+import com.dimowner.goodweather.sensor.SensorsContract.SensorsCallback
+import com.dimowner.goodweather.sensor.SensorsImpl
 import com.dimowner.goodweather.util.TimeUtils
 import com.dimowner.goodweather.util.WeatherUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -50,6 +53,9 @@ class MainActivity : AppCompatActivity() {
 
 	lateinit var disposable: Disposable
 
+	lateinit var sensors: SensorsContract.Sensors
+	lateinit var sensorsCallback: SensorsCallback
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		setTheme(R.style.AppTheme)
 		super.onCreate(savedInstanceState)
@@ -58,6 +64,8 @@ class MainActivity : AppCompatActivity() {
 //		toast("Hello world")
 
 		GWApplication.get(applicationContext).applicationComponent().inject(this)
+
+		sensors = SensorsImpl(applicationContext)
 
 		Timber.v("isFirsRun = " + prefs.isFirstRun())
 //		prefs.firstRunExecuted()
@@ -78,6 +86,27 @@ class MainActivity : AppCompatActivity() {
 					txtPressure.text = getString(R.string.pressure_val, it.main.pressure)
 
 				},{Timber.e(it)})
+
+		sensorsCallback = object : SensorsCallback {
+			override fun onAccuracyChanged(accuracy: Int) {}
+			override fun onMagneticFieldChange(value: Float) {}
+
+			override fun onSensorsNotFound() {
+
+			}
+
+			override fun onRotationChange(azimuth: Float, pitch: Float, roll: Float) {
+//				Timber.v("onRotationChange az = " + azimuth + " pitch = " + pitch + " roll = " + roll)
+//				touchLayout.setOrientation(pitch, roll)
+			}
+
+			override fun onLinearAccelerationChange(x: Float, y: Float, z: Float) {
+				touchLayout.setAcceleration(x, y)
+			}
+		}
+
+		sensors.setEnergySavingMode(false)
+		sensors.setSensorsCallback(sensorsCallback)
 	}
 
 	fun AppCompatActivity.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
@@ -87,6 +116,16 @@ class MainActivity : AppCompatActivity() {
 	override fun onPause() {
 		super.onPause()
 		disposable.dispose()
+	}
+
+	override fun onStart() {
+		super.onStart()
+		sensors.start()
+	}
+
+	override fun onStop() {
+		super.onStop()
+		sensors.stop()
 	}
 }
 

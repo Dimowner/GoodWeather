@@ -23,8 +23,9 @@ package com.dimowner.goodweather
  * Created on 20.01.2018.
  * @author Dimowner
  */
-class Constants {
+class AppConstants {
 	companion object {
+		//TODO: hide from public availability
 		const val OPEN_WEATHER_MAP_API_KEY = "c694cf3ed462a56acc43e6fa2037bbbd"
 	}
 }

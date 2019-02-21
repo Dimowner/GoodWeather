@@ -41,6 +41,7 @@
 		</activity-alias>
 
 		<activity android:name="com.dimowner.goodweather.presentation.ui.MainActivity"
+					 android:screenOrientation="portrait"
 					 android:theme="@style/AppTheme.BrandedLaunch"/>
 
 	</application>

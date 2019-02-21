@@ -19,7 +19,7 @@
 
 package com.dimowner.goodweather.data.repository
 
-import com.dimowner.goodweather.Constants
+import com.dimowner.goodweather.AppConstants
 import com.dimowner.goodweather.data.remote.WeatherApi
 import com.dimowner.goodweather.data.remote.model.WeatherResponse
 import io.reactivex.Single
@@ -29,6 +29,6 @@ class RepositoryImpl(
 	) : Repository {
 
 	override fun getWeather(): Single<WeatherResponse> {
-		return weatherApi.getWeather("Kyiv", Constants.OPEN_WEATHER_MAP_API_KEY)
+		return weatherApi.getWeather("Kyiv", AppConstants.OPEN_WEATHER_MAP_API_KEY)
 	}
 }
