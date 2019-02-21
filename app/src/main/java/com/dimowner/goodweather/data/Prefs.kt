@@ -21,6 +21,7 @@ package com.dimowner.goodweather.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.dimowner.goodweather.AppConstants
 import kotlin.properties.Delegates
 
 /**
@@ -32,20 +33,107 @@ class Prefs constructor(context: Context){
 	private val PREF_NAME = "com.dimowner.goodweather.data.Prefs"
 
 	private val PREF_KEY_IS_FIRST_RUN = "is_first_run"
+	private val PREF_KEY_TEMP_FORMAT = "temp_format"
+	private val PREF_KEY_WIND_FORMAT = "wind_format"
+	private val PREF_KEY_PRESSURE_FORMAT = "pressure_format"
+	private val PREF_KEY_TIME_FORMAT = "time_format"
+	private val PREF_KEY_CITY = "city"
+	private val PREF_KEY_LATITUDE = "latitude"
+	private val PREF_KEY_LONGITUDE = "longitude"
 
-	private var sharedPreferences : SharedPreferences by Delegates.notNull()
+	private var preferences : SharedPreferences by Delegates.notNull()
 
 	init {
-		this.sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+		this.preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 	}
 
 	fun isFirstRun(): Boolean {
-		return !sharedPreferences.contains(PREF_KEY_IS_FIRST_RUN) || sharedPreferences.getBoolean(PREF_KEY_IS_FIRST_RUN, false)
+		return !preferences.contains(PREF_KEY_IS_FIRST_RUN) || preferences.getBoolean(PREF_KEY_IS_FIRST_RUN, false)
 	}
 
 	fun firstRunExecuted() {
-		val editor = sharedPreferences.edit()
+		val editor = preferences.edit()
 		editor.putBoolean(PREF_KEY_IS_FIRST_RUN, false)
 		editor.apply()
+	}
+
+	fun switchTimeFormatt() : Int {
+		if (preferences.getInt(PREF_KEY_TIME_FORMAT, AppConstants.TIME_FORMAT_24H) == AppConstants.TIME_FORMAT_24H) {
+			preferences.edit().putInt(PREF_KEY_TIME_FORMAT, AppConstants.TIME_FORMAT_12H).apply()
+			return AppConstants.TIME_FORMAT_12H
+		} else {
+			preferences.edit().putInt(PREF_KEY_TIME_FORMAT, AppConstants.TIME_FORMAT_24H).apply()
+			return AppConstants.TIME_FORMAT_24H
+		}
+	}
+
+	fun switchWindFormat() : Int {
+		if (preferences.getInt(PREF_KEY_WIND_FORMAT, AppConstants.WIND_FORMAT_METER_PER_HOUR) == AppConstants.WIND_FORMAT_METER_PER_HOUR) {
+			preferences.edit().putInt(PREF_KEY_WIND_FORMAT, AppConstants.WIND_FORMAT_MILES_PER_HOUR).apply()
+			return AppConstants.WIND_FORMAT_MILES_PER_HOUR
+		} else {
+			preferences.edit().putInt(PREF_KEY_WIND_FORMAT, AppConstants.WIND_FORMAT_METER_PER_HOUR).apply()
+			return AppConstants.WIND_FORMAT_METER_PER_HOUR
+		}
+	}
+
+	fun switchPressureFormat() : Int {
+		if (preferences.getInt(PREF_KEY_PRESSURE_FORMAT, AppConstants.PRESSURE_FORMAT_PHA) == AppConstants.PRESSURE_FORMAT_MM_HG) {
+			preferences.edit().putInt(PREF_KEY_PRESSURE_FORMAT, AppConstants.PRESSURE_FORMAT_PHA).apply()
+			return AppConstants.PRESSURE_FORMAT_PHA
+		} else {
+			preferences.edit().putInt(PREF_KEY_PRESSURE_FORMAT, AppConstants.PRESSURE_FORMAT_MM_HG).apply()
+			return AppConstants.PRESSURE_FORMAT_MM_HG
+		}
+	}
+
+	fun switchTempFormat() : Int {
+		if (preferences.getInt(PREF_KEY_TEMP_FORMAT, AppConstants.TEMP_FORMAT_CELSIUS) == AppConstants.TEMP_FORMAT_CELSIUS) {
+			preferences.edit().putInt(PREF_KEY_TEMP_FORMAT, AppConstants.TEMP_FORMAT_FAHRENHEIT).apply()
+			return AppConstants.TEMP_FORMAT_FAHRENHEIT
+		} else {
+			preferences.edit().putInt(PREF_KEY_TEMP_FORMAT, AppConstants.TEMP_FORMAT_CELSIUS).apply()
+			return AppConstants.TEMP_FORMAT_CELSIUS
+		}
+	}
+
+	fun getTempFormat(): Int {
+		return preferences.getInt(PREF_KEY_TEMP_FORMAT, AppConstants.TEMP_FORMAT_CELSIUS)
+	}
+
+	fun getWindFormat(): Int {
+		return preferences.getInt(PREF_KEY_WIND_FORMAT, AppConstants.WIND_FORMAT_METER_PER_HOUR)
+	}
+
+	fun getPressureFormat(): Int {
+		return preferences.getInt(PREF_KEY_PRESSURE_FORMAT, AppConstants.PRESSURE_FORMAT_PHA)
+	}
+
+	fun getTimeFormat(): Int {
+		return preferences.getInt(PREF_KEY_TIME_FORMAT, AppConstants.TIME_FORMAT_24H)
+	}
+
+	fun saveCity(city : String) {
+		preferences.edit().putString(PREF_KEY_CITY, city).apply()
+	}
+
+	fun getCity() : String {
+		return preferences.getString(PREF_KEY_CITY, "Kyiv")
+	}
+
+	fun saveLatitude(lat : Double) {
+		preferences.edit().putLong(PREF_KEY_LATITUDE, java.lang.Double.doubleToRawLongBits(lat)).apply()
+	}
+
+	fun getLatitude() : Double {
+		return java.lang.Double.longBitsToDouble(preferences.getLong(PREF_KEY_LATITUDE, 0))
+	}
+
+	fun saveLongitude(lng : Double) {
+		preferences.edit().putLong(PREF_KEY_LONGITUDE, java.lang.Double.doubleToRawLongBits(lng)).apply()
+	}
+
+	fun getLongitude() : Double {
+		return java.lang.Double.longBitsToDouble(preferences.getLong(PREF_KEY_LONGITUDE, 0))
 	}
 }

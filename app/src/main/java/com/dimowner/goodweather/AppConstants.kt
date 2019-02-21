@@ -27,5 +27,23 @@ class AppConstants {
 	companion object {
 		//TODO: hide from public availability
 		const val OPEN_WEATHER_MAP_API_KEY = "c694cf3ed462a56acc43e6fa2037bbbd"
+
+//		const val OPEN_WEATHER_MAP_API_KEY = "09e6be8ca3991509ff0e08494e0238f7"
+
+		const val WEATHER_ICON_URL = "http://openweathermap.org/img/w/"
+
+		const val PNG = ".png"
+
+		const val TEMP_FORMAT_CELSIUS = 1
+		const val TEMP_FORMAT_FAHRENHEIT = 2
+
+		const val TIME_FORMAT_24H = 11
+		const val TIME_FORMAT_12H = 12
+
+		const val WIND_FORMAT_METER_PER_HOUR = 21
+		const val WIND_FORMAT_MILES_PER_HOUR = 22
+
+		const val PRESSURE_FORMAT_PHA = 31
+		const val PRESSURE_FORMAT_MM_HG = 32
 	}
 }

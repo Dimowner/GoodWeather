@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  Copyright 2018 Dmitriy Ponomarenko
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<android.support.constraint.ConstraintLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:id="@+id/container"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/colorPrimary"
+		android:orientation="vertical">
+
+	<TextView
+			android:id="@+id/txtDate"
+			style="@style/Text.NormalLabel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginTop="@dimen/spacing_big"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			tools:text="May 8, 14:00"
+			/>
+
+	<TextView
+			android:id="@+id/txtTemp"
+			style="@style/Text.TemperatureText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/txtDate"
+			tools:text="+24°C"
+			/>
+
+	<TextView
+			android:id="@+id/windLabel"
+			style="@style/Text.NormalLabel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/wind"
+			android:layout_marginStart="@dimen/spacing_double"
+			android:layout_marginEnd="@dimen/spacing_double"
+			android:layout_marginLeft="@dimen/spacing_double"
+			android:layout_marginRight="@dimen/spacing_double"
+			android:layout_marginBottom="@dimen/spacing_double"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="@+id/txtWind"
+			/>
+
+	<TextView
+			android:id="@+id/humidityLabel"
+			style="@style/Text.NormalLabel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/humidity"
+			android:layout_marginStart="@dimen/spacing_double"
+			android:layout_marginEnd="@dimen/spacing_double"
+			android:layout_marginLeft="@dimen/spacing_double"
+			android:layout_marginRight="@dimen/spacing_double"
+			android:layout_marginBottom="@dimen/spacing_double"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="@+id/txtHumidity"
+			/>
+
+	<TextView
+			android:id="@+id/pressureLabel"
+			style="@style/Text.NormalLabel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/pressure"
+			android:layout_marginStart="@dimen/spacing_double"
+			android:layout_marginEnd="@dimen/spacing_double"
+			android:layout_marginLeft="@dimen/spacing_double"
+			android:layout_marginRight="@dimen/spacing_double"
+			android:layout_marginBottom="@dimen/spacing_double"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="@+id/txtPressure"
+			/>
+
+	<android.support.constraint.Barrier
+			android:id="@+id/barrier"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/spacing_small"
+			app:barrierDirection="end"
+			app:constraint_referenced_ids="windLabel, humidityLabel, pressureLabel"
+			/>
+
+	<TextView
+			android:id="@+id/txtWind"
+			style="@style/Text.NormalValue"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/spacing_normal"
+			android:layout_marginEnd="@dimen/spacing_normal"
+			android:layout_marginLeft="@dimen/spacing_normal"
+			android:layout_marginRight="@dimen/spacing_normal"
+			android:layout_marginBottom="@dimen/spacing_small"
+			app:layout_constraintStart_toEndOf="@id/barrier"
+			app:layout_constraintBottom_toTopOf="@id/txtHumidity"
+			tools:text="5 m/s"
+			/>
+
+	<TextView
+			android:id="@+id/txtHumidity"
+			style="@style/Text.NormalValue"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/spacing_normal"
+			android:layout_marginEnd="@dimen/spacing_normal"
+			android:layout_marginLeft="@dimen/spacing_normal"
+			android:layout_marginRight="@dimen/spacing_normal"
+			android:layout_marginBottom="@dimen/spacing_small"
+			tools:text="90 %"
+			app:layout_constraintStart_toEndOf="@id/barrier"
+			app:layout_constraintBottom_toTopOf="@id/txtPressure"
+			/>
+
+	<TextView
+			android:id="@+id/txtPressure"
+			style="@style/Text.NormalValue"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/spacing_normal"
+			android:layout_marginEnd="@dimen/spacing_normal"
+			android:layout_marginLeft="@dimen/spacing_normal"
+			android:layout_marginRight="@dimen/spacing_normal"
+			android:layout_marginBottom="@dimen/spacing_double"
+			app:layout_constraintStart_toEndOf="@id/barrier"
+			app:layout_constraintBottom_toBottomOf="parent"
+			tools:text="932 hPa"
+			/>
+
+	<ImageView
+			android:id="@+id/weatherIcon"
+			android:layout_width="180dp"
+			android:layout_height="180dp"
+			android:layout_gravity="center"
+			android:contentDescription="@null"
+			tools:src="@drawable/weather_loadscreen"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintStart_toStartOf="parent"/>
+
+	<ProgressBar
+			android:id="@+id/progress"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:visibility="gone"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintStart_toStartOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>

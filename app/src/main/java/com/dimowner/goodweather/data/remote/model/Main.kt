@@ -25,9 +25,9 @@ data class Main(
 		@SerializedName("temp")
 		val temp : Float,
 		@SerializedName("pressure")
-		val pressure : Int,
+		val pressure : Float,
 		@SerializedName("humidity")
-		val humidity : Int,
+		val humidity : Float,
 		@SerializedName("temp_min")
 		val temp_min : Float,
 		@SerializedName("temp_max")

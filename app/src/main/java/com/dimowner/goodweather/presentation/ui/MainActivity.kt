@@ -47,9 +47,9 @@ class MainActivity : AppCompatActivity() {
 	//TODO: Do not request weather from server more often than 5 min
 	//TODO: Read device accelerometer and move weather icon according to device orientation
 
-	@Inject lateinit var prefs: Prefs
-
-	@Inject lateinit var repository: Repository
+//	@Inject lateinit var prefs: Prefs
+//
+//	@Inject lateinit var repository: Repository
 
 	lateinit var disposable: Disposable
 
@@ -63,29 +63,29 @@ class MainActivity : AppCompatActivity() {
 		Timber.v("onCreate")
 //		toast("Hello world")
 
-		GWApplication.get(applicationContext).applicationComponent().inject(this)
+//		GWApplication.get(applicationContext).applicationComponent().inject(this)
 
 		sensors = SensorsImpl(applicationContext)
 
-		Timber.v("isFirsRun = " + prefs.isFirstRun())
+//		Timber.v("isFirsRun = " + prefs.isFirstRun())
 //		prefs.firstRunExecuted()
 //		Timber.v("isFirsRun = " + prefs.isFirstRun())
-
-		Timber.v("getWeather")
-		disposable = repository.getWeather()
-				.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe({
-					Timber.v("WeatherResponse $it")
-
-					txtTemp.text = WeatherUtils.formatTemp(it.main.temp).toString()
-					txtDate.text = TimeUtils.formatTime(it.dt*1000)
-
-					txtWind.text = getString(R.string.wind_val, it.wind.speed)
-					txtHumidity.text = getString(R.string.humidity_val, it.main.humidity)
-					txtPressure.text = getString(R.string.pressure_val, it.main.pressure)
-
-				},{Timber.e(it)})
+//
+//		Timber.v("getWeather")
+//		disposable = repository.getWeather()
+//				.subscribeOn(Schedulers.io())
+//				.observeOn(AndroidSchedulers.mainThread())
+//				.subscribe({
+//					Timber.v("WeatherResponse $it")
+//
+//					txtTemp.text = WeatherUtils.formatTemp(it.main.temp).toString()
+//					txtDate.text = TimeUtils.formatTime(it.dt*1000)
+//
+//					txtWind.text = getString(R.string.wind_val, it.wind.speed)
+//					txtHumidity.text = getString(R.string.humidity_val, it.main.humidity)
+//					txtPressure.text = getString(R.string.pressure_val, it.main.pressure)
+//
+//				},{Timber.e(it)})
 
 		sensorsCallback = object : SensorsCallback {
 			override fun onAccuracyChanged(accuracy: Int) {}

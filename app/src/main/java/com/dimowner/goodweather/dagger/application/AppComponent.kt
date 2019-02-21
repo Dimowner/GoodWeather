@@ -20,7 +20,15 @@
 package com.dimowner.goodweather.dagger.application
 
 import com.dimowner.goodweather.GWApplication
-import com.dimowner.goodweather.presentation.ui.MainActivity
+import com.dimowner.goodweather.dagger.location.LocationComponent
+import com.dimowner.goodweather.dagger.location.LocationModule
+import com.dimowner.goodweather.data.periodic.JobSchedulerService
+import com.dimowner.goodweather.data.periodic.UpdatesReceiver
+import com.dimowner.goodweather.ui.main.MainActivity
+import com.dimowner.goodweather.ui.main.WeatherDetailsFragment
+import com.dimowner.goodweather.ui.main.WeatherTwoWeeksFragment
+import com.dimowner.goodweather.ui.settings.SettingsActivity
+import com.dimowner.goodweather.ui.welcome.WelcomeActivity
 import dagger.Component
 import javax.inject.Singleton
 
@@ -35,5 +43,19 @@ interface AppComponent {
 	fun inject(app: GWApplication)
 
 	fun inject(activity: MainActivity)
+
+	fun inject(activity: WelcomeActivity)
+
+	fun inject(activity: SettingsActivity)
+
+	fun inject(fragment: WeatherDetailsFragment)
+
+	fun inject(fragment: WeatherTwoWeeksFragment)
+
+	fun inject(receiver: UpdatesReceiver)
+
+	fun inject(service: JobSchedulerService)
+
+	fun plus(detailsModule: LocationModule): LocationComponent
 
 }

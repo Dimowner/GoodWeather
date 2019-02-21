@@ -1,13 +1,13 @@
 # Good Weather
-<p>Simple weather application</p>
+<p>Good weather application</p>
 
-![Good Weather Logo](https://github.com/Dimowner/GoodWeather/blob/master/app/src/main/res/drawable-hdpi/weather_loadscreen.png)
+![Good Weather Logo](https://github.com/Dimowner/GoodWeather/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_weather_round.png)
 
 
 ### License
 
 ```
-Copyright 2017 Dmitriy Ponomarenko
+Copyright 2019 Dmitriy Ponomarenko
 
 Licensed to the Apache Software Foundation (ASF) under one or more contributor
 license agreements. See the NOTICE file distributed with this work for

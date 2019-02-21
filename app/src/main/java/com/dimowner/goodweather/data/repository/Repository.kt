@@ -20,6 +20,8 @@
 package com.dimowner.goodweather.data.repository
 
 import com.dimowner.goodweather.data.remote.model.WeatherResponse
+import com.dimowner.goodweather.data.local.room.WeatherEntity
+import io.reactivex.Flowable
 import io.reactivex.Single
 
 /**
@@ -28,4 +30,18 @@ import io.reactivex.Single
  */
 interface Repository {
 	fun getWeather(): Single<WeatherResponse>
+
+	fun getWeatherToday(city: String): Single<WeatherEntity>
+
+	fun getWeatherTomorrow(city: String): Single<WeatherEntity>
+
+	fun subscribeWeatherToday(city: String): Flowable<WeatherEntity>
+
+	fun subscribeWeatherTomorrow(city: String): Flowable<WeatherEntity>
+
+	fun subscribeWeatherTwoWeeks(city: String): Flowable<List<WeatherEntity>>
+
+	fun cacheWeather(entity: WeatherEntity)
+
+	fun cacheWeather(entity: List<WeatherEntity>)
 }

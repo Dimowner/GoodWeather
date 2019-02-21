@@ -19,7 +19,7 @@
 
 	<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 		<item name="colorPrimary">@color/colorPrimary</item>
-		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorPrimaryDark">@color/colorPrimary</item>
 		<item name="colorAccent">@color/colorAccent</item>
 
 		<item name="windowActionBar">false</item>
@@ -28,11 +28,11 @@
 
 		<item name="actionBarInsetStart">@dimen/spacing_huge</item>
 
-		<item name="android:navigationBarColor">@color/colorPrimaryDark</item>
+		<!--<item name="android:navigationBarColor">@color/colorPrimaryDark</item>-->
 	</style>
 
-	<style name="TransparentStatusBar" parent="AppTheme" >
-		<item name="android:windowTranslucentStatus">true</item>
+	<style name="AppTheme.TransparentStatusBar" parent="AppTheme" >
+		<!--<item name="android:windowTranslucentStatus">true</item>-->
 	</style>
 
 	<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
@@ -62,8 +62,28 @@
 		<item name="android:fontFamily">sans-serif</item>
 	</style>
 
+	<style name="Text.Input" parent="Text">
+		<item name="android:textColorHint">@color/text_secondary_light</item>
+	</style>
+
+	<style name="Text.Subheader">
+		<item name="android:gravity">center_vertical</item>
+		<!--<item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>-->
+		<item name="android:textColor">@color/text_secondary_light</item>
+	</style>
+
 	<style name="Text.TemperatureText" parent="Text">
 		<item name="android:textSize">@dimen/temperature_text_size</item>
 	</style>
 
+	<style name="Text.SectionLabel">
+		<item name="android:textColor">@color/colorAccent</item>
+		<item name="android:fontFamily">sans-serif-light</item>
+		<item name="android:textSize">@dimen/text_xlarge</item>
+	</style>
+
+	<style name="Button">
+		<item name="android:textColor">@color/colorAccent</item>
+		<item name="android:textSize">@dimen/text_large</item>
+	</style>
 </resources>

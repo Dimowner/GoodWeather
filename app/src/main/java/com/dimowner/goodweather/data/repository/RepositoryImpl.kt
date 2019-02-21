@@ -20,15 +20,81 @@
 package com.dimowner.goodweather.data.repository
 
 import com.dimowner.goodweather.AppConstants
+import com.dimowner.goodweather.data.local.LocalRepository
 import com.dimowner.goodweather.data.remote.WeatherApi
 import com.dimowner.goodweather.data.remote.model.WeatherResponse
+import com.dimowner.goodweather.data.local.room.WeatherEntity
+import com.dimowner.goodweather.data.remote.RemoteRepository
+import io.reactivex.Flowable
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 class RepositoryImpl(
-		private val weatherApi: WeatherApi
+		private val localRepository: LocalRepository,
+		private val remoteRepository: RemoteRepository
 	) : Repository {
 
 	override fun getWeather(): Single<WeatherResponse> {
-		return weatherApi.getWeather("Kyiv", AppConstants.OPEN_WEATHER_MAP_API_KEY)
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
+
+//	override fun getWeather(): Single<WeatherResponse> {
+//		return weatherApi.getWeather("Kyiv", AppConstants.OPEN_WEATHER_MAP_API_KEY)
+//	}
+
+	override fun getWeatherToday(city: String): Single<WeatherEntity> {
+		return remoteRepository.getWeatherToday(city)
+				.subscribeOn(Schedulers.io())
+				.flatMap { data ->
+					localRepository.cacheWeather(data)
+					localRepository.getWeatherToday(city).subscribeOn(Schedulers.io())
+				}
+	}
+
+	override fun getWeatherTomorrow(city: String): Single<WeatherEntity> {
+		return remoteRepository.getWeatherTomorrow(city)
+				.subscribeOn(Schedulers.io())
+				.flatMap { data ->
+					localRepository.cacheWeather(data)
+					localRepository.getWeatherTomorrow(city).subscribeOn(Schedulers.io())
+				}
+	}
+
+	override fun subscribeWeatherToday(city: String): Flowable<WeatherEntity> {
+		remoteRepository.getWeatherToday(city)
+				.subscribeOn(Schedulers.io())
+				.subscribe({response ->
+					localRepository.cacheWeather(response)
+				}, Timber::e)
+		return localRepository.subscribeWeatherToday(city)
+				.subscribeOn(Schedulers.io())
+	}
+
+	override fun subscribeWeatherTomorrow(city: String): Flowable<WeatherEntity> {
+		remoteRepository.subscribeWeatherTomorrow(city)
+				.subscribeOn(Schedulers.io())
+				.subscribe({response ->
+					localRepository.cacheWeather(response)
+				}, Timber::e)
+		return localRepository.subscribeWeatherTomorrow(city)
+				.subscribeOn(Schedulers.io())
+	}
+
+	override fun subscribeWeatherTwoWeeks(city: String): Flowable<List<WeatherEntity>> {
+		remoteRepository.subscribeWeatherTwoWeeks(city)
+				.subscribeOn(Schedulers.io())
+				.subscribe({response ->
+					localRepository.cacheWeather(response)
+				}, Timber::e)
+		return localRepository.subscribeWeatherTwoWeeks(city)
+				.subscribeOn(Schedulers.io())
+	}
+
+	override fun cacheWeather(entity: List<WeatherEntity>) {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
+	override fun cacheWeather(entity: WeatherEntity) {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 }

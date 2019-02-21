@@ -22,6 +22,11 @@
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
+	<uses-feature android:name="android.hardware.screen.portrait" android:required="false" />
+	<uses-feature android:name="android.hardware.telephony" android:required="false" />
+	<uses-feature android:name="android.hardware.camera2" android:required="false" />
+	<uses-feature android:name="android.hardware.microphone" android:required="false" />
+
 	<application
 			android:allowBackup="true"
 			android:icon="@mipmap/ic_weather_round"
@@ -31,19 +36,52 @@
 			android:name=".GWApplication"
 			android:theme="@style/AppTheme">
 
+		<meta-data
+				android:name="com.google.android.geo.API_KEY"
+				android:value="@string/google_maps_key"/>
+
 		<activity-alias
 				android:name="com.dimowner.goodweather.Launcher"
-				android:targetActivity="com.dimowner.goodweather.presentation.ui.MainActivity" >
+				android:targetActivity="com.dimowner.goodweather.ui.main.MainActivity" >
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity-alias>
 
-		<activity android:name="com.dimowner.goodweather.presentation.ui.MainActivity"
+		<activity android:name="com.dimowner.goodweather.ui.main.MainActivity"
 					 android:screenOrientation="portrait"
 					 android:theme="@style/AppTheme.BrandedLaunch"/>
 
+		<activity
+				android:name="com.dimowner.goodweather.ui.welcome.WelcomeActivity"
+				android:screenOrientation="portrait"/>
+
+		<activity
+				android:name="com.dimowner.goodweather.ui.location.LocationActivity"
+				android:screenOrientation="portrait"
+				android:theme="@style/AppTheme.TransparentStatusBar"
+				android:windowSoftInputMode="adjustPan"
+				/>
+
+		<activity
+				android:name="com.dimowner.goodweather.ui.settings.SettingsActivity"
+				android:screenOrientation="portrait"/>
+
+		<receiver
+				android:name="com.dimowner.goodweather.data.periodic.UpdatesReceiver"
+				android:exported="false">
+			<intent-filter>
+				<action android:name="com.dimowner.goodweather.data.UPDATES_RECEIVER_ACTION"/>
+			</intent-filter>
+		</receiver>
+
+		<service
+				android:name=".data.periodic.JobSchedulerService"
+				android:label="Background weather updates"
+				android:permission="android.permission.BIND_JOB_SERVICE" >
+
+		</service>
 	</application>
 
 </manifest>
