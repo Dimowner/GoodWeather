@@ -27,6 +27,7 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 class RepositoryImpl(
 		private val localRepository: LocalRepository,
@@ -66,6 +67,7 @@ class RepositoryImpl(
 					localRepository.cacheWeather(response)
 				}, Timber::e)
 		return localRepository.subscribeWeatherToday(city)
+//				.timeout(20, TimeUnit.SECONDS)
 				.subscribeOn(Schedulers.io())
 	}
 

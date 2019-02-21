@@ -18,37 +18,38 @@
 <LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
 		android:id="@+id/container"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:clipToPadding="false"
 		android:orientation="vertical">
 
-	<!--<android.support.v7.widget.Toolbar-->
-	<!--android:id="@+id/toolbar"-->
-	<!--android:layout_width="match_parent"-->
-	<!--android:layout_height="wrap_content"-->
-	<!--android:background="@android:color/transparent"-->
-	<!--android:minHeight="?attr/actionBarSize"-->
-	<!--android:theme="?attr/actionBarTheme"-->
-	<!--app:titleTextAppearance="@style/Toolbar.TitleText"-->
-	<!--app:contentInsetStart="@dimen/spacing_double"-->
-	<!--app:popupTheme="@style/AppTheme.PopupOverlay"-->
-	<!--app:title="Kyiv, Ukraine"/>-->
-
 	<FrameLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
+
 		<TextView
 				style="@style/Text.SectionLabel"
 				android:id="@+id/toolbar"
-				android:layout_width="match_parent"
-				android:layout_height="56dp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
 				android:textColor="@color/text_primary_light"
-				android:text="Kyiv, Ukraine"
-				android:gravity="center"
-				app:layout_constraintTop_toTopOf="parent"
+				android:background="?android:selectableItemBackgroundBorderless"
+				android:clickable="true"
+				android:focusable="true"
+				android:paddingStart="@dimen/spacing_normal"
+				android:paddingLeft="@dimen/spacing_normal"
+				android:paddingTop="@dimen/spacing_small"
+				android:paddingEnd="@dimen/spacing_normal"
+				android:paddingRight="@dimen/spacing_normal"
+				android:paddingBottom="@dimen/spacing_small"
+				android:drawableEnd="@drawable/ic_pencil_small_transperent"
+				android:drawableRight="@drawable/ic_pencil_small_transperent"
+				tools:text="Kyiv, Ukraine"
 				/>
+
 		<ImageButton
 				android:id="@+id/btnSettings"
 				android:layout_width="wrap_content"
@@ -59,6 +60,7 @@
 				android:padding="@dimen/spacing_normal"
 				android:src="@drawable/tune"
 				app:srcCompat="@drawable/tune"/>
+
 	</FrameLayout>
 
 	<android.support.v4.view.ViewPager
@@ -68,12 +70,12 @@
 			android:layout_weight="1"
 			/>
 
-	<View
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:elevation="@dimen/toolbar_elevation"
-			android:background="@color/colorPrimaryDark"
-			/>
+	<!--<View-->
+			<!--android:layout_width="match_parent"-->
+			<!--android:layout_height="1dp"-->
+			<!--android:elevation="@dimen/toolbar_elevation"-->
+			<!--android:background="@color/colorPrimaryDark"-->
+			<!--/>-->
 
 	<!--<android.support.design.widget.BottomNavigationView-->
 	<!--android:id="@+id/bottomNavigation"-->

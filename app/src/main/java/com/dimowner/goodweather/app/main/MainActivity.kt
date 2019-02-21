@@ -84,7 +84,7 @@ class MainActivity : FragmentActivity(), ViewPager.OnPageChangeListener {
 		} else {
 			val fragments = ArrayList<Fragment>()
 			fragments.add(WeatherDetailsFragment.newInstance(WeatherDetailsFragment.TYPE_TODAY))
-			fragments.add(WeatherDetailsFragment.newInstance(WeatherDetailsFragment.TYPE_TOMORROW))
+//			fragments.add(WeatherDetailsFragment.newInstance(WeatherDetailsFragment.TYPE_TOMORROW))
 			fragments.add(WeatherTwoWeeksFragment())
 			val adapter = MyStatePagerAdapter(supportFragmentManager, fragments)
 			pager.adapter = adapter

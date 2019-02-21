@@ -17,10 +17,12 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 <item>
 	<shape android:shape="rectangle" >
-		<gradient android:type="radial"
-					 android:gradientRadius="900"
-					 android:startColor="@color/load_screen_gradient_light"
-					 android:endColor="@color/load_screen_gradient_dark" />
+		<gradient
+				android:type="radial"
+				android:gradientRadius="@dimen/gradient_radius"
+				android:startColor="@color/load_screen_gradient_light"
+				android:endColor="@color/load_screen_gradient_dark"
+				/>
 	</shape>
 </item>
 <item>
