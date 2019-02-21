@@ -89,7 +89,7 @@ class LocationActivity : Activity(), LocationContract.View {
 		//Disable list scrolling
 		list.setOnTouchListener { v, event -> event.action == MotionEvent.ACTION_MOVE }
 
-		btnLocate.setOnClickListener {
+		fab.setOnClickListener {
 			if (checkLocatePermission()) {
 				presenter.locate()
 			}
@@ -98,6 +98,7 @@ class LocationActivity : Activity(), LocationContract.View {
 		mapView.onCreate(null)
 		btnApply.setOnClickListener {
 			startActivity(Intent(applicationContext, MainActivity::class.java))
+			presenter.setLocationSelected()
 			finish()
 		}
 
@@ -137,6 +138,8 @@ class LocationActivity : Activity(), LocationContract.View {
 
 	override fun showSelectedCity(city: String) {
 		inputCity.setText(city)
+		inputCity.requestFocus()
+		inputCity.setSelection(inputCity.text.length)
 	}
 
 	override fun onStart() {

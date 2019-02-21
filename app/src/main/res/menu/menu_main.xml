@@ -23,7 +23,7 @@
 
 	<!--<item-->
 			<!--android:id="@+id/action_locate"-->
-			<!--android:icon="@drawable/map_marker"-->
+			<!--android:icon="@drawable/ic_map_marker"-->
 			<!--android:title="@string/btn_locate"-->
 			<!--app:showAsAction="ifRoom"/>-->
 

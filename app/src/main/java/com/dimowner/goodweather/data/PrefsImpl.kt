@@ -40,6 +40,8 @@ class PrefsImpl constructor(context: Context) : Prefs {
 	private val PREF_KEY_CITY = "city"
 	private val PREF_KEY_LATITUDE = "latitude"
 	private val PREF_KEY_LONGITUDE = "longitude"
+	private val PREF_KEY_INITIAL_SETTINGS_APPLIED = "is_initial_settings_applied"
+	private val PREF_KEY_LOCATION_SELECTED = "is_location_selected"
 
 	private var preferences: SharedPreferences by Delegates.notNull()
 
@@ -57,7 +59,7 @@ class PrefsImpl constructor(context: Context) : Prefs {
 		editor.apply()
 	}
 
-	override fun switchTimeFormatt(): Int {
+	override fun switchTimeFormat(): Int {
 		if (preferences.getInt(PREF_KEY_TIME_FORMAT, AppConstants.TIME_FORMAT_24H) == AppConstants.TIME_FORMAT_24H) {
 			preferences.edit().putInt(PREF_KEY_TIME_FORMAT, AppConstants.TIME_FORMAT_12H).apply()
 			return AppConstants.TIME_FORMAT_12H
@@ -135,5 +137,25 @@ class PrefsImpl constructor(context: Context) : Prefs {
 
 	override fun getLongitude(): Double {
 		return java.lang.Double.longBitsToDouble(preferences.getLong(PREF_KEY_LONGITUDE, 0))
+	}
+
+	override fun isInitialSettingApplied(): Boolean {
+		return preferences.contains(PREF_KEY_INITIAL_SETTINGS_APPLIED) || preferences.getBoolean(PREF_KEY_INITIAL_SETTINGS_APPLIED, false)
+	}
+
+	override fun applyInitialSettings() {
+		val editor = preferences.edit()
+		editor.putBoolean(PREF_KEY_INITIAL_SETTINGS_APPLIED, false)
+		editor.apply()
+	}
+
+	override fun isLocationSelected(): Boolean {
+		return preferences.contains(PREF_KEY_LOCATION_SELECTED) || preferences.getBoolean(PREF_KEY_LOCATION_SELECTED, false)
+	}
+
+	override fun setLocationSelected() {
+		val editor = preferences.edit()
+		editor.putBoolean(PREF_KEY_LOCATION_SELECTED, false)
+		editor.apply()
 	}
 }

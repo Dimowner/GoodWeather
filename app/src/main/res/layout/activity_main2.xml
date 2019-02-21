@@ -36,7 +36,7 @@
 				android:layout_height="wrap_content"
 				android:layout_gravity="center"
 				android:textColor="@color/text_primary_light"
-				android:background="?android:selectableItemBackgroundBorderless"
+				android:background="?android:selectableItemBackground"
 				android:clickable="true"
 				android:focusable="true"
 				android:paddingStart="@dimen/spacing_normal"
@@ -58,8 +58,8 @@
 				android:layout_gravity="end|right"
 				android:background="?android:selectableItemBackground"
 				android:padding="@dimen/spacing_normal"
-				android:src="@drawable/tune"
-				app:srcCompat="@drawable/tune"/>
+				android:src="@drawable/ic_tune"
+				app:srcCompat="@drawable/ic_tune"/>
 
 	</FrameLayout>
 

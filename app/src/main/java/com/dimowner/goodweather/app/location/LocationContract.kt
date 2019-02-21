@@ -38,6 +38,8 @@ interface LocationContract : Contract {
 
 		fun findCity(city: String)
 
+		fun setLocationSelected()
+
 		fun findLocationForCity(city: String)
 
 		fun setCitySelected(b: Boolean)

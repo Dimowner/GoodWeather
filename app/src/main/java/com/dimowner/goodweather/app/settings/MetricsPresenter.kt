@@ -81,7 +81,7 @@ open class MetricsPresenter(open val prefs: Prefs, open val context: Context) : 
 	}
 
 	override fun switchTimeFormat() {
-		if (prefs.switchTimeFormatt() == AppConstants.TIME_FORMAT_24H) {
+		if (prefs.switchTimeFormat() == AppConstants.TIME_FORMAT_24H) {
 			view?.showTimeFormat(context.resources.getString(R.string.time_format_24h))
 		} else {
 			view?.showTimeFormat(context.resources.getString(R.string.time_format_12h))

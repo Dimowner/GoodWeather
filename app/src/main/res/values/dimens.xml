@@ -31,6 +31,7 @@
 	<dimen name="text_xmedium">18sp</dimen>
 	<dimen name="text_large">20sp</dimen>
 	<dimen name="text_xlarge">24sp</dimen>
+	<dimen name="text_huge">32sp</dimen>
 
 	<dimen name="temperature_text_size">80sp</dimen>
 

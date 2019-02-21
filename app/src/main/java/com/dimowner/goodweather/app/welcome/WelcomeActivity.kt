@@ -39,15 +39,16 @@ class WelcomeActivity : Activity(), MetricsContract.View {
 		setContentView(R.layout.activity_welcome)
 		GWApplication.get(applicationContext).applicationComponent().inject(this)
 
-		txtWind.setOnClickListener { presenter.switchWind() }
-		txtTempFormat.setOnClickListener { presenter.switchTemperature() }
-		txtPressure.setOnClickListener { presenter.switchPressure() }
-		txtTimeFormat.setOnClickListener { presenter.switchTimeFormat() }
+		pnlWind.setOnClickListener { presenter.switchWind() }
+		pnlTemperature.setOnClickListener { presenter.switchTemperature() }
+		pnlPressure.setOnClickListener { presenter.switchPressure() }
+		pnlTimeFormat.setOnClickListener { presenter.switchTimeFormat() }
 		btnApply.setOnClickListener {
-			presenter.firstRunExecuted()
 			startActivity(Intent(applicationContext, LocationActivity::class.java))
+			presenter.applyInitialSettings()
 			finish()
 		}
+		presenter.firstRunExecuted()
 
 		presenter.bindView(this)
 	}

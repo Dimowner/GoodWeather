@@ -28,4 +28,8 @@ class WelcomePresenter(override val prefs: Prefs, override val context: Context)
 	fun firstRunExecuted() {
 		prefs.firstRunExecuted()
 	}
+
+	fun applyInitialSettings() {
+		prefs.applyInitialSettings()
+	}
 }

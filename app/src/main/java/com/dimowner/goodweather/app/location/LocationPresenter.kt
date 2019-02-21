@@ -100,6 +100,10 @@ class LocationPresenter(
 				})
 	}
 
+	override fun setLocationSelected() {
+		prefs.setLocationSelected()
+	}
+
 	override fun setCitySelected(b: Boolean) {
 		isCitySelected = b
 	}

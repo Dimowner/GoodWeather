@@ -78,8 +78,11 @@ class MainActivity : FragmentActivity(), ViewPager.OnPageChangeListener {
 
 		btnSettings.setOnClickListener { startActivity(Intent(applicationContext, SettingsActivity::class.java)) }
 
-		if (prefs.isFirstRun()) {
+		if (prefs.isFirstRun() || !prefs.isInitialSettingApplied()) {
 			startActivity(Intent(applicationContext, WelcomeActivity::class.java))
+			finish()
+		} else if (!prefs.isLocationSelected()) {
+			startActivity(Intent(applicationContext, LocationActivity::class.java))
 			finish()
 		} else {
 			val fragments = ArrayList<Fragment>()

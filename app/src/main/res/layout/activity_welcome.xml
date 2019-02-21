@@ -42,164 +42,182 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/metrics"
-			android:layout_margin="@dimen/spacing_double"
+			android:layout_margin="@dimen/spacing_big"
+			android:textSize="@dimen/text_huge"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/welcomeIcon"
-			app:layout_constraintBottom_toTopOf="@+id/txtWind"
+			app:layout_constraintBottom_toTopOf="@+id/pnlWind"
 			/>
 
-	<TextView
-			android:id="@+id/windLabel"
-			style="@style/Text.NormalLabel"
-			android:layout_width="wrap_content"
+	<FrameLayout
+			android:id="@+id/pnlWind"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/wind"
-			android:layout_marginStart="@dimen/spacing_double"
-			android:layout_marginEnd="@dimen/spacing_double"
-			android:layout_marginLeft="@dimen/spacing_double"
-			android:layout_marginRight="@dimen/spacing_double"
-			android:layout_marginBottom="@dimen/spacing_double"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintBaseline_toBaselineOf="@id/txtWind"
-			/>
-
-	<TextView
-			android:id="@+id/tempFormatLabel"
-			style="@style/Text.NormalLabel"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/temperature"
-			android:layout_marginStart="@dimen/spacing_double"
-			android:layout_marginEnd="@dimen/spacing_double"
-			android:layout_marginLeft="@dimen/spacing_double"
-			android:layout_marginRight="@dimen/spacing_double"
-			android:layout_marginBottom="@dimen/spacing_double"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintBaseline_toBaselineOf="@id/txtTempFormat"
-			/>
-
-	<TextView
-			android:id="@+id/pressureLabel"
-			style="@style/Text.NormalLabel"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/pressure"
-			android:layout_marginStart="@dimen/spacing_double"
-			android:layout_marginEnd="@dimen/spacing_double"
-			android:layout_marginLeft="@dimen/spacing_double"
-			android:layout_marginRight="@dimen/spacing_double"
-			android:layout_marginBottom="@dimen/spacing_double"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintBaseline_toBaselineOf="@id/txtPressure"
-			/>
-
-	<TextView
-			android:id="@+id/timeFormatLabel"
-			style="@style/Text.NormalLabel"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/time_format"
-			android:layout_marginStart="@dimen/spacing_double"
-			android:layout_marginEnd="@dimen/spacing_double"
-			android:layout_marginLeft="@dimen/spacing_double"
-			android:layout_marginRight="@dimen/spacing_double"
-			android:layout_marginBottom="@dimen/spacing_double"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintBaseline_toBaselineOf="@id/txtTimeFormat"
-			/>
-
-	<TextView
-			android:id="@+id/txtWind"
-			style="@style/Text.NormalValue"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textStyle="bold"
-			android:layout_marginStart="@dimen/spacing_double"
-			android:layout_marginEnd="@dimen/spacing_double"
-			android:layout_marginLeft="@dimen/spacing_double"
-			android:layout_marginRight="@dimen/spacing_double"
+			android:layout_marginTop="@dimen/spacing_normal"
+			android:background="?android:selectableItemBackground"
 			android:clickable="true"
 			android:focusable="true"
-			android:padding="@dimen/spacing_small"
-			android:drawableEnd="@drawable/chevron_down"
-			android:drawableRight="@drawable/chevron_down"
-			android:drawablePadding="@dimen/spacing_normal"
-			android:background="?android:attr/selectableItemBackground"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintBottom_toTopOf="@id/txtTempFormat"
+			android:paddingStart="@dimen/spacing_big"
+			android:paddingLeft="@dimen/spacing_big"
+			android:paddingTop="@dimen/spacing_small"
+			android:paddingEnd="@dimen/spacing_big"
+			android:paddingRight="@dimen/spacing_big"
+			android:paddingBottom="@dimen/spacing_small"
 			app:layout_constraintTop_toBottomOf="@+id/welcomeLabel"
-			tools:text="m/s"
-			/>
+			app:layout_constraintBottom_toTopOf="@+id/pnlTemperature"
+			>
 
-	<TextView
-			android:id="@+id/txtTempFormat"
-			style="@style/Text.NormalValue"
-			android:layout_width="wrap_content"
+		<TextView
+				style="@style/Text.NormalLabel"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="start"
+				android:drawableStart="@drawable/ic_weather_windy"
+				android:drawableLeft="@drawable/ic_weather_windy"
+				android:drawablePadding="@dimen/spacing_double"
+				android:text="@string/wind"
+				/>
+
+		<TextView
+				android:id="@+id/txtWind"
+				style="@style/Text.NormalValue"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="end"
+				android:drawableEnd="@drawable/ic_chevron_down"
+				android:drawableRight="@drawable/ic_chevron_down"
+				android:drawablePadding="@dimen/spacing_normal"
+				android:textStyle="bold"
+				tools:text="m/s"
+				/>
+	</FrameLayout>
+
+	<FrameLayout
+			android:id="@+id/pnlTemperature"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:textStyle="bold"
-			android:layout_marginStart="@dimen/spacing_double"
-			android:layout_marginEnd="@dimen/spacing_double"
-			android:layout_marginLeft="@dimen/spacing_double"
-			android:layout_marginRight="@dimen/spacing_double"
+			android:background="?android:selectableItemBackground"
 			android:clickable="true"
 			android:focusable="true"
-			android:padding="@dimen/spacing_small"
-			android:drawableEnd="@drawable/chevron_down"
-			android:drawableRight="@drawable/chevron_down"
-			android:drawablePadding="@dimen/spacing_normal"
-			android:background="?android:attr/selectableItemBackground"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintBottom_toTopOf="@id/txtPressure"
-			app:layout_constraintTop_toBottomOf="@+id/txtWind"
-			tools:text="%"
-			/>
+			android:paddingStart="@dimen/spacing_big"
+			android:paddingLeft="@dimen/spacing_big"
+			android:paddingTop="@dimen/spacing_small"
+			android:paddingEnd="@dimen/spacing_big"
+			android:paddingRight="@dimen/spacing_big"
+			android:paddingBottom="@dimen/spacing_small"
+			app:layout_constraintTop_toBottomOf="@+id/pnlWind"
+			app:layout_constraintBottom_toTopOf="@+id/pnlPressure"
+			>
 
-	<TextView
-			android:id="@+id/txtPressure"
-			style="@style/Text.NormalValue"
-			android:layout_width="wrap_content"
+		<TextView
+				style="@style/Text.NormalLabel"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="start"
+				android:drawableStart="@drawable/ic_thermometer"
+				android:drawableLeft="@drawable/ic_thermometer"
+				android:drawablePadding="@dimen/spacing_double"
+				android:text="@string/temperature"
+				/>
+
+		<TextView
+				android:id="@+id/txtTempFormat"
+				style="@style/Text.NormalValue"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="end"
+				android:drawableEnd="@drawable/ic_chevron_down"
+				android:drawableRight="@drawable/ic_chevron_down"
+				android:drawablePadding="@dimen/spacing_normal"
+				android:textStyle="bold"
+				tools:text="24H"
+				/>
+	</FrameLayout>
+
+	<FrameLayout
+			android:id="@+id/pnlPressure"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:textStyle="bold"
-			android:layout_marginStart="@dimen/spacing_double"
-			android:layout_marginEnd="@dimen/spacing_double"
-			android:layout_marginLeft="@dimen/spacing_double"
-			android:layout_marginRight="@dimen/spacing_double"
+			android:background="?android:selectableItemBackground"
 			android:clickable="true"
 			android:focusable="true"
-			android:padding="@dimen/spacing_small"
-			android:drawableEnd="@drawable/chevron_down"
-			android:drawableRight="@drawable/chevron_down"
-			android:drawablePadding="@dimen/spacing_normal"
-			android:background="?android:attr/selectableItemBackground"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintBottom_toTopOf="@+id/txtTimeFormat"
-			app:layout_constraintTop_toBottomOf="@+id/txtTempFormat"
-			tools:text="hPa"
-			/>
+			android:paddingStart="@dimen/spacing_big"
+			android:paddingLeft="@dimen/spacing_big"
+			android:paddingTop="@dimen/spacing_small"
+			android:paddingEnd="@dimen/spacing_big"
+			android:paddingRight="@dimen/spacing_big"
+			android:paddingBottom="@dimen/spacing_small"
+			app:layout_constraintTop_toBottomOf="@+id/pnlTemperature"
+			app:layout_constraintBottom_toTopOf="@+id/pnlTimeFormat"
+			>
 
-	<TextView
-			android:id="@+id/txtTimeFormat"
-			style="@style/Text.NormalValue"
-			android:layout_width="wrap_content"
+		<TextView
+				style="@style/Text.NormalLabel"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="start"
+				android:drawableStart="@drawable/ic_arrow_collapse_all"
+				android:drawableLeft="@drawable/ic_arrow_collapse_all"
+				android:drawablePadding="@dimen/spacing_double"
+				android:text="@string/pressure"
+				/>
+
+		<TextView
+				android:id="@+id/txtPressure"
+				style="@style/Text.NormalValue"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="end"
+				android:drawableEnd="@drawable/ic_chevron_down"
+				android:drawableRight="@drawable/ic_chevron_down"
+				android:drawablePadding="@dimen/spacing_normal"
+				android:textStyle="bold"
+				tools:text="hPa"
+				/>
+	</FrameLayout>
+
+	<FrameLayout
+			android:id="@+id/pnlTimeFormat"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:textStyle="bold"
-			android:layout_marginStart="@dimen/spacing_double"
-			android:layout_marginEnd="@dimen/spacing_double"
-			android:layout_marginLeft="@dimen/spacing_double"
-			android:layout_marginRight="@dimen/spacing_double"
+			android:background="?android:selectableItemBackground"
 			android:clickable="true"
 			android:focusable="true"
-			android:padding="@dimen/spacing_small"
-			android:drawableEnd="@drawable/chevron_down"
-			android:drawableRight="@drawable/chevron_down"
-			android:drawablePadding="@dimen/spacing_normal"
-			android:background="?android:attr/selectableItemBackground"
-			app:layout_constraintEnd_toEndOf="parent"
+			android:paddingStart="@dimen/spacing_big"
+			android:paddingLeft="@dimen/spacing_big"
+			android:paddingTop="@dimen/spacing_small"
+			android:paddingEnd="@dimen/spacing_big"
+			android:paddingRight="@dimen/spacing_big"
+			android:paddingBottom="@dimen/spacing_small"
+			app:layout_constraintTop_toBottomOf="@+id/pnlPressure"
 			app:layout_constraintBottom_toTopOf="@+id/btnApply"
-			app:layout_constraintTop_toBottomOf="@+id/txtPressure"
-			tools:text="24H"
-			/>
+			>
+
+		<TextView
+				style="@style/Text.NormalLabel"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="start"
+				android:drawableStart="@drawable/ic_clock"
+				android:drawableLeft="@drawable/ic_clock"
+				android:drawablePadding="@dimen/spacing_double"
+				android:text="@string/time_format"
+				/>
+
+		<TextView
+				android:id="@+id/txtTimeFormat"
+				style="@style/Text.NormalValue"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="end"
+				android:drawableEnd="@drawable/ic_chevron_down"
+				android:drawableRight="@drawable/ic_chevron_down"
+				android:drawablePadding="@dimen/spacing_normal"
+				android:textStyle="bold"
+				tools:text="24H"
+				/>
+	</FrameLayout>
 
 	<Button
 			android:id="@+id/btnApply"
