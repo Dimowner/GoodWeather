@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -17,25 +17,42 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.ui
+package com.dimowner.goodweather.app.main
 
-interface Contract {
+import com.dimowner.goodweather.app.Contract
+import com.dimowner.goodweather.data.local.room.WeatherEntity
 
-	interface View {
+interface WeatherContract {
 
-		fun showProgress()
+	interface View : Contract.View {
 
-		fun hideProgress()
+		fun showDate(date: String)
 
-		fun showError(message: String)
+		fun showTemperature(temp: String)
 
-		fun showError(resId: Int)
+		fun showWind(wind: String)
+
+		fun showPressure(pressure: String)
+
+		fun showHumidity(humidity: String)
+
+		fun showWeatherIcon(url: String)
+
+		fun showWeatherIconRes(resId: Int)
+
+		fun showTwoWeeksWeather(list: List<WeatherEntity>)
+
+		fun setTemperatureFormat(format: Int)
 	}
 
-	interface UserActionsListener<in T : View> {
+	interface UserActionsListener : Contract.UserActionsListener<View> {
 
-		fun bindView(view: T)
+		fun locate()
 
-		fun unbindView()
+		fun updateWeather(type: Int)
+
+		fun updateWeatherTwoWeeks()
+
+		fun updateTemperatureFormat()
 	}
 }

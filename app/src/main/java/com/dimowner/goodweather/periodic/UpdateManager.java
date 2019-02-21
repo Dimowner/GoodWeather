@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -17,7 +17,7 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.data.periodic;
+package com.dimowner.goodweather.periodic;
 
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
@@ -47,8 +47,8 @@ public class UpdateManager {
 			if (alarmManager != null) {
 				alarmManager.setInexactRepeating(
 						AlarmManager.ELAPSED_REALTIME_WAKEUP,
-					SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_HALF_DAY,
-					AlarmManager.INTERVAL_DAY, alarmIntent
+						SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_HALF_DAY,
+						AlarmManager.INTERVAL_DAY, alarmIntent
 				);
 			}
 		} else {
@@ -89,7 +89,9 @@ public class UpdateManager {
 
 	@TargetApi(21)
 	static void scheduleJob(Context context) {
-		if (!JobSchedulerService.isPeriodic()) { JobSchedulerService.setPeriodic(true);}
+		if (!JobSchedulerService.isPeriodic()) {
+			JobSchedulerService.setPeriodic(true);
+		}
 
 		ComponentName serviceComponent = new ComponentName(context, JobSchedulerService.class);
 		JobInfo.Builder builder = new JobInfo.Builder(PERIODIC_UPDATE_ID, serviceComponent);

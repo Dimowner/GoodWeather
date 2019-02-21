@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Dmitriy Ponomarenko
+ * Copyright 2019 Dmitriy Ponomarenko
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor
  * license agreements. See the NOTICE file distributed with this work for
@@ -22,21 +22,13 @@ package com.dimowner.goodweather.presentation.ui
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.dimowner.goodweather.GWApplication
 import com.dimowner.goodweather.R
-import com.dimowner.goodweather.data.Prefs
-import com.dimowner.goodweather.data.repository.Repository
 import com.dimowner.goodweather.sensor.SensorsContract
 import com.dimowner.goodweather.sensor.SensorsContract.SensorsCallback
 import com.dimowner.goodweather.sensor.SensorsImpl
-import com.dimowner.goodweather.util.TimeUtils
-import com.dimowner.goodweather.util.WeatherUtils
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
-import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 

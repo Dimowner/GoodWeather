@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -17,7 +17,7 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.domain.location
+package com.dimowner.goodweather.app.location
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -46,12 +46,12 @@ class LocationProvider(
 		private val context: Context,
 		private val service: GeocodeApi) {
 
-	private val TIME_OUT_LOCATION : Long = 120
+	private val TIME_OUT_LOCATION: Long = 120
 	private val TIME_OUT_PLACES = 45
 
 	private var filter: AutocompleteFilter = AutocompleteFilter.Builder()
-												.setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES)
-												.build()
+			.setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES)
+			.build()
 
 	private var buffer: AutocompletePredictionBuffer? = null
 	private var disposable: Disposable? = null
@@ -147,7 +147,7 @@ class LocationProvider(
 		}
 
 		return Single.just(googleApi)
-				.map ({ client ->
+				.map({ client ->
 					val result = Places.GeoDataApi.getAutocompletePredictions(client, address, null, filter)
 //					it.setDisposable(Disposables.fromRunnable { result.cancel() })
 
@@ -225,12 +225,12 @@ class LocationProvider(
 		}
 	}
 
-	fun findLocationForCityName(city : String) : Single<Location> {
+	fun findLocationForCityName(city: String): Single<Location> {
 		return Single.just(city).map {
 			if (Geocoder.isPresent()) {
 				val geocoder = Geocoder(context)
 				try {
-					val result : List<Address> = geocoder.getFromLocationName(city, 1)
+					val result: List<Address> = geocoder.getFromLocationName(city, 1)
 					if (result.isNotEmpty()) {
 						Location(result[0].locality, result[0].latitude, result[0].longitude)
 					} else {

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -45,7 +45,7 @@ interface WeatherDao {
 	fun subscribeWeatherTwoWeeks(): Flowable<List<WeatherEntity>>
 
 	@Query("SELECT * FROM weather WHERE type = :weatherType")
-	fun subscribeWeather(weatherType: Int) : Flowable<List<WeatherEntity>>
+	fun subscribeWeather(weatherType: Int): Flowable<List<WeatherEntity>>
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	fun insertWeather(item: WeatherEntity)

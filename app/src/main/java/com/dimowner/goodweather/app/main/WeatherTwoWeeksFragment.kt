@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -17,7 +17,7 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.ui.main
+package com.dimowner.goodweather.app.main
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -29,14 +29,13 @@ import android.widget.Toast
 import com.dimowner.goodweather.R
 import com.dimowner.goodweather.GWApplication
 import com.dimowner.goodweather.data.local.room.WeatherEntity
-import com.dimowner.goodweather.domain.main.WeatherContract
 import kotlinx.android.synthetic.main.fragment_weather_two_weeks.*
 import javax.inject.Inject
 
 class WeatherTwoWeeksFragment : Fragment(), WeatherContract.View {
 
 	@Inject
-	lateinit var presenter : WeatherContract.UserActionsListener
+	lateinit var presenter: WeatherContract.UserActionsListener
 
 	val adapter: WeatherRecyclerAdapter by lazy { WeatherRecyclerAdapter() }
 

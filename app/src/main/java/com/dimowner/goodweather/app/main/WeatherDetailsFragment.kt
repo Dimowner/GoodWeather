@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -17,7 +17,7 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.ui.main
+package com.dimowner.goodweather.app.main
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -25,11 +25,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.bumptech.glide.Glide
 import com.dimowner.goodweather.R
 import com.dimowner.goodweather.GWApplication
 import com.dimowner.goodweather.data.local.room.WeatherEntity
-import com.dimowner.goodweather.domain.main.WeatherContract
 import kotlinx.android.synthetic.main.fragment_weather_details.*
 import javax.inject.Inject
 
@@ -49,7 +47,8 @@ class WeatherDetailsFragment : Fragment(), WeatherContract.View {
 		}
 	}
 
-	@Inject lateinit var presenter : WeatherContract.UserActionsListener
+	@Inject
+	lateinit var presenter: WeatherContract.UserActionsListener
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		val view = inflater.inflate(R.layout.fragment_weather_details, container, false)
@@ -59,7 +58,9 @@ class WeatherDetailsFragment : Fragment(), WeatherContract.View {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		GWApplication.get(view.context).applicationComponent().inject(this)
-		weatherIcon.setOnClickListener{ presenter.updateWeather(arguments?.getInt(ARG_KEY_TYPE) ?: TYPE_TODAY) }
+		weatherIcon.setOnClickListener {
+			presenter.updateWeather(arguments?.getInt(ARG_KEY_TYPE) ?: TYPE_TODAY)
+		}
 		presenter.bindView(this)
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Dmitriy Ponomarenko
+ * Copyright 2019 Dmitriy Ponomarenko
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor
  * license agreements. See the NOTICE file distributed with this work for
@@ -27,9 +27,9 @@ import com.google.gson.annotations.SerializedName
  */
 data class WeatherResponse(
 		@SerializedName("id")
-		val id : Long,
+		val id: Long,
 		@SerializedName("name")
-		val name : String,
+		val name: String,
 		@SerializedName("coord")
 		val coord: Coord,
 		@SerializedName("weather")

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -17,11 +17,11 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.data.periodic;
+package com.dimowner.goodweather.periodic;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
+import android.annotation.TargetApi;
+import android.app.job.JobParameters;
+import android.app.job.JobService;
 
 import com.dimowner.goodweather.GWApplication;
 import com.dimowner.goodweather.data.Prefs;
@@ -32,22 +32,45 @@ import javax.inject.Inject;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
-public class UpdatesReceiver  extends BroadcastReceiver {
+@TargetApi(21)
+public class JobSchedulerService extends JobService {
 
-	@Inject Repository repository;
-	@Inject Prefs prefs;
+	private static boolean isPeriodic = true;
+
+	@Inject
+	Repository repository;
+	@Inject
+	Prefs prefs;
 
 	@Override
-	public void onReceive(Context context, Intent intent) {
-		GWApplication.Companion.get(context).applicationComponent().inject(this);
+	public boolean onStartJob(JobParameters params) {
+		GWApplication.Companion.get(getApplicationContext()).applicationComponent().inject(this);
 		repository.getWeatherToday(prefs.getCity())
-					.subscribeOn(Schedulers.io())
-					.subscribe(data -> {}, Timber::e);
+				.subscribeOn(Schedulers.io())
+				.subscribe(data -> {
+				}, Timber::e);
 
 		repository.getWeatherTomorrow(prefs.getCity())
 				.subscribeOn(Schedulers.io())
-				.subscribe(data -> {}, Timber::e);
+				.subscribe(data -> {
+				}, Timber::e);
+
+		if (isPeriodic) {
+			UpdateManager.scheduleJob(getApplicationContext());
+		}
+		return true;
 	}
 
-	public static final String UPDATES_RECEIVER_ACTION = "com.dimowner.goodweather.data.UPDATES_RECEIVER_ACTION";
+	@Override
+	public boolean onStopJob(JobParameters params) {
+		return true;
+	}
+
+	public static boolean isPeriodic() {
+		return isPeriodic;
+	}
+
+	public static void setPeriodic(boolean b) {
+		isPeriodic = b;
+	}
 }

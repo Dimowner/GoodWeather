@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~  Copyright 2018 Dmitriy Ponomarenko
+  ~  Copyright 2019 Dmitriy Ponomarenko
   ~
   ~  Licensed under the Apache License, Version 2.0 (the "License");
   ~  you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:orientation="vertical"
-		tools:context="com.dimowner.goodweather.ui.settings.SettingsActivity">
+		tools:context="com.dimowner.goodweather.app.settings.SettingsActivity">
 
 	<!--<android.support.v7.widget.Toolbar-->
 			<!--android:id="@+id/toolbar"-->
@@ -61,7 +61,9 @@
 				android:layout_gravity="start|left"
 				android:background="?android:selectableItemBackground"
 				android:padding="@dimen/spacing_normal"
-				app:srcCompat="@drawable/arrow_left"/>
+				android:src="@drawable/arrow_left"
+				app:srcCompat="@drawable/arrow_left"
+				/>
 	</FrameLayout>
 
 	<TextView

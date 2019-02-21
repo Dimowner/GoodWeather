@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -17,10 +17,25 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.domain.location
+package com.dimowner.goodweather.app
 
-data class Location(
-		val address: String,
-		val lat: Double,
-		val lng: Double
-)
+interface Contract {
+
+	interface View {
+
+		fun showProgress()
+
+		fun hideProgress()
+
+		fun showError(message: String)
+
+		fun showError(resId: Int)
+	}
+
+	interface UserActionsListener<in T : View> {
+
+		fun bindView(view: T)
+
+		fun unbindView()
+	}
+}

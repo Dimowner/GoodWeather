@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -17,29 +17,15 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.domain.location
+package com.dimowner.goodweather.app.welcome
 
-import com.dimowner.goodweather.Contract
+import android.content.Context
+import com.dimowner.goodweather.data.Prefs
+import com.dimowner.goodweather.app.settings.MetricsPresenter
 
-interface LocationContract : Contract {
+class WelcomePresenter(override val prefs: Prefs, override val context: Context) : MetricsPresenter(prefs, context) {
 
-	interface View : Contract.View {
-
-		fun showMapMarker(location: Location)
-
-		fun showSelectedCity(city: String)
-
-		fun showPredictions(list: List<String>)
-	}
-
-	interface UserActionsListener : Contract.UserActionsListener<LocationContract.View> {
-
-		fun locate()
-
-		fun findCity(city: String)
-
-		fun findLocationForCity(city: String)
-
-		fun setCitySelected(b: Boolean)
+	fun firstRunExecuted() {
+		prefs.firstRunExecuted()
 	}
 }

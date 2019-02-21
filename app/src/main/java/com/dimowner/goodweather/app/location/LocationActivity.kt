@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -17,7 +17,7 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.ui.location
+package com.dimowner.goodweather.app.location
 
 import android.Manifest
 import android.app.Activity
@@ -27,8 +27,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import com.dimowner.goodweather.domain.location.LocationContract
-import com.dimowner.goodweather.ui.main.MainActivity
+import com.dimowner.goodweather.app.main.MainActivity
 import kotlinx.android.synthetic.main.activity_location.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -45,7 +44,6 @@ import android.widget.AdapterView
 import com.dimowner.goodweather.GWApplication
 import com.dimowner.goodweather.R
 import com.dimowner.goodweather.dagger.location.LocationModule
-import com.dimowner.goodweather.domain.location.Location
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -58,9 +56,10 @@ class LocationActivity : Activity(), LocationContract.View {
 
 	val REQ_CODE_LOCATION = 303
 
-	@Inject lateinit var presenter : LocationContract.UserActionsListener
+	@Inject
+	lateinit var presenter: LocationContract.UserActionsListener
 
-	private val adapter : MySimpleArrayAdapter by lazy { MySimpleArrayAdapter(Collections.emptyList(), this) }
+	private val adapter: MySimpleArrayAdapter by lazy { MySimpleArrayAdapter(Collections.emptyList(), this) }
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -90,7 +89,7 @@ class LocationActivity : Activity(), LocationContract.View {
 		//Disable list scrolling
 		list.setOnTouchListener { v, event -> event.action == MotionEvent.ACTION_MOVE }
 
-		btnLocate.setOnClickListener{
+		btnLocate.setOnClickListener {
 			if (checkLocatePermission()) {
 				presenter.locate()
 			}
@@ -102,7 +101,7 @@ class LocationActivity : Activity(), LocationContract.View {
 			finish()
 		}
 
-		inputCity.setOnClickListener{ presenter.setCitySelected(false) }
+		inputCity.setOnClickListener { presenter.setCitySelected(false) }
 		inputCity.addTextChangedListener(object : TextWatcher {
 			override fun afterTextChanged(p0: Editable?) {}
 			override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -167,7 +166,7 @@ class LocationActivity : Activity(), LocationContract.View {
 	}
 
 	override fun showMapMarker(location: Location) {
-		mapView.getMapAsync({map ->
+		mapView.getMapAsync({ map ->
 			Timber.v("showMapMarker location %s", location.toString())
 			map.clear()
 			val latLng = LatLng(location.lat, location.lng)
@@ -196,7 +195,7 @@ class LocationActivity : Activity(), LocationContract.View {
 				textView.text = values[position]
 
 				return textView
-			} else{
+			} else {
 				(convertView as TextView).text = values[position]
 				return convertView
 			}
@@ -206,12 +205,12 @@ class LocationActivity : Activity(), LocationContract.View {
 			return values.size
 		}
 
-		fun setItems(items : List<String>) {
+		fun setItems(items: List<String>) {
 			values = items
 			notifyDataSetChanged()
 		}
 
-		override fun getItem(pos : Int) : String {
+		override fun getItem(pos: Int): String {
 			return values[pos]
 		}
 

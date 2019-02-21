@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -28,9 +28,9 @@ import com.dimowner.goodweather.data.repository.Repository
 import io.reactivex.Flowable
 import io.reactivex.Single
 
-class RemoteRepository (
+class RemoteRepository(
 		private val weatherApi: WeatherApi
-	): Repository {
+) : Repository {
 
 	override fun getWeather(): Single<WeatherResponse> {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -38,27 +38,27 @@ class RemoteRepository (
 
 	override fun getWeatherToday(city: String): Single<WeatherEntity> {
 		return weatherApi.getWeather(city, AppConstants.OPEN_WEATHER_MAP_API_KEY)
-				.map{ w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
+				.map { w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
 	}
 
 	override fun getWeatherTomorrow(city: String): Single<WeatherEntity> {
 		return weatherApi.getWeather(city, AppConstants.OPEN_WEATHER_MAP_API_KEY)
-				.map{ w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
+				.map { w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
 	}
 
 	override fun subscribeWeatherToday(city: String): Flowable<WeatherEntity> {
 		return weatherApi.getWeather(city, AppConstants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
-				.map{ w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
+				.map { w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
 	}
 
 	override fun subscribeWeatherTomorrow(city: String): Flowable<WeatherEntity> {
 		return weatherApi.getWeather(city, AppConstants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
-				.map{ w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TOMORROW, w) }
+				.map { w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TOMORROW, w) }
 	}
 
 	override fun subscribeWeatherTwoWeeks(city: String): Flowable<List<WeatherEntity>> {
 		return weatherApi.getWeatherFewDays(city, 14, AppConstants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
-				.map{ w -> Mapper.convertWeatherListResponseToEntityList(AppDatabase.ITEM_TYPE_TWO_WEEKS, w) }
+				.map { w -> Mapper.convertWeatherListResponseToEntityList(AppDatabase.ITEM_TYPE_TWO_WEEKS, w) }
 	}
 
 	override fun cacheWeather(entity: List<WeatherEntity>) {

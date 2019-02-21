@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -17,29 +17,31 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.domain.location
+package com.dimowner.goodweather.app.settings
 
-import com.dimowner.goodweather.data.remote.model.location.GeocodeResultResponse
-import com.google.android.gms.location.places.AutocompletePrediction
-import java.util.ArrayList
+import com.dimowner.goodweather.app.Contract
 
-class LocationMapper {
+interface MetricsContract {
 
-	companion object {
+	interface View : Contract.View {
 
-		fun predictionsToList(predictions: List<AutocompletePrediction>): List<String> {
-			val list = ArrayList<String>()
-			for (i in predictions.indices) {
-				list.add(predictions[i].getPrimaryText(null).toString())
-			}
-			return list
-		}
+		fun showTemperatureFormat(format: String)
 
-		fun geocodeToLocation(geocodeResultResponse: GeocodeResultResponse): Location {
-			val location = geocodeResultResponse.geometry.location
-			return Location(geocodeResultResponse.formattedAddress,
-					location.lat,
-					location.lng)
-		}
+		fun showWindFormat(format: String)
+
+		fun showPressureFormat(format: String)
+
+		fun showTimeFormat(format: String)
+	}
+
+	interface UserActionsListener : Contract.UserActionsListener<View> {
+
+		fun switchTemperature()
+
+		fun switchWind()
+
+		fun switchPressure()
+
+		fun switchTimeFormat()
 	}
 }

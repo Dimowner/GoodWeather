@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -21,9 +21,10 @@ package com.dimowner.goodweather.data.remote.model.location
 
 import com.google.gson.annotations.SerializedName
 
-data class GeometryResponse(
+data class
+GeometryResponse(
 		@SerializedName("location")
-		val location : LocationResponse,
+		val location: LocationResponse,
 		@SerializedName("location_type")
-		val locationType : String
+		val locationType: String
 )

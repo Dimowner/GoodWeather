@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -19,7 +19,7 @@
 
 package com.dimowner.goodweather.dagger.location
 
-import com.dimowner.goodweather.ui.location.LocationActivity
+import com.dimowner.goodweather.app.location.LocationActivity
 import dagger.Subcomponent
 
 @Subcomponent(modules = arrayOf(LocationModule::class))

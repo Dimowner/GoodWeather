@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -17,7 +17,7 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.ui.settings
+package com.dimowner.goodweather.app.settings
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -28,13 +28,13 @@ import android.text.SpannableStringBuilder
 import android.view.MenuItem
 import com.dimowner.goodweather.R
 import com.dimowner.goodweather.GWApplication
-import com.dimowner.goodweather.domain.metrics.MetricsContract
 import kotlinx.android.synthetic.main.activity_settings.*
 import javax.inject.Inject
 
-class SettingsActivity : Activity(), MetricsContract.View  {
+class SettingsActivity : Activity(), MetricsContract.View {
 
-	@Inject lateinit var presenter : MetricsContract.UserActionsListener
+	@Inject
+	lateinit var presenter: MetricsContract.UserActionsListener
 
 	private val VERSION_UNAVAILABLE = "N/A"
 
@@ -42,18 +42,18 @@ class SettingsActivity : Activity(), MetricsContract.View  {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_settings)
 
-		btnNavUp.setOnClickListener{finish()}
+		btnNavUp.setOnClickListener { finish() }
 
 		GWApplication.get(applicationContext).applicationComponent().inject(this)
 
-		txtWind.setOnClickListener{ presenter.switchWind() }
-		txtTempFormat.setOnClickListener{ presenter.switchTemperature() }
-		txtPressure.setOnClickListener{ presenter.switchPressure() }
-		txtTimeFormat.setOnClickListener{ presenter.switchTimeFormat() }
+		txtWind.setOnClickListener { presenter.switchWind() }
+		txtTempFormat.setOnClickListener { presenter.switchTemperature() }
+		txtPressure.setOnClickListener { presenter.switchPressure() }
+		txtTimeFormat.setOnClickListener { presenter.switchTimeFormat() }
 
 		presenter.bindView(this)
 
-		btnAbout.setOnClickListener{ showAboutDialog() }
+		btnAbout.setOnClickListener { showAboutDialog() }
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -89,19 +89,19 @@ class SettingsActivity : Activity(), MetricsContract.View  {
 		presenter.unbindView()
 	}
 
-	override fun showTemperatureFormat(format : String) {
+	override fun showTemperatureFormat(format: String) {
 		txtTempFormat.text = format
 	}
 
-	override fun showWindFormat(format : String) {
+	override fun showWindFormat(format: String) {
 		txtWind.text = format
 	}
 
-	override fun showPressureFormat(format : String) {
+	override fun showPressureFormat(format: String) {
 		txtPressure.text = format
 	}
 
-	override fun showTimeFormat(format : String) {
+	override fun showTimeFormat(format: String) {
 		txtTimeFormat.text = format
 	}
 

@@ -1,4 +1,23 @@
-package com.dimowner.goodweather.ui.main;
+/*
+ *  Copyright 2019 Dmitriy Ponomarenko
+ *
+ *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
+ *  license agreements. See the NOTICE file distributed with this work for
+ *  additional information regarding copyright ownership. The ASF licenses this
+ *  file to you under the Apache License, Version 2.0 (the "License"); you may not
+ *  use this file except in compliance with the License. You may obtain a copy of
+ *  the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  License for the specific language governing permissions and limitations under
+ *  the License.
+ */
+
+package com.dimowner.goodweather.app.main;
 
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -93,7 +112,7 @@ public class MyStatePagerAdapter extends PagerAdapter {
 	@Override
 	@SuppressWarnings("ReferenceEquality")
 	public void setPrimaryItem(ViewGroup container, int position, Object object) {
-		Fragment fragment = (Fragment)object;
+		Fragment fragment = (Fragment) object;
 		if (fragment != mCurrentPrimaryItem) {
 			if (mCurrentPrimaryItem != null) {
 				mCurrentPrimaryItem.setMenuVisibility(false);
@@ -117,7 +136,7 @@ public class MyStatePagerAdapter extends PagerAdapter {
 
 	@Override
 	public boolean isViewFromObject(View view, Object object) {
-		return ((Fragment)object).getView() == view;
+		return ((Fragment) object).getView() == view;
 	}
 
 	@Override
@@ -129,7 +148,7 @@ public class MyStatePagerAdapter extends PagerAdapter {
 			mSavedState.toArray(fss);
 			state.putParcelableArray("states", fss);
 		}
-		for (int i=0; i<mFragments.size(); i++) {
+		for (int i = 0; i < mFragments.size(); i++) {
 			Fragment f = mFragments.get(i);
 			if (f != null && f.isAdded()) {
 				if (state == null) {
@@ -145,18 +164,18 @@ public class MyStatePagerAdapter extends PagerAdapter {
 	@Override
 	public void restoreState(Parcelable state, ClassLoader loader) {
 		if (state != null) {
-			Bundle bundle = (Bundle)state;
+			Bundle bundle = (Bundle) state;
 			bundle.setClassLoader(loader);
 			Parcelable[] fss = bundle.getParcelableArray("states");
 			mSavedState.clear();
 			mFragments.clear();
 			if (fss != null) {
-				for (int i=0; i<fss.length; i++) {
-					mSavedState.add((Fragment.SavedState)fss[i]);
+				for (int i = 0; i < fss.length; i++) {
+					mSavedState.add((Fragment.SavedState) fss[i]);
 				}
 			}
 			Iterable<String> keys = bundle.keySet();
-			for (String key: keys) {
+			for (String key : keys) {
 				if (key.startsWith("f")) {
 					int index = Integer.parseInt(key.substring(1));
 					Fragment f = mFragmentManager.getFragment(bundle, key);

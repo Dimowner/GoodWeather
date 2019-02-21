@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -25,7 +25,7 @@ import com.dimowner.goodweather.data.remote.model.WeatherResponse
 
 class Mapper {
 	companion object {
-		fun convertWeatherResponseToEntity(type: Int, response: WeatherResponse) : WeatherEntity {
+		fun convertWeatherResponseToEntity(type: Int, response: WeatherResponse): WeatherEntity {
 			return WeatherEntity(
 					type,
 					response.dt,
@@ -40,7 +40,7 @@ class Mapper {
 			)
 		}
 
-		fun convertWeatherResponseToEntityList(type: Int, response: WeatherResponse) : List<WeatherEntity> {
+		fun convertWeatherResponseToEntityList(type: Int, response: WeatherResponse): List<WeatherEntity> {
 			val list = ArrayList<WeatherEntity>()
 			list.add(WeatherEntity(
 					type,
@@ -57,7 +57,7 @@ class Mapper {
 			return list
 		}
 
-		fun convertWeatherListResponseToEntityList(type: Int, response: WeatherListResponse) : List<WeatherEntity> {
+		fun convertWeatherListResponseToEntityList(type: Int, response: WeatherListResponse): List<WeatherEntity> {
 			val list = ArrayList<WeatherEntity>()
 			for (item in response.list) {
 				list.add(WeatherEntity(

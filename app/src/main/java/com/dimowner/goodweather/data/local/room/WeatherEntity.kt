@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -25,26 +25,26 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "weather")
 data class WeatherEntity(
-	@SerializedName("type")
-	val type: Int,
-	@SerializedName("dt")
-	val dt: Long,
-	@SerializedName("temp")
-	val temp : Float,
-	@SerializedName("wind")
-	val wind: Float,
-	@SerializedName("humidity")
-	val humidity : Float,
-	@SerializedName("pressure")
-	val pressure : Float,
-	@SerializedName("description")
-	val description : String,
-	@SerializedName("lon")
-	val lon: Double,
-	@SerializedName("lat")
-	val lat: Double,
-	@SerializedName("icon")
-	val icon: String
+		@SerializedName("type")
+		val type: Int,
+		@SerializedName("dt")
+		val dt: Long,
+		@SerializedName("temp")
+		val temp: Float,
+		@SerializedName("wind")
+		val wind: Float,
+		@SerializedName("humidity")
+		val humidity: Float,
+		@SerializedName("pressure")
+		val pressure: Float,
+		@SerializedName("description")
+		val description: String,
+		@SerializedName("lon")
+		val lon: Double,
+		@SerializedName("lat")
+		val lat: Double,
+		@SerializedName("icon")
+		val icon: String
 ) {
 
 	@PrimaryKey(autoGenerate = true)

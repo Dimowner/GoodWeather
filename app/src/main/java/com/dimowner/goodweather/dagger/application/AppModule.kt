@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Dmitriy Ponomarenko
+ * Copyright 2019 Dmitriy Ponomarenko
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor
  * license agreements. See the NOTICE file distributed with this work for
@@ -32,12 +32,13 @@ import com.dimowner.goodweather.data.remote.RestClient
 import com.dimowner.goodweather.data.remote.WeatherRestClient
 import com.dimowner.goodweather.data.repository.Repository
 import com.dimowner.goodweather.data.repository.RepositoryImpl
-import com.dimowner.goodweather.domain.location.LocationProvider
-import com.dimowner.goodweather.domain.main.WeatherContract
-import com.dimowner.goodweather.domain.main.WeatherPresenter
-import com.dimowner.goodweather.domain.metrics.MetricsContract
-import com.dimowner.goodweather.domain.metrics.MetricsPresenter
-import com.dimowner.goodweather.domain.welcome.WelcomePresenter
+import com.dimowner.goodweather.app.location.LocationProvider
+import com.dimowner.goodweather.app.main.WeatherContract
+import com.dimowner.goodweather.app.main.WeatherPresenter
+import com.dimowner.goodweather.app.settings.MetricsContract
+import com.dimowner.goodweather.app.settings.MetricsPresenter
+import com.dimowner.goodweather.app.welcome.WelcomePresenter
+import com.dimowner.goodweather.data.PrefsImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -49,7 +50,7 @@ import javax.inject.Singleton
 @Module
 class AppModule(
 		var appContext: Context
-	) {
+) {
 
 	@Provides
 	@Singleton
@@ -60,12 +61,12 @@ class AppModule(
 	@Provides
 	@Singleton
 	internal fun providePrefs(context: Context): Prefs {
-		return Prefs(context)
+		return PrefsImpl(context)
 	}
 
 	@Provides
 	@Singleton
-	internal fun provideRestClient(): RestClient{
+	internal fun provideRestClient(): RestClient {
 		return RestClient()
 	}
 

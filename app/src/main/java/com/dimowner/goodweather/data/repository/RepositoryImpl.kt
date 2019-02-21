@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Dmitriy Ponomarenko
+ * Copyright 2019 Dmitriy Ponomarenko
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor
  * license agreements. See the NOTICE file distributed with this work for
@@ -19,9 +19,7 @@
 
 package com.dimowner.goodweather.data.repository
 
-import com.dimowner.goodweather.AppConstants
 import com.dimowner.goodweather.data.local.LocalRepository
-import com.dimowner.goodweather.data.remote.WeatherApi
 import com.dimowner.goodweather.data.remote.model.WeatherResponse
 import com.dimowner.goodweather.data.local.room.WeatherEntity
 import com.dimowner.goodweather.data.remote.RemoteRepository
@@ -33,7 +31,7 @@ import timber.log.Timber
 class RepositoryImpl(
 		private val localRepository: LocalRepository,
 		private val remoteRepository: RemoteRepository
-	) : Repository {
+) : Repository {
 
 	override fun getWeather(): Single<WeatherResponse> {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -64,7 +62,7 @@ class RepositoryImpl(
 	override fun subscribeWeatherToday(city: String): Flowable<WeatherEntity> {
 		remoteRepository.getWeatherToday(city)
 				.subscribeOn(Schedulers.io())
-				.subscribe({response ->
+				.subscribe({ response ->
 					localRepository.cacheWeather(response)
 				}, Timber::e)
 		return localRepository.subscribeWeatherToday(city)
@@ -74,7 +72,7 @@ class RepositoryImpl(
 	override fun subscribeWeatherTomorrow(city: String): Flowable<WeatherEntity> {
 		remoteRepository.subscribeWeatherTomorrow(city)
 				.subscribeOn(Schedulers.io())
-				.subscribe({response ->
+				.subscribe({ response ->
 					localRepository.cacheWeather(response)
 				}, Timber::e)
 		return localRepository.subscribeWeatherTomorrow(city)
@@ -84,7 +82,7 @@ class RepositoryImpl(
 	override fun subscribeWeatherTwoWeeks(city: String): Flowable<List<WeatherEntity>> {
 		remoteRepository.subscribeWeatherTwoWeeks(city)
 				.subscribeOn(Schedulers.io())
-				.subscribe({response ->
+				.subscribe({ response ->
 					localRepository.cacheWeather(response)
 				}, Timber::e)
 		return localRepository.subscribeWeatherTwoWeeks(city)
@@ -94,6 +92,7 @@ class RepositoryImpl(
 	override fun cacheWeather(entity: List<WeatherEntity>) {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
+
 	override fun cacheWeather(entity: WeatherEntity) {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}

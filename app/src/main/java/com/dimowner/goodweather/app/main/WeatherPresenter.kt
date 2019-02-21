@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -17,14 +17,12 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.domain.main
+package com.dimowner.goodweather.app.main
 
 import android.content.Context
-import com.dimowner.goodweather.AppConstants
 import com.dimowner.goodweather.data.Prefs
 import com.dimowner.goodweather.data.local.room.WeatherEntity
 import com.dimowner.goodweather.data.repository.Repository
-import com.dimowner.goodweather.ui.main.WeatherDetailsFragment
 import com.dimowner.goodweather.util.TimeUtils
 import com.dimowner.goodweather.util.WeatherUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -57,7 +55,7 @@ class WeatherPresenter(
 		view?.showProgress()
 		disposable.add(repository.subscribeWeatherTwoWeeks(prefs.getCity())
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe({d ->
+				.subscribe({ d ->
 					view?.showTwoWeeksWeather(d)
 					view?.hideProgress()
 				}, {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~  Copyright 2018 Dmitriy Ponomarenko
+  ~  Copyright 2019 Dmitriy Ponomarenko
   ~
   ~  Licensed to the Apache Software Foundation (ASF) under one or more contributor
   ~  license agreements. See the NOTICE file distributed with this work for
@@ -38,6 +38,7 @@
 			android:layout_width="40dp"
 			android:layout_height="40dp"
 			app:srcCompat="@drawable/weather_windy"
+			android:src="@drawable/weather_windy"
 			android:contentDescription="@null"
 			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintLeft_toLeftOf="parent"

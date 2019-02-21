@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Dmitriy Ponomarenko
+ * Copyright 2019 Dmitriy Ponomarenko
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor
  * license agreements. See the NOTICE file distributed with this work for
@@ -29,6 +29,7 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.FrameLayout;
+
 import timber.log.Timber;
 
 public class TouchLayout extends FrameLayout implements ScaleGestureDetector.OnScaleGestureListener {
@@ -49,7 +50,7 @@ public class TouchLayout extends FrameLayout implements ScaleGestureDetector.OnS
 
 	private int action = ACTION_NONE;
 	private float viewScale = 1.0f;
-	private float realScale= 1.0f;
+	private float realScale = 1.0f;
 
 	private float realDx = 0;
 	private float realDy = 0;
@@ -66,7 +67,7 @@ public class TouchLayout extends FrameLayout implements ScaleGestureDetector.OnS
 	private float accelerationY = 0;
 
 	//Converted value from pixels to coefficient used in function which describes move.
-	private final float k = (float) (MAX_MOVE / (Math.PI/2));
+	private final float k = (float) (MAX_MOVE / (Math.PI / 2));
 
 	private View childView;
 
@@ -137,8 +138,8 @@ public class TouchLayout extends FrameLayout implements ScaleGestureDetector.OnS
 						realDx = motionEvent.getX() - startX;
 						realDy = motionEvent.getY() - startY;
 
-						dx =(float) (k * Math.atan(realDx/k));
-						dy =(float) (k * Math.atan(realDy/k));
+						dx = (float) (k * Math.atan(realDx / k));
+						dy = (float) (k * Math.atan(realDy / k));
 
 						childView.setTranslationX(dx + accelerationX);
 						childView.setTranslationY(dy + accelerationY);
@@ -191,7 +192,7 @@ public class TouchLayout extends FrameLayout implements ScaleGestureDetector.OnS
 	public boolean onScale(ScaleGestureDetector scaleDetector) {
 		float scaleFactor = scaleDetector.getScaleFactor();
 		realScale *= scaleFactor;
-		viewScale = (MAX_ZOOM * realScale - (MAX_ZOOM - 1))/realScale;
+		viewScale = (MAX_ZOOM * realScale - (MAX_ZOOM - 1)) / realScale;
 		viewScale = Math.max(MIN_ZOOM, Math.min(viewScale, MAX_ZOOM));
 
 		Timber.v("onScale" + scaleFactor + " scale = " + viewScale + " realScale = " + realScale);
@@ -218,8 +219,8 @@ public class TouchLayout extends FrameLayout implements ScaleGestureDetector.OnS
 	public void setAcceleration(float x, float y) {
 		//This if added for view invalidation optimization to make view less often invalidated.
 //		TODO: need better optimization
-		Timber.v("x1 = " + (int)x1 + " x = "+ (int)(x*1000) + " y1 = " + (int)y1 + " y = " + (int)(y*1000));
-		if ((int) x1 != (int)(x*1000) && (int) y1 != (int)(y*1000)) {
+		Timber.v("x1 = " + (int) x1 + " x = " + (int) (x * 1000) + " y1 = " + (int) y1 + " y = " + (int) (y * 1000));
+		if ((int) x1 != (int) (x * 1000) && (int) y1 != (int) (y * 1000)) {
 			this.x1 = x * 1000;
 			this.y1 = y * 1000;
 			this.accelerationX = (float) -(k * Math.atan(x * MAX_ACCELERATION / k));

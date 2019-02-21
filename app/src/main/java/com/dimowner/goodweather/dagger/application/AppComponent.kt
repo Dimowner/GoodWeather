@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Dmitriy Ponomarenko
+ * Copyright 2019 Dmitriy Ponomarenko
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor
  * license agreements. See the NOTICE file distributed with this work for
@@ -22,13 +22,13 @@ package com.dimowner.goodweather.dagger.application
 import com.dimowner.goodweather.GWApplication
 import com.dimowner.goodweather.dagger.location.LocationComponent
 import com.dimowner.goodweather.dagger.location.LocationModule
-import com.dimowner.goodweather.data.periodic.JobSchedulerService
-import com.dimowner.goodweather.data.periodic.UpdatesReceiver
-import com.dimowner.goodweather.ui.main.MainActivity
-import com.dimowner.goodweather.ui.main.WeatherDetailsFragment
-import com.dimowner.goodweather.ui.main.WeatherTwoWeeksFragment
-import com.dimowner.goodweather.ui.settings.SettingsActivity
-import com.dimowner.goodweather.ui.welcome.WelcomeActivity
+import com.dimowner.goodweather.periodic.JobSchedulerService
+import com.dimowner.goodweather.periodic.UpdatesReceiver
+import com.dimowner.goodweather.app.main.MainActivity
+import com.dimowner.goodweather.app.main.WeatherDetailsFragment
+import com.dimowner.goodweather.app.main.WeatherTwoWeeksFragment
+import com.dimowner.goodweather.app.settings.SettingsActivity
+import com.dimowner.goodweather.app.welcome.WelcomeActivity
 import dagger.Component
 import javax.inject.Singleton
 

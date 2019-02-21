@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Dmitriy Ponomarenko
+ * Copyright 2019 Dmitriy Ponomarenko
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor
  * license agreements. See the NOTICE file distributed with this work for
@@ -23,13 +23,13 @@ import com.google.gson.annotations.SerializedName
 
 data class Main(
 		@SerializedName("temp")
-		val temp : Float,
+		val temp: Float,
 		@SerializedName("pressure")
-		val pressure : Float,
+		val pressure: Float,
 		@SerializedName("humidity")
-		val humidity : Float,
+		val humidity: Float,
 		@SerializedName("temp_min")
-		val temp_min : Float,
+		val temp_min: Float,
 		@SerializedName("temp_max")
 		val temp_max: Float
-	)
+)

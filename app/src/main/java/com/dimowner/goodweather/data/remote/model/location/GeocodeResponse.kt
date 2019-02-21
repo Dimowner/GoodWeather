@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -23,7 +23,7 @@ import com.google.gson.annotations.SerializedName
 
 data class GeocodeResponse(
 		@SerializedName("results")
-		val results : List<GeocodeResultResponse>,
+		val results: List<GeocodeResultResponse>,
 		@SerializedName("status")
-		val status : String
+		val status: String
 )

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -17,11 +17,9 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.ui.main;
+package com.dimowner.goodweather.app.main;
 
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,12 +27,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 import com.dimowner.goodweather.AppConstants;
 import com.dimowner.goodweather.R;
 import com.dimowner.goodweather.data.local.room.WeatherEntity;
@@ -76,15 +68,15 @@ public class WeatherRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 	@NonNull
 	@Override
 	public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-			View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
-			return new ItemViewHolder(v);
+		View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+		return new ItemViewHolder(v);
 	}
 
 	@Override
 	public void onBindViewHolder(@NonNull RecyclerView.ViewHolder h, int position) {
 		int pos = h.getAdapterPosition();
 		ItemViewHolder holder = (ItemViewHolder) h;
-		holder.name.setText(TimeUtils.formatTime(mShowingData.get(pos).getDt()*1000, AppConstants.TIME_FORMAT_24H));
+		holder.name.setText(TimeUtils.formatTime(mShowingData.get(pos).getDt() * 1000, AppConstants.TIME_FORMAT_24H));
 		holder.description.setText(mShowingData.get(pos).getDescription());
 		holder.txtTemp.setText(WeatherUtils.formatTemp(mShowingData.get(pos).getTemp(), temperatureFormat));
 //		Glide.with(holder.view.getContext())
@@ -132,7 +124,7 @@ public class WeatherRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 		this.itemClickListener = itemClickListener;
 	}
 
-	public interface ItemClickListener{
+	public interface ItemClickListener {
 		void onItemClick(View view, int position);
 	}
 }

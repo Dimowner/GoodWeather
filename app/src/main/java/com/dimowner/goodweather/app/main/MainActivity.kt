@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -17,7 +17,7 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.ui.main
+package com.dimowner.goodweather.app.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -28,20 +28,13 @@ import android.view.MenuItem
 import com.dimowner.goodweather.R
 import com.dimowner.goodweather.GWApplication
 import com.dimowner.goodweather.data.Prefs
-import com.dimowner.goodweather.data.periodic.UpdateManager
-import com.dimowner.goodweather.ui.location.LocationActivity
-import com.dimowner.goodweather.ui.settings.SettingsActivity
-import com.dimowner.goodweather.ui.welcome.WelcomeActivity
-//import com.dimowner.goodweather.ui.settings.SettingsActivity
-//import com.dimowner.goodweather.utils.AppStartTracker
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.*
+import com.dimowner.goodweather.periodic.UpdateManager
+import com.dimowner.goodweather.app.location.LocationActivity
+import com.dimowner.goodweather.app.settings.SettingsActivity
+import com.dimowner.goodweather.app.welcome.WelcomeActivity
 import kotlinx.android.synthetic.main.activity_main2.*
 import timber.log.Timber
 import java.util.ArrayList
-import java.util.concurrent.Callable
 import javax.inject.Inject
 
 class MainActivity : FragmentActivity(), ViewPager.OnPageChangeListener {
@@ -50,9 +43,8 @@ class MainActivity : FragmentActivity(), ViewPager.OnPageChangeListener {
 	private val ITEM_TOMORROW = 1
 	private val ITEM_TWO_WEEKS = 2
 
-//	private lateinit var tracker: AppStartTracker
-
-	@Inject lateinit var prefs: Prefs
+	@Inject
+	lateinit var prefs: Prefs
 
 	private var prevMenuItem: MenuItem? = null
 
@@ -76,19 +68,15 @@ class MainActivity : FragmentActivity(), ViewPager.OnPageChangeListener {
 //	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
-//		tracker = SWApplication.getAppStartTracker(applicationContext)
-//		tracker.activityOnCreate()
 		setTheme(R.style.AppTheme)
 		super.onCreate(savedInstanceState)
-//		tracker.activityContentViewBefore()
 		setContentView(R.layout.activity_main2)
-//		tracker.activityContentViewAfter()
 
 //		setSupportActionBar(toolbar)
 
 		GWApplication.get(applicationContext).applicationComponent().inject(this)
 
-		btnSettings.setOnClickListener{ startActivity(Intent(applicationContext, SettingsActivity::class.java)) }
+		btnSettings.setOnClickListener { startActivity(Intent(applicationContext, SettingsActivity::class.java)) }
 
 		if (prefs.isFirstRun()) {
 			startActivity(Intent(applicationContext, WelcomeActivity::class.java))
@@ -115,19 +103,11 @@ class MainActivity : FragmentActivity(), ViewPager.OnPageChangeListener {
 		}
 
 		toolbar.text = prefs.getCity()
-		toolbar.setOnClickListener{ startActivity(Intent(applicationContext, LocationActivity::class.java)) }
-
-//		tracker.activityOnCreateEnd()
-	}
-
-	override fun onStart() {
-		super.onStart()
-//		tracker.activityOnStart()
+		toolbar.setOnClickListener { startActivity(Intent(applicationContext, LocationActivity::class.java)) }
 	}
 
 	override fun onResume() {
 		super.onResume()
-//		tracker.activityOnResume()
 		toolbar.text = prefs.getCity()
 	}
 

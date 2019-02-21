@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -17,42 +17,29 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.domain.main
+package com.dimowner.goodweather.app.location
 
-import com.dimowner.goodweather.data.local.room.WeatherEntity
-import com.dimowner.goodweather.Contract
+import com.dimowner.goodweather.data.remote.model.location.GeocodeResultResponse
+import com.google.android.gms.location.places.AutocompletePrediction
+import java.util.ArrayList
 
-interface WeatherContract {
+class LocationMapper {
 
-	interface View : Contract.View {
+	companion object {
 
-		fun showDate(date: String)
+		fun predictionsToList(predictions: List<AutocompletePrediction>): List<String> {
+			val list = ArrayList<String>()
+			for (i in predictions.indices) {
+				list.add(predictions[i].getPrimaryText(null).toString())
+			}
+			return list
+		}
 
-		fun showTemperature(temp: String)
-
-		fun showWind(wind: String)
-
-		fun showPressure(pressure: String)
-
-		fun showHumidity(humidity: String)
-
-		fun showWeatherIcon(url: String)
-
-		fun showWeatherIconRes(resId: Int)
-
-		fun showTwoWeeksWeather(list: List<WeatherEntity>)
-
-		fun setTemperatureFormat(format: Int)
-	}
-
-	interface UserActionsListener : Contract.UserActionsListener<WeatherContract.View> {
-
-		fun locate()
-
-		fun updateWeather(type: Int)
-
-		fun updateWeatherTwoWeeks()
-
-		fun updateTemperatureFormat()
+		fun geocodeToLocation(geocodeResultResponse: GeocodeResultResponse): Location {
+			val location = geocodeResultResponse.geometry.location
+			return Location(geocodeResultResponse.formattedAddress,
+					location.lat,
+					location.lng)
+		}
 	}
 }

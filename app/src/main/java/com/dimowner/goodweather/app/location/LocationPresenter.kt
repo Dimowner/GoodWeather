@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -17,7 +17,7 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.domain.location
+package com.dimowner.goodweather.app.location
 
 import android.os.Bundle
 import com.dimowner.goodweather.data.Prefs
@@ -29,10 +29,10 @@ import timber.log.Timber
 class LocationPresenter(
 		private val locationDataModel: LocationProvider,
 		private val prefs: Prefs
-	) : LocationContract.UserActionsListener {
+) : LocationContract.UserActionsListener {
 
 	private var view: LocationContract.View? = null
-	private var isCitySelected : Boolean = false
+	private var isCitySelected: Boolean = false
 
 	override fun bindView(view: LocationContract.View) {
 		this.view = view
@@ -70,7 +70,7 @@ class LocationPresenter(
 					isCitySelected = true
 					view?.showSelectedCity(location.address)
 					prefs.saveCity(location.address)
-				}, {Timber.e(it)})
+				}, { Timber.e(it) })
 	}
 
 	override fun findCity(city: String) {
@@ -94,8 +94,8 @@ class LocationPresenter(
 					view?.showMapMarker(location)
 					prefs.saveLatitude(location.lat)
 					prefs.saveLongitude(location.lng)
-				}, {
-					t -> Timber.e(t)
+				}, { t ->
+					Timber.e(t)
 					view?.showError(if (t.message != null) t.message!! else "Error on find location for city")
 				})
 	}

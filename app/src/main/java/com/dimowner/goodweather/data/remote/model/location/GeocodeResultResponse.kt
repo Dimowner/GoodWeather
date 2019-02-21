@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Dmitriy Ponomarenko
+ *  Copyright 2019 Dmitriy Ponomarenko
  *
  *  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  *  license agreements. See the NOTICE file distributed with this work for
@@ -23,9 +23,9 @@ import com.google.gson.annotations.SerializedName
 
 data class GeocodeResultResponse(
 		@SerializedName("formatted_address")
-		val formattedAddress : String,
+		val formattedAddress: String,
 		@SerializedName("place_id")
-		val placeId : String,
+		val placeId: String,
 		@SerializedName("geometry")
-		val geometry : GeometryResponse
+		val geometry: GeometryResponse
 )
