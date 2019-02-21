@@ -15,28 +15,13 @@
   ~  limitations under the License.
   -->
 
-<android.support.constraint.ConstraintLayout
+<LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:orientation="vertical"
-		tools:context="com.dimowner.goodweather.app.settings.SettingsActivity">
-
-	<!--<android.support.v7.widget.Toolbar-->
-			<!--android:id="@+id/toolbar"-->
-			<!--android:layout_width="match_parent"-->
-			<!--android:layout_height="wrap_content"-->
-			<!--android:background="@android:color/transparent"-->
-			<!--android:minHeight="?attr/actionBarSize"-->
-			<!--android:theme="?attr/actionBarTheme"-->
-			<!--app:titleTextAppearance="@style/Toolbar.TitleText"-->
-			<!--app:contentInsetStart="?attr/actionBarInsetStart"-->
-			<!--app:popupTheme="@style/AppTheme.PopupOverlay"-->
-			<!--app:title="@string/tittle_settings"-->
-			<!--app:layout_constraintTop_toTopOf="parent"-->
-			<!--/>-->
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
 
 	<FrameLayout
 			android:id="@+id/toolbar"
@@ -48,205 +33,238 @@
 				style="@style/Text.SectionLabel"
 				android:layout_width="match_parent"
 				android:layout_height="56dp"
-				android:textColor="@color/text_primary_light"
-				android:text="@string/tittle_settings"
 				android:gravity="center"
+				android:text="@string/tittle_settings"
+				android:textColor="@color/text_primary_light"
 				/>
 
 		<ImageButton
 				android:id="@+id/btnNavUp"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:contentDescription="@null"
 				android:layout_gravity="start|left"
 				android:background="?android:selectableItemBackground"
+				android:contentDescription="@null"
 				android:padding="@dimen/spacing_normal"
 				android:src="@drawable/arrow_left"
 				app:srcCompat="@drawable/arrow_left"
 				/>
 	</FrameLayout>
 
-	<TextView
-			android:id="@+id/windLabel"
-			style="@style/Text.NormalLabel"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/wind"
-			android:layout_marginBottom="@dimen/spacing_double"
-			android:layout_marginStart="@dimen/spacing_normal"
-			android:layout_marginEnd="@dimen/spacing_normal"
-			android:layout_marginLeft="@dimen/spacing_normal"
-			android:layout_marginRight="@dimen/spacing_normal"
-			android:drawableLeft="@drawable/weather_windy"
-			android:drawableStart="@drawable/weather_windy"
-			android:drawablePadding="@dimen/spacing_double"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintBaseline_toBaselineOf="@id/txtWind"
-			/>
-
-	<TextView
-			android:id="@+id/tempFormatLabel"
-			style="@style/Text.NormalLabel"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/temperature"
-			android:layout_marginBottom="@dimen/spacing_double"
-			android:layout_marginStart="@dimen/spacing_normal"
-			android:layout_marginEnd="@dimen/spacing_normal"
-			android:layout_marginLeft="@dimen/spacing_normal"
-			android:layout_marginRight="@dimen/spacing_normal"
-			android:drawableLeft="@drawable/thermometer"
-			android:drawableStart="@drawable/thermometer"
-			android:drawablePadding="@dimen/spacing_double"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintBaseline_toBaselineOf="@id/txtTempFormat"
-			/>
-
-	<TextView
-			android:id="@+id/pressureLabel"
-			style="@style/Text.NormalLabel"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/pressure"
-			android:layout_marginBottom="@dimen/spacing_double"
-			android:layout_marginStart="@dimen/spacing_normal"
-			android:layout_marginEnd="@dimen/spacing_normal"
-			android:layout_marginLeft="@dimen/spacing_normal"
-			android:layout_marginRight="@dimen/spacing_normal"
-			android:drawableLeft="@drawable/arrow_collapse_all"
-			android:drawableStart="@drawable/arrow_collapse_all"
-			android:drawablePadding="@dimen/spacing_double"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintBaseline_toBaselineOf="@id/txtPressure"
-			/>
-
-	<TextView
-			android:id="@+id/timeFormatLabel"
-			style="@style/Text.NormalLabel"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/time_format"
-			android:layout_marginBottom="@dimen/spacing_double"
-			android:layout_marginStart="@dimen/spacing_normal"
-			android:layout_marginEnd="@dimen/spacing_normal"
-			android:layout_marginLeft="@dimen/spacing_normal"
-			android:layout_marginRight="@dimen/spacing_normal"
-			android:drawableLeft="@drawable/clock"
-			android:drawableStart="@drawable/clock"
-			android:drawablePadding="@dimen/spacing_double"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintBaseline_toBaselineOf="@id/txtTimeFormat"
-			/>
-
-	<TextView
-			android:id="@+id/txtWind"
-			style="@style/Text.NormalValue"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textStyle="bold"
-			android:layout_marginStart="@dimen/spacing_normal"
-			android:layout_marginEnd="@dimen/spacing_normal"
-			android:layout_marginLeft="@dimen/spacing_normal"
-			android:layout_marginRight="@dimen/spacing_normal"
-			android:layout_marginTop="@dimen/spacing_normal"
-			android:clickable="true"
-			android:focusable="true"
-			android:padding="@dimen/spacing_small"
-			android:drawableEnd="@drawable/chevron_down"
-			android:drawableRight="@drawable/chevron_down"
-			android:drawablePadding="@dimen/spacing_normal"
-			android:background="?android:attr/selectableItemBackground"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintBottom_toTopOf="@id/txtTempFormat"
-			app:layout_constraintTop_toBottomOf="@+id/toolbar"
-			app:layout_constraintVertical_chainStyle="packed"
-			tools:text="m/s"
-			/>
-
-	<TextView
-			android:id="@+id/txtTempFormat"
-			style="@style/Text.NormalValue"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textStyle="bold"
-			android:layout_marginStart="@dimen/spacing_normal"
-			android:layout_marginEnd="@dimen/spacing_normal"
-			android:layout_marginLeft="@dimen/spacing_normal"
-			android:layout_marginRight="@dimen/spacing_normal"
-			android:clickable="true"
-			android:focusable="true"
-			android:padding="@dimen/spacing_small"
-			android:drawableEnd="@drawable/chevron_down"
-			android:drawableRight="@drawable/chevron_down"
-			android:drawablePadding="@dimen/spacing_normal"
-			android:background="?android:attr/selectableItemBackground"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintBottom_toTopOf="@id/txtPressure"
-			app:layout_constraintTop_toBottomOf="@+id/txtWind"
-			tools:text="24H"
-			/>
-
-	<TextView
-			android:id="@+id/txtPressure"
-			style="@style/Text.NormalValue"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textStyle="bold"
-			android:layout_marginStart="@dimen/spacing_normal"
-			android:layout_marginEnd="@dimen/spacing_normal"
-			android:layout_marginLeft="@dimen/spacing_normal"
-			android:layout_marginRight="@dimen/spacing_normal"
-			android:clickable="true"
-			android:focusable="true"
-			android:padding="@dimen/spacing_small"
-			android:drawableEnd="@drawable/chevron_down"
-			android:drawableRight="@drawable/chevron_down"
-			android:drawablePadding="@dimen/spacing_normal"
-			android:background="?android:attr/selectableItemBackground"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintBottom_toTopOf="@+id/txtTimeFormat"
-			app:layout_constraintTop_toBottomOf="@+id/txtTempFormat"
-			tools:text="hPa"
-			/>
-
-	<TextView
-			android:id="@+id/txtTimeFormat"
-			style="@style/Text.NormalValue"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textStyle="bold"
-			android:layout_marginStart="@dimen/spacing_normal"
-			android:layout_marginEnd="@dimen/spacing_normal"
-			android:layout_marginLeft="@dimen/spacing_normal"
-			android:layout_marginRight="@dimen/spacing_normal"
-			android:clickable="true"
-			android:focusable="true"
-			android:padding="@dimen/spacing_small"
-			android:drawableEnd="@drawable/chevron_down"
-			android:drawableRight="@drawable/chevron_down"
-			android:drawablePadding="@dimen/spacing_normal"
-			android:background="?android:attr/selectableItemBackground"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/txtPressure"
-			tools:text="24H"
-			/>
-
-	<TextView
-			android:id="@+id/btnAbout"
-			style="@style/Text.NormalLabel"
-			android:layout_height="wrap_content"
+	<FrameLayout
+			android:id="@+id/pnlWind"
 			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
 			android:layout_marginTop="@dimen/spacing_normal"
+			android:background="?android:selectableItemBackground"
 			android:clickable="true"
 			android:focusable="true"
-			android:padding="@dimen/spacing_normal"
-			android:drawableLeft="@drawable/information"
-			android:drawableStart="@drawable/information"
+			android:paddingStart="@dimen/spacing_normal"
+			android:paddingLeft="@dimen/spacing_normal"
+			android:paddingTop="@dimen/spacing_small"
+			android:paddingEnd="@dimen/spacing_normal"
+			android:paddingRight="@dimen/spacing_normal"
+			android:paddingBottom="@dimen/spacing_small"
+			>
+
+		<TextView
+				style="@style/Text.NormalLabel"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="start"
+				android:drawableStart="@drawable/weather_windy"
+				android:drawableLeft="@drawable/weather_windy"
+				android:drawablePadding="@dimen/spacing_double"
+				android:text="@string/wind"
+				/>
+
+		<TextView
+				android:id="@+id/txtWind"
+				style="@style/Text.NormalValue"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="end"
+				android:drawableEnd="@drawable/chevron_down"
+				android:drawableRight="@drawable/chevron_down"
+				android:drawablePadding="@dimen/spacing_normal"
+				android:textStyle="bold"
+				tools:text="m/s"
+				/>
+	</FrameLayout>
+
+	<FrameLayout
+			android:id="@+id/pnlTemperature"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="?android:selectableItemBackground"
+			android:clickable="true"
+			android:focusable="true"
+			android:paddingStart="@dimen/spacing_normal"
+			android:paddingLeft="@dimen/spacing_normal"
+			android:paddingTop="@dimen/spacing_small"
+			android:paddingEnd="@dimen/spacing_normal"
+			android:paddingRight="@dimen/spacing_normal"
+			android:paddingBottom="@dimen/spacing_small"
+			>
+
+		<TextView
+				style="@style/Text.NormalLabel"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="start"
+				android:drawableStart="@drawable/thermometer"
+				android:drawableLeft="@drawable/thermometer"
+				android:drawablePadding="@dimen/spacing_double"
+				android:text="@string/temperature"
+				/>
+
+		<TextView
+				android:id="@+id/txtTempFormat"
+				style="@style/Text.NormalValue"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="end"
+				android:drawableEnd="@drawable/chevron_down"
+				android:drawableRight="@drawable/chevron_down"
+				android:drawablePadding="@dimen/spacing_normal"
+				android:textStyle="bold"
+				tools:text="24H"
+				/>
+	</FrameLayout>
+
+	<FrameLayout
+			android:id="@+id/pnlPressure"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="?android:selectableItemBackground"
+			android:clickable="true"
+			android:focusable="true"
+			android:paddingStart="@dimen/spacing_normal"
+			android:paddingLeft="@dimen/spacing_normal"
+			android:paddingTop="@dimen/spacing_small"
+			android:paddingEnd="@dimen/spacing_normal"
+			android:paddingRight="@dimen/spacing_normal"
+			android:paddingBottom="@dimen/spacing_small"
+			>
+
+		<TextView
+				style="@style/Text.NormalLabel"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="start"
+				android:drawableStart="@drawable/arrow_collapse_all"
+				android:drawableLeft="@drawable/arrow_collapse_all"
+				android:drawablePadding="@dimen/spacing_double"
+				android:text="@string/pressure"
+				/>
+
+		<TextView
+				android:id="@+id/txtPressure"
+				style="@style/Text.NormalValue"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="end"
+				android:drawableEnd="@drawable/chevron_down"
+				android:drawableRight="@drawable/chevron_down"
+				android:drawablePadding="@dimen/spacing_normal"
+				android:textStyle="bold"
+				tools:text="hPa"
+				/>
+	</FrameLayout>
+
+	<FrameLayout
+			android:id="@+id/pnlTimeFormat"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="?android:selectableItemBackground"
+			android:clickable="true"
+			android:focusable="true"
+			android:paddingStart="@dimen/spacing_normal"
+			android:paddingLeft="@dimen/spacing_normal"
+			android:paddingTop="@dimen/spacing_small"
+			android:paddingEnd="@dimen/spacing_normal"
+			android:paddingRight="@dimen/spacing_normal"
+			android:paddingBottom="@dimen/spacing_small"
+			>
+
+		<TextView
+				style="@style/Text.NormalLabel"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="start"
+				android:drawableStart="@drawable/clock"
+				android:drawableLeft="@drawable/clock"
+				android:drawablePadding="@dimen/spacing_double"
+				android:text="@string/time_format"
+				/>
+
+		<TextView
+				android:id="@+id/txtTimeFormat"
+				style="@style/Text.NormalValue"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="end"
+				android:drawableEnd="@drawable/chevron_down"
+				android:drawableRight="@drawable/chevron_down"
+				android:drawablePadding="@dimen/spacing_normal"
+				android:textStyle="bold"
+				tools:text="24H"
+				/>
+	</FrameLayout>
+
+	<TextView
+			android:id="@+id/btnRate"
+			style="@style/Text.NormalLabel"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/spacing_normal"
+			android:background="?android:selectableItemBackground"
+			android:clickable="true"
+			android:drawableStart="@drawable/ic_thumbs"
+			android:drawableLeft="@drawable/ic_thumbs"
 			android:drawablePadding="@dimen/spacing_double"
-			android:background="?android:attr/selectableItemBackground"
-			android:text="@string/tittle_about"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/txtTimeFormat"
+			android:focusable="true"
+			android:paddingStart="@dimen/spacing_normal"
+			android:paddingLeft="@dimen/spacing_normal"
+			android:paddingTop="@dimen/spacing_small"
+			android:paddingEnd="@dimen/spacing_normal"
+			android:paddingRight="@dimen/spacing_normal"
+			android:paddingBottom="@dimen/spacing_small"
+			android:text="@string/rate_app"
 			/>
 
-</android.support.constraint.ConstraintLayout>
+	<TextView
+			android:id="@+id/btnRequest"
+			style="@style/Text.NormalLabel"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="?android:selectableItemBackground"
+			android:clickable="true"
+			android:drawableStart="@drawable/ic_chat_bubble"
+			android:drawableLeft="@drawable/ic_chat_bubble"
+			android:drawablePadding="@dimen/spacing_double"
+			android:focusable="true"
+			android:paddingStart="@dimen/spacing_normal"
+			android:paddingLeft="@dimen/spacing_normal"
+			android:paddingTop="@dimen/spacing_small"
+			android:paddingEnd="@dimen/spacing_normal"
+			android:paddingRight="@dimen/spacing_normal"
+			android:paddingBottom="@dimen/spacing_small"
+			android:text="@string/request"
+			/>
+
+	<TextView
+			android:id="@+id/txtAbout"
+			style="@style/Text.NormalLabel"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/spacing_small"
+			android:background="?android:selectableItemBackground"
+			android:drawablePadding="@dimen/spacing_double"
+			android:gravity="bottom|center"
+			android:padding="@dimen/spacing_normal"
+			android:text="@string/app_name"
+			android:textSize="@dimen/text_xmedium"
+			/>
+
+</LinearLayout>

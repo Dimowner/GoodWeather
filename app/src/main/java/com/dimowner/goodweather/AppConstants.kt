@@ -25,6 +25,10 @@ package com.dimowner.goodweather
  */
 class AppConstants {
 	companion object {
+
+		const val APPLICATION_NAME = "GoodWeather"
+		const val REQUESTS_RECEIVER = "dimmony@gmail.com"
+
 		//TODO: hide from public availability
 		const val OPEN_WEATHER_MAP_API_KEY = "c694cf3ed462a56acc43e6fa2037bbbd"
 

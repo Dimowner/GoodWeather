@@ -20,12 +20,16 @@
 package com.dimowner.goodweather.app.settings
 
 import android.app.Activity
-import android.app.AlertDialog
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.text.SpannableStringBuilder
 import android.view.MenuItem
+import com.dimowner.goodweather.AppConstants
 import com.dimowner.goodweather.R
 import com.dimowner.goodweather.GWApplication
 import kotlinx.android.synthetic.main.activity_settings.*
@@ -46,14 +50,16 @@ class SettingsActivity : Activity(), MetricsContract.View {
 
 		GWApplication.get(applicationContext).applicationComponent().inject(this)
 
-		txtWind.setOnClickListener { presenter.switchWind() }
-		txtTempFormat.setOnClickListener { presenter.switchTemperature() }
-		txtPressure.setOnClickListener { presenter.switchPressure() }
-		txtTimeFormat.setOnClickListener { presenter.switchTimeFormat() }
+		pnlWind.setOnClickListener { presenter.switchWind() }
+		pnlTemperature.setOnClickListener { presenter.switchTemperature() }
+		pnlPressure.setOnClickListener { presenter.switchPressure() }
+		pnlTimeFormat.setOnClickListener { presenter.switchTimeFormat() }
+		btnRequest.setOnClickListener { requestFeature() }
+		btnRate.setOnClickListener { rateApp() }
 
 		presenter.bindView(this)
 
-		btnAbout.setOnClickListener { showAboutDialog() }
+		txtAbout.text = getAboutContent()
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -61,27 +67,6 @@ class SettingsActivity : Activity(), MetricsContract.View {
 			finish()
 		}
 		return super.onOptionsItemSelected(item)
-	}
-
-	private fun showAboutDialog() {
-		// Get app version
-		val versionName: String
-		versionName = try {
-			val info = this.packageManager.getPackageInfo(packageName, 0)
-			info.versionName
-		} catch (e: PackageManager.NameNotFoundException) {
-			VERSION_UNAVAILABLE
-		}
-
-		val aboutBody = SpannableStringBuilder()
-		aboutBody.append(Html.fromHtml(getString(R.string.about_body, versionName)))
-
-		AlertDialog.Builder(this)
-				.setTitle(R.string.nav_about)
-				.setMessage(aboutBody)
-				.setPositiveButton(R.string.btn_ok, { dialog, whichButton -> dialog.dismiss() })
-				.create()
-				.show()
 	}
 
 	override fun onDestroy() {
@@ -109,4 +94,58 @@ class SettingsActivity : Activity(), MetricsContract.View {
 	override fun hideProgress() {}
 	override fun showError(message: String) {}
 	override fun showError(resId: Int) {}
+
+	private fun requestFeature() {
+		val i = Intent(Intent.ACTION_SEND)
+		i.type = "message/rfc822"
+		i.putExtra(Intent.EXTRA_EMAIL, arrayOf<String>(AppConstants.REQUESTS_RECEIVER))
+		i.putExtra(Intent.EXTRA_SUBJECT,
+				"[" + resources.getString(R.string.app_name) + "] - " + resources.getString(R.string.request)
+		)
+		try {
+			startActivity(Intent.createChooser(i, resources.getString(R.string.send_email)))
+		} catch (ex: android.content.ActivityNotFoundException) {
+			showError(R.string.email_clients_not_found)
+		}
+	}
+
+	private fun rateApp() {
+		try {
+			val rateIntent = rateIntentForUrl("market://details")
+			startActivity(rateIntent)
+		} catch (e: ActivityNotFoundException) {
+			val rateIntent = rateIntentForUrl("https://play.google.com/store/apps/details")
+			startActivity(rateIntent)
+		}
+	}
+
+	private fun rateIntentForUrl(url: String): Intent {
+		val intent = Intent(Intent.ACTION_VIEW, Uri.parse(String.format("%s?id=%s", url, applicationContext.packageName)))
+		var flags = Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+		flags = if (Build.VERSION.SDK_INT >= 21) {
+			flags or Intent.FLAG_ACTIVITY_NEW_DOCUMENT
+		} else {
+			flags or Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET
+		}
+		intent.addFlags(flags)
+		return intent
+	}
+
+	private fun getAboutContent(): SpannableStringBuilder {
+		// Get app version;
+		val packageName = packageName
+		var versionName: String
+		versionName = try {
+			val info = packageManager.getPackageInfo(packageName, 0)
+			info.versionName
+		} catch (e: PackageManager.NameNotFoundException) {
+			VERSION_UNAVAILABLE
+		}
+
+		// Build the about body view and append the link to see OSS licenses
+		val aboutBody = SpannableStringBuilder()
+		aboutBody.append(Html.fromHtml(getString(R.string.about_body, versionName)))
+		return aboutBody
+	}
+
 }
