@@ -19,9 +19,9 @@
 
 package com.dimowner.goodweather.app.welcome
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.dimowner.goodweather.GWApplication
 import com.dimowner.goodweather.R
 import com.dimowner.goodweather.app.settings.MetricsContract
@@ -29,7 +29,7 @@ import com.dimowner.goodweather.app.location.LocationActivity
 import kotlinx.android.synthetic.main.activity_welcome.*
 import javax.inject.Inject
 
-class WelcomeActivity : Activity(), MetricsContract.View {
+class WelcomeActivity : AppCompatActivity(), MetricsContract.View {
 
 	@Inject
 	lateinit var presenter: WelcomePresenter

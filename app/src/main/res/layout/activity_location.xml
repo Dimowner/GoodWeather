@@ -15,7 +15,7 @@
   ~  limitations under the License.
   -->
 
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
@@ -30,7 +30,7 @@
 			android:layout_height="0dp"
 			android:layout_marginBottom="@dimen/spacing_normal"
 			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintBottom_toTopOf="@+id/inputCity"
+			app:layout_constraintBottom_toTopOf="@+id/pnlLocation"
 			/>
 
 	<ListView
@@ -38,47 +38,77 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:background="@color/primary_transparent"
-			android:layout_marginBottom="@dimen/spacing_normal"
-			app:layout_constraintBottom_toTopOf="@+id/inputCity"
+			android:layout_marginBottom="@dimen/toolbar_height"
+			app:layout_constraintBottom_toTopOf="@+id/pnlLocation"
 			/>
 
-	<EditText
-			android:id="@+id/inputCity"
-			style="@style/Text.Input"
+	<androidx.coordinatorlayout.widget.CoordinatorLayout
+			android:id="@+id/coordinator_layout_session_detail"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toTopOf="@+id/pnlLocation"
+			tools:ignore="MergeRootFrame">
+
+		<com.google.android.material.floatingactionbutton.FloatingActionButton
+				android:id="@+id/fab"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				app:layout_anchor="@id/session_detail_bottom_app_bar"
+				app:srcCompat="@drawable/ic_map_marker"
+				app:fabSize="normal"
+				tools:visibility="visible"/>
+
+		<com.google.android.material.bottomappbar.BottomAppBar
+				android:id="@+id/session_detail_bottom_app_bar"
+				android:layout_width="match_parent"
+				android:layout_height="?actionBarSize"
+				android:layout_gravity="bottom"
+				android:elevation="6dp"
+				app:backgroundTint="@color/colorPrimaryDark"
+				app:contentInsetStart="@dimen/spacing_normal"
+				app:fabAlignmentMode="end" >
+
+			<TextView
+					style="@style/Text.SectionLabel"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="@dimen/spacing_double"
+					android:layout_marginEnd="@dimen/spacing_double"
+					android:text="@string/select_location"
+					/>
+
+		</com.google.android.material.bottomappbar.BottomAppBar>
+
+	</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+	<LinearLayout
+			android:id="@+id/pnlLocation"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/spacing_normal"
-			android:hint="@string/location"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintBottom_toTopOf="@+id/btnApply"
-			android:inputType="text"/>
-
-	<android.support.design.widget.FloatingActionButton
-			android:id="@+id/fab"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_gravity="bottom|end"
-			android:layout_marginEnd="@dimen/spacing_normal"
-			android:layout_marginRight="@dimen/spacing_normal"
-			android:src="@drawable/ic_map_marker"
-			app:srcCompat="@drawable/ic_map_marker"
-			app:fabSize="normal"
-			app:layout_constraintBottom_toBottomOf="@+id/list"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/list"
-			tools:visibility="visible"/>
-
-	<Button
-			android:id="@+id/btnApply"
-			style="@style/Button"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:contentDescription="@null"
-			android:text="@string/btn_start"
-			android:padding="@dimen/spacing_normal"
-			android:background="?android:attr/selectableItemBackground"
+			android:background="@color/colorPrimaryDark"
 			app:layout_constraintBottom_toBottomOf="parent"
-			/>
+			android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+		<EditText
+				android:id="@+id/inputCity"
+				style="@style/Text.Input"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_double"
+				android:layout_marginEnd="@dimen/spacing_double"
+				android:hint="@string/location"
+				android:inputType="text"/>
+
+		<Button
+				android:id="@+id/btnApply"
+				style="@style/Button"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:contentDescription="@null"
+				android:text="@string/btn_start"
+				android:padding="@dimen/spacing_normal"
+				android:background="?android:attr/selectableItemBackgroundBorderless"
+				/>
+	</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

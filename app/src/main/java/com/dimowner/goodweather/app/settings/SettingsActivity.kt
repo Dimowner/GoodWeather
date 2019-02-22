@@ -19,7 +19,6 @@
 
 package com.dimowner.goodweather.app.settings
 
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -29,13 +28,14 @@ import android.os.Bundle
 import android.text.Html
 import android.text.SpannableStringBuilder
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.dimowner.goodweather.AppConstants
 import com.dimowner.goodweather.R
 import com.dimowner.goodweather.GWApplication
 import kotlinx.android.synthetic.main.activity_settings.*
 import javax.inject.Inject
 
-class SettingsActivity : Activity(), MetricsContract.View {
+class SettingsActivity : AppCompatActivity(), MetricsContract.View {
 
 	@Inject
 	lateinit var presenter: MetricsContract.UserActionsListener
