@@ -37,7 +37,7 @@ ext.versions = [
 
 def versionMajor = 0
 def versionMinor = 1
-def versionPatch = 6
+def versionPatch = 7
 
 android {
 	compileSdkVersion versions.targetSdkVersion
@@ -114,6 +114,9 @@ android {
 	}
 
 	lintOptions {
+		checkReleaseBuilds false
+		// Or, if you prefer, you can continue to check for errors in release builds,
+		// but continue the build even when errors are found:
 		abortOnError false
 	}
 }

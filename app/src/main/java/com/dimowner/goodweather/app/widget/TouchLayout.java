@@ -17,7 +17,7 @@
  * the License.
  */
 
-package com.dimowner.goodweather.presentation.view;
+package com.dimowner.goodweather.app.widget;
 
 import android.content.Context;
 import android.support.animation.DynamicAnimation;

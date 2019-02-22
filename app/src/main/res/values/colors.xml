@@ -24,7 +24,7 @@
 	<color name="load_screen_gradient_dark">#1063bf</color>
 	<color name="load_screen_gradient_light">#1a7eef</color>
 
-	<!--<color name="primary_transparent">#8a1a7eef</color>-->
+	<color name="primary_transparent">#8a1a7eef</color>
 	<color name="text_primary_dark">#de000000</color> <!-- 87% -->
 	<color name="text_secondary_dark">#8a000000</color> <!-- 54% -->
 	<color name="text_tertiary_dark">#61000000</color> <!-- 38% -->

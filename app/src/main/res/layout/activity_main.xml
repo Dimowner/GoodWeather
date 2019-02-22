@@ -139,7 +139,7 @@
 			tools:text="932 hPa"
 			/>
 
-	<com.dimowner.goodweather.presentation.view.TouchLayout
+	<com.dimowner.goodweather.app.widget.TouchLayout
 			android:id="@+id/touchLayout"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
@@ -153,6 +153,6 @@
 				android:src="@drawable/weather_loadscreen"
 				/>
 
-	</com.dimowner.goodweather.presentation.view.TouchLayout>
+	</com.dimowner.goodweather.app.widget.TouchLayout>
 
 </android.support.constraint.ConstraintLayout>
