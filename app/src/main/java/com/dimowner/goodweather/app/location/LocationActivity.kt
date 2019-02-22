@@ -44,6 +44,7 @@ import android.widget.AdapterView
 import com.dimowner.goodweather.GWApplication
 import com.dimowner.goodweather.R
 import com.dimowner.goodweather.dagger.location.LocationModule
+import com.dimowner.goodweather.util.AndroidUtils
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -169,17 +170,16 @@ class LocationActivity : Activity(), LocationContract.View {
 	}
 
 	override fun showMapMarker(location: Location) {
-		mapView.getMapAsync({ map ->
-			Timber.v("showMapMarker location %s", location.toString())
+		mapView.getMapAsync { map ->
 			map.clear()
 			val latLng = LatLng(location.lat, location.lng)
-			map.addMarker(MarkerOptions().position(latLng))
+			map.addMarker(MarkerOptions().position(latLng).icon(
+					AndroidUtils.bitmapDescriptorFromVector(applicationContext, R.drawable.ic_map_marker)))
 			map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MAP_ZOOM))
-		})
+		}
 	}
 
 	override fun showPredictions(list: List<String>) {
-		Timber.v("Predictions: %s", list.toString())
 		adapter.setItems(list)
 	}
 
