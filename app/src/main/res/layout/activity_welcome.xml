@@ -227,7 +227,7 @@
 			android:contentDescription="@null"
 			android:text="@string/btn_apply"
 			android:padding="@dimen/spacing_normal"
-			android:background="?android:attr/selectableItemBackground"
+			android:background="?android:attr/selectableItemBackgroundBorderless"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintBottom_toBottomOf="parent"

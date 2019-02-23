@@ -43,11 +43,10 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="start|left"
-				android:background="?android:selectableItemBackground"
+				android:background="?android:selectableItemBackgroundBorderless"
 				android:contentDescription="@null"
 				android:padding="@dimen/spacing_normal"
 				android:src="@drawable/ic_arrow_left"
-				app:srcCompat="@drawable/ic_arrow_left"
 				/>
 	</FrameLayout>
 

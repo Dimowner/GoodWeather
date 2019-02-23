@@ -106,7 +106,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:contentDescription="@null"
-				android:text="@string/btn_start"
+				android:text="@string/btn_apply"
 				android:padding="@dimen/spacing_normal"
 				android:background="?android:attr/selectableItemBackgroundBorderless"
 				/>
