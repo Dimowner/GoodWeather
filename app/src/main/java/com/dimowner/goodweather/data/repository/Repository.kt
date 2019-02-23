@@ -33,11 +33,7 @@ interface Repository {
 
 	fun getWeatherToday(city: String): Single<WeatherEntity>
 
-	fun getWeatherTomorrow(city: String): Single<WeatherEntity>
-
 	fun subscribeWeatherToday(city: String): Flowable<WeatherEntity>
-
-	fun subscribeWeatherTomorrow(city: String): Flowable<WeatherEntity>
 
 	fun subscribeWeatherTwoWeeks(city: String): Flowable<List<WeatherEntity>>
 

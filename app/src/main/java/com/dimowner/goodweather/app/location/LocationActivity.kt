@@ -46,14 +46,13 @@ import com.dimowner.goodweather.R
 import com.dimowner.goodweather.dagger.location.LocationModule
 import com.dimowner.goodweather.util.AndroidUtils
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlin.collections.ArrayList
 
 
 class LocationActivity : AppCompatActivity(), LocationContract.View {
-
-	private val MAP_ZOOM = 12f
 
 	val REQ_CODE_LOCATION = 303
 
@@ -103,19 +102,27 @@ class LocationActivity : AppCompatActivity(), LocationContract.View {
 			finish()
 		}
 
+		mapView.getMapAsync { map ->
+			map.setOnMapClickListener { point ->
+				run {
+					presenter.findCity(applicationContext, point.latitude, point.longitude)
+				}
+			}
+		}
+
 		inputCity.setOnClickListener { presenter.setCitySelected(false) }
 		inputCity.addTextChangedListener(object : TextWatcher {
 			override fun afterTextChanged(p0: Editable?) {}
 			override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
 			override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-				if (p0 != null && p0.isNotEmpty()) {
+				if (p0 != null && p0.isNotBlank()) {
 					Timber.v("onTextChanged: %s", p0.toString())
 					presenter.findCity(p0.toString())
 				} else {
 					Timber.v("Empty address str")
+					adapter.setItems(emptyList())
 				}
-
 			}
 		})
 	}
@@ -169,18 +176,30 @@ class LocationActivity : AppCompatActivity(), LocationContract.View {
 		mapView.onDestroy()
 	}
 
-	override fun showMapMarker(location: Location) {
+	override fun showMapMarker(lat: Double, lng: Double) {
 		mapView.getMapAsync { map ->
-			map.clear()
-			val latLng = LatLng(location.lat, location.lng)
-			map.addMarker(MarkerOptions().position(latLng).icon(
-					AndroidUtils.bitmapDescriptorFromVector(applicationContext, R.drawable.ic_map_marker)))
-			map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MAP_ZOOM))
+			putMarker(map, lat, lng)
 		}
 	}
 
-	override fun showPredictions(list: List<String>) {
-		adapter.setItems(list)
+	override fun animateCamera(latitude: Double, longitude: Double, zoom: Float) {
+		mapView.getMapAsync { map ->
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), zoom))
+		}
+	}
+
+	private fun putMarker(map: GoogleMap, lat: Double, lng: Double) {
+		map.clear()
+		map.addMarker(MarkerOptions().position(LatLng(lat, lng)).icon(
+				AndroidUtils.bitmapDescriptorFromVector(applicationContext, R.drawable.ic_map_marker)))
+	}
+
+	override fun showPredictions(data: List<String>) {
+		adapter.setItems(data)
+	}
+
+	override fun enableButtonApply(enable: Boolean) {
+		btnApply.isEnabled = enable
 	}
 
 	override fun showProgress() {}

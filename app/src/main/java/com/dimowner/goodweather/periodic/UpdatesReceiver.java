@@ -46,11 +46,6 @@ public class UpdatesReceiver extends BroadcastReceiver {
 				.subscribeOn(Schedulers.io())
 				.subscribe(data -> {
 				}, Timber::e);
-
-		repository.getWeatherTomorrow(prefs.getCity())
-				.subscribeOn(Schedulers.io())
-				.subscribe(data -> {
-				}, Timber::e);
 	}
 
 	public static final String UPDATES_RECEIVER_ACTION = "com.dimowner.goodweather.data.UPDATES_RECEIVER_ACTION";

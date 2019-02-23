@@ -36,16 +36,8 @@ class LocalRepository(private val appDatabase: AppDatabase) : Repository {
 		return appDatabase.weatherDao().getWeatherToday()
 	}
 
-	override fun getWeatherTomorrow(city: String): Single<WeatherEntity> {
-		return appDatabase.weatherDao().getWeatherTomorrow()
-	}
-
 	override fun subscribeWeatherToday(city: String): Flowable<WeatherEntity> {
 		return appDatabase.weatherDao().subscribeWeatherToday()
-	}
-
-	override fun subscribeWeatherTomorrow(city: String): Flowable<WeatherEntity> {
-		return appDatabase.weatherDao().subscribeWeatherTomorrow()
 	}
 
 	override fun subscribeWeatherTwoWeeks(city: String): Flowable<List<WeatherEntity>> {

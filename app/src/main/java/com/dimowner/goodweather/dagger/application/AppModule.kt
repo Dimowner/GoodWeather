@@ -26,13 +26,12 @@ import android.content.Context
 import com.dimowner.goodweather.data.Prefs
 import com.dimowner.goodweather.data.local.LocalRepository
 import com.dimowner.goodweather.data.local.room.AppDatabase
-import com.dimowner.goodweather.data.remote.GeocodeRestClient
 import com.dimowner.goodweather.data.remote.RemoteRepository
 import com.dimowner.goodweather.data.remote.RestClient
 import com.dimowner.goodweather.data.remote.WeatherRestClient
 import com.dimowner.goodweather.data.repository.Repository
 import com.dimowner.goodweather.data.repository.RepositoryImpl
-import com.dimowner.goodweather.app.location.LocationProvider
+import com.dimowner.goodweather.places.PlacesProvider
 import com.dimowner.goodweather.app.main.WeatherContract
 import com.dimowner.goodweather.app.main.WeatherPresenter
 import com.dimowner.goodweather.app.settings.MetricsContract
@@ -83,12 +82,6 @@ class AppModule(
 	}
 
 	@Provides
-	@Singleton
-	internal fun provideGeocodeRestClient(): GeocodeRestClient {
-		return GeocodeRestClient()
-	}
-
-	@Provides
 	internal fun provideWelcomePresenter(prefs: Prefs, context: Context): WelcomePresenter {
 		return WelcomePresenter(prefs, context)
 	}
@@ -111,8 +104,8 @@ class AppModule(
 
 	@Provides
 	@Singleton
-	internal fun provideRemoteRepository(restClient: WeatherRestClient): RemoteRepository {
-		return RemoteRepository(restClient.weatherApi)
+	internal fun provideRemoteRepository(restClient: WeatherRestClient, prefs: Prefs): RemoteRepository {
+		return RemoteRepository(restClient.weatherApi, prefs)
 	}
 
 	@Provides
@@ -124,8 +117,8 @@ class AppModule(
 
 	@Provides
 	@Singleton
-	internal fun provideLocationProvider(context: Context, geocodeRestClient: GeocodeRestClient): LocationProvider {
-		return LocationProvider(context, geocodeRestClient.geocodeApi)
+	internal fun provideLocationProvider(context: Context): PlacesProvider {
+		return PlacesProvider(context)
 	}
 
 	@Provides

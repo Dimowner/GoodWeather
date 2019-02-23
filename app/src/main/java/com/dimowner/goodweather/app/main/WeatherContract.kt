@@ -49,7 +49,7 @@ interface WeatherContract {
 
 		fun locate()
 
-		fun updateWeather(type: Int)
+		fun updateWeather()
 
 		fun updateWeatherTwoWeeks()
 

@@ -53,6 +53,10 @@ interface Prefs {
 
 	fun getCity(): String
 
+	fun isWeatherByCoordinates(): Boolean
+
+	fun setWeatherByCoordinates(b: Boolean)
+
 	fun saveLatitude(lat: Double)
 
 	fun getLatitude(): Double

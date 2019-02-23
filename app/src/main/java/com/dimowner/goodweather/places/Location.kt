@@ -17,29 +17,10 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.app.location
+package com.dimowner.goodweather.places
 
-import com.dimowner.goodweather.data.remote.model.location.GeocodeResultResponse
-import com.google.android.gms.location.places.AutocompletePrediction
-import java.util.ArrayList
-
-class LocationMapper {
-
-	companion object {
-
-		fun predictionsToList(predictions: List<AutocompletePrediction>): List<String> {
-			val list = ArrayList<String>()
-			for (i in predictions.indices) {
-				list.add(predictions[i].getPrimaryText(null).toString())
-			}
-			return list
-		}
-
-		fun geocodeToLocation(geocodeResultResponse: GeocodeResultResponse): Location {
-			val location = geocodeResultResponse.geometry.location
-			return Location(geocodeResultResponse.formattedAddress,
-					location.lat,
-					location.lng)
-		}
-	}
-}
+data class Location(
+		val address: String,
+		val lat: Double,
+		val lng: Double
+)

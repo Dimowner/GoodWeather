@@ -34,16 +34,9 @@ import javax.inject.Inject
 class WeatherDetailsFragment : Fragment(), WeatherContract.View {
 
 	companion object {
-		val ARG_KEY_TYPE = "key_type"
-		val TYPE_TODAY: Int = 1
-		val TYPE_TOMORROW: Int = 2
 
-		fun newInstance(type: Int): WeatherDetailsFragment {
-			val args = Bundle()
-			args.putInt(ARG_KEY_TYPE, type)
-			val fragment = WeatherDetailsFragment()
-			fragment.arguments = args
-			return fragment
+		fun newInstance(): WeatherDetailsFragment {
+			return WeatherDetailsFragment()
 		}
 	}
 
@@ -59,14 +52,14 @@ class WeatherDetailsFragment : Fragment(), WeatherContract.View {
 		super.onViewCreated(view, savedInstanceState)
 		GWApplication.get(view.context).applicationComponent().inject(this)
 		weatherIcon.setOnClickListener {
-			presenter.updateWeather(arguments?.getInt(ARG_KEY_TYPE) ?: TYPE_TODAY)
+			presenter.updateWeather()
 		}
 		presenter.bindView(this)
 	}
 
 	override fun onResume() {
 		super.onResume()
-		presenter.updateWeather(arguments?.getInt(ARG_KEY_TYPE) ?: TYPE_TODAY)
+		presenter.updateWeather()
 	}
 
 	override fun onDestroyView() {

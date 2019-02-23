@@ -50,11 +50,6 @@ public class JobSchedulerService extends JobService {
 				.subscribe(data -> {
 				}, Timber::e);
 
-		repository.getWeatherTomorrow(prefs.getCity())
-				.subscribeOn(Schedulers.io())
-				.subscribe(data -> {
-				}, Timber::e);
-
 		if (isPeriodic) {
 			UpdateManager.scheduleJob(getApplicationContext());
 		}

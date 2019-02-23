@@ -27,7 +27,6 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 
 class RepositoryImpl(
 		private val localRepository: LocalRepository,
@@ -38,25 +37,12 @@ class RepositoryImpl(
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 
-//	override fun getWeather(): Single<WeatherResponse> {
-//		return weatherApi.getWeather("Kyiv", AppConstants.OPEN_WEATHER_MAP_API_KEY)
-//	}
-
 	override fun getWeatherToday(city: String): Single<WeatherEntity> {
 		return remoteRepository.getWeatherToday(city)
 				.subscribeOn(Schedulers.io())
 				.flatMap { data ->
 					localRepository.cacheWeather(data)
 					localRepository.getWeatherToday(city).subscribeOn(Schedulers.io())
-				}
-	}
-
-	override fun getWeatherTomorrow(city: String): Single<WeatherEntity> {
-		return remoteRepository.getWeatherTomorrow(city)
-				.subscribeOn(Schedulers.io())
-				.flatMap { data ->
-					localRepository.cacheWeather(data)
-					localRepository.getWeatherTomorrow(city).subscribeOn(Schedulers.io())
 				}
 	}
 
@@ -68,16 +54,6 @@ class RepositoryImpl(
 				}, Timber::e)
 		return localRepository.subscribeWeatherToday(city)
 //				.timeout(20, TimeUnit.SECONDS)
-				.subscribeOn(Schedulers.io())
-	}
-
-	override fun subscribeWeatherTomorrow(city: String): Flowable<WeatherEntity> {
-		remoteRepository.subscribeWeatherTomorrow(city)
-				.subscribeOn(Schedulers.io())
-				.subscribe({ response ->
-					localRepository.cacheWeather(response)
-				}, Timber::e)
-		return localRepository.subscribeWeatherTomorrow(city)
 				.subscribeOn(Schedulers.io())
 	}
 

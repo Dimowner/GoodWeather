@@ -42,6 +42,7 @@ class PrefsImpl constructor(context: Context) : Prefs {
 	private val PREF_KEY_LONGITUDE = "longitude"
 	private val PREF_KEY_INITIAL_SETTINGS_APPLIED = "is_initial_settings_applied"
 	private val PREF_KEY_LOCATION_SELECTED = "is_location_selected"
+	private val PREF_KEY_IS_WEATHER_BY_COORDINATES = "is_weather_by_coordinates"
 
 	private var preferences: SharedPreferences by Delegates.notNull()
 
@@ -120,7 +121,15 @@ class PrefsImpl constructor(context: Context) : Prefs {
 	}
 
 	override fun getCity(): String {
-		return preferences.getString(PREF_KEY_CITY, "Kyiv")
+		return preferences.getString(PREF_KEY_CITY, "") ?: ""
+	}
+
+	override fun isWeatherByCoordinates(): Boolean {
+		return preferences.getBoolean(PREF_KEY_IS_WEATHER_BY_COORDINATES, false)
+	}
+
+	override fun setWeatherByCoordinates(b: Boolean) {
+		preferences.edit().putBoolean(PREF_KEY_IS_WEATHER_BY_COORDINATES, b).apply()
 	}
 
 	override fun saveLatitude(lat: Double) {

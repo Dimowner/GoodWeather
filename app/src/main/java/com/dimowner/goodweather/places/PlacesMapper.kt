@@ -17,10 +17,21 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.app.location
+package com.dimowner.goodweather.places
 
-data class Location(
-		val address: String,
-		val lat: Double,
-		val lng: Double
-)
+import com.google.android.gms.location.places.AutocompletePrediction
+import java.util.ArrayList
+
+class PlacesMapper {
+
+	companion object {
+
+		fun predictionsToList(predictions: List<AutocompletePrediction>): List<String> {
+			val list = ArrayList<String>()
+			for (i in predictions.indices) {
+				list.add(predictions[i].getPrimaryText(null).toString())
+			}
+			return list
+		}
+	}
+}

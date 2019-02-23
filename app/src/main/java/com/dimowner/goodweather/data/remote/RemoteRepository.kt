@@ -21,6 +21,7 @@ package com.dimowner.goodweather.data.remote
 
 import com.dimowner.goodweather.AppConstants
 import com.dimowner.goodweather.data.Mapper
+import com.dimowner.goodweather.data.Prefs
 import com.dimowner.goodweather.data.local.room.AppDatabase
 import com.dimowner.goodweather.data.local.room.WeatherEntity
 import com.dimowner.goodweather.data.remote.model.WeatherResponse
@@ -29,7 +30,8 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 
 class RemoteRepository(
-		private val weatherApi: WeatherApi
+		private val weatherApi: WeatherApi,
+		private val prefs: Prefs
 ) : Repository {
 
 	override fun getWeather(): Single<WeatherResponse> {
@@ -37,28 +39,33 @@ class RemoteRepository(
 	}
 
 	override fun getWeatherToday(city: String): Single<WeatherEntity> {
-		return weatherApi.getWeather(city, AppConstants.OPEN_WEATHER_MAP_API_KEY)
-				.map { w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
-	}
-
-	override fun getWeatherTomorrow(city: String): Single<WeatherEntity> {
-		return weatherApi.getWeather(city, AppConstants.OPEN_WEATHER_MAP_API_KEY)
-				.map { w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
+		return if (prefs.isWeatherByCoordinates()) {
+			weatherApi.getWeather(prefs.getLatitude().toString(), prefs.getLongitude().toString(), AppConstants.OPEN_WEATHER_MAP_API_KEY)
+					.map { w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
+		} else {
+			weatherApi.getWeather(city, AppConstants.OPEN_WEATHER_MAP_API_KEY)
+					.map { w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
+		}
 	}
 
 	override fun subscribeWeatherToday(city: String): Flowable<WeatherEntity> {
-		return weatherApi.getWeather(city, AppConstants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
-				.map { w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
-	}
-
-	override fun subscribeWeatherTomorrow(city: String): Flowable<WeatherEntity> {
-		return weatherApi.getWeather(city, AppConstants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
-				.map { w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TOMORROW, w) }
+		return if (prefs.isWeatherByCoordinates()) {
+			weatherApi.getWeather(prefs.getLatitude().toString(), prefs.getLongitude().toString(), AppConstants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
+					.map { w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
+		} else {
+			weatherApi.getWeather(city, AppConstants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
+					.map { w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
+		}
 	}
 
 	override fun subscribeWeatherTwoWeeks(city: String): Flowable<List<WeatherEntity>> {
-		return weatherApi.getWeatherFewDays(city, 14, AppConstants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
-				.map { w -> Mapper.convertWeatherListResponseToEntityList(AppDatabase.ITEM_TYPE_TWO_WEEKS, w) }
+		return if (prefs.isWeatherByCoordinates()) {
+			weatherApi.getWeatherFewDays(prefs.getLatitude().toString(), prefs.getLongitude().toString(), 14, AppConstants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
+					.map { w -> Mapper.convertWeatherListResponseToEntityList(AppDatabase.ITEM_TYPE_TWO_WEEKS, w) }
+		} else {
+			weatherApi.getWeatherFewDays(city, 14, AppConstants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
+					.map { w -> Mapper.convertWeatherListResponseToEntityList(AppDatabase.ITEM_TYPE_TWO_WEEKS, w) }
+		}
 	}
 
 	override fun cacheWeather(entity: List<WeatherEntity>) {

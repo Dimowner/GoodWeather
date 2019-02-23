@@ -77,7 +77,7 @@ class GWApplication : Application() {
 
 	override fun onTrimMemory(level: Int) {
 		super.onTrimMemory(level)
-		Timber.d("onTrimMemory level = " + level)
+		Timber.d("onTrimMemory level = %s", level)
 	}
 
 	fun applicationComponent(): AppComponent {

@@ -22,7 +22,7 @@ package com.dimowner.goodweather.dagger.location
 import com.dimowner.goodweather.data.Prefs
 import com.dimowner.goodweather.app.location.LocationContract
 import com.dimowner.goodweather.app.location.LocationPresenter
-import com.dimowner.goodweather.app.location.LocationProvider
+import com.dimowner.goodweather.places.PlacesProvider
 import dagger.Module
 import dagger.Provides
 
@@ -31,7 +31,7 @@ class LocationModule {
 
 	@Provides
 	@LocationScope
-	internal fun provideLocationPresenter(locationProvider: LocationProvider, prefs: Prefs): LocationContract.UserActionsListener {
+	internal fun provideLocationPresenter(locationProvider: PlacesProvider, prefs: Prefs): LocationContract.UserActionsListener {
 		return LocationPresenter(locationProvider, prefs)
 	}
 }

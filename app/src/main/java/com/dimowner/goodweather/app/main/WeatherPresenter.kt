@@ -69,31 +69,18 @@ class WeatherPresenter(
 		view?.setTemperatureFormat(prefs.getTempFormat())
 	}
 
-	override fun updateWeather(type: Int) {
+	override fun updateWeather() {
 		view?.showProgress()
-		if (type == WeatherDetailsFragment.TYPE_TODAY) {
-			disposable.add(repository.subscribeWeatherToday(prefs.getCity())
-					.observeOn(AndroidSchedulers.mainThread())
-					.subscribe({
-						showData(it)
-						view?.hideProgress()
-					}, {
-						view?.hideProgress()
-						Timber.e(it)
-						view?.showError(it.message!!)
-					}))
-		} else if (type == WeatherDetailsFragment.TYPE_TOMORROW) {
-			disposable.add(repository.subscribeWeatherTomorrow(prefs.getCity())
-					.observeOn(AndroidSchedulers.mainThread())
-					.subscribe({
-						showData(it)
-						view?.hideProgress()
-					}, {
-						view?.hideProgress()
-						Timber.e(it)
-						view?.showError(it.message!!)
-					}))
-		}
+		disposable.add(repository.subscribeWeatherToday(prefs.getCity())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe({
+					showData(it)
+					view?.hideProgress()
+				}, {
+					view?.hideProgress()
+					Timber.e(it)
+					view?.showError(it.message!!)
+				}))
 	}
 
 	private fun showData(entity: WeatherEntity) {

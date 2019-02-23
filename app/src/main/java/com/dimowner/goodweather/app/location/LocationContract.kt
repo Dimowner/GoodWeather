@@ -19,17 +19,22 @@
 
 package com.dimowner.goodweather.app.location
 
+import android.content.Context
 import com.dimowner.goodweather.app.Contract
 
 interface LocationContract : Contract {
 
 	interface View : Contract.View {
 
-		fun showMapMarker(location: Location)
+		fun showMapMarker(latitude: Double, longitude: Double)
+
+		fun animateCamera(latitude: Double, longitude: Double, zoom: Float)
 
 		fun showSelectedCity(city: String)
 
 		fun showPredictions(list: List<String>)
+
+		fun enableButtonApply(enable: Boolean)
 	}
 
 	interface UserActionsListener : Contract.UserActionsListener<View> {
@@ -37,6 +42,8 @@ interface LocationContract : Contract {
 		fun locate()
 
 		fun findCity(city: String)
+
+		fun findCity(context: Context, lat: Double, lng: Double)
 
 		fun setLocationSelected()
 

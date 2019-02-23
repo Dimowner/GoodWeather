@@ -17,14 +17,12 @@
  *  the License.
  */
 
-package com.dimowner.goodweather.app.location
+package com.dimowner.goodweather.places
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
-import com.dimowner.goodweather.R
-import com.dimowner.goodweather.data.remote.GeocodeApi
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationRequest
@@ -42,12 +40,10 @@ import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class LocationProvider(
-		private val context: Context,
-		private val service: GeocodeApi) {
+class PlacesProvider(private val context: Context) {
 
 	private val TIME_OUT_LOCATION: Long = 120
-	private val TIME_OUT_PLACES = 45
+	private val TIME_OUT_PLACES: Long = 45
 
 	private var filter: AutocompleteFilter = AutocompleteFilter.Builder()
 			.setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES)
@@ -93,7 +89,7 @@ class LocationProvider(
 						ConnectionResult.SERVICE_MISSING_PERMISSION -> msg = "Service missing permission"
 						ConnectionResult.RESTRICTED_PROFILE -> msg = "Restricted profile"
 					}
-					Timber.e(if (msg != null) msg else "")
+					Timber.e(msg ?: "")
 				}
 				.build()
 
@@ -101,14 +97,12 @@ class LocationProvider(
 	}
 
 	fun disconnect() {
-		if (googleApi != null) {
-			googleApi!!.disconnect()
-			googleApi = null
-		}
+		googleApi?.disconnect()
+		googleApi = null
 	}
 
 	@SuppressLint("MissingPermission")
-	fun findLocation(): Maybe<Location> {
+	fun findCurrentLocation(): Maybe<Location> {
 		val rxLocation = RxLocation(context)
 		val locationRequest = LocationRequest.create()
 				.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -136,81 +130,56 @@ class LocationProvider(
 						Location("", location.latitude, location.longitude)
 					}
 
-				}
+				}.subscribeOn(Schedulers.io())
 	}
 
-	fun findPlace(address: String): Single<List<String>> {
+	fun findPlaceRx(address: String): Single<List<String>> {
 
 		disposable?.dispose()
 		if (address.isEmpty()) {
 			return Single.just(emptyList())
 		}
 
-		return Single.just(googleApi)
-				.map({ client ->
-					val result = Places.GeoDataApi.getAutocompletePredictions(client, address, null, filter)
-//					it.setDisposable(Disposables.fromRunnable { result.cancel() })
-
-					val predictions = ArrayList<AutocompletePrediction>()
-					val buffer = result.await(TIME_OUT_PLACES.toLong(), TimeUnit.SECONDS)
-
-					if (this.buffer != null) this.buffer!!.release()
-					this.buffer = buffer
-
-//					if (!buffer.status.isSuccess) {
-//						if (!it.isDisposed) {
-//							it.onError(Exception(buffer.status.statusMessage))
-//						}
-//					}
-
-					for (autocompletePrediction in buffer) {
-						predictions.add(autocompletePrediction)
-					}
-					predictions
-				})
-				.map { it -> LocationMapper.predictionsToList(it) }
-				.doOnSubscribe { disposable -> this.disposable = disposable }
-				.subscribeOn(Schedulers.io())
-
-//		return Single.create<List<AutocompletePrediction>> {
-//			val result = Places.GeoDataApi.getAutocompletePredictions(googleApi, address, null, filter)
-//			it.setDisposable(Disposables.fromRunnable { result.cancel() })
-//
-//			val predictions = ArrayList<AutocompletePrediction>()
-//			val buffer = result.await(TIME_OUT_PLACES.toLong(), TimeUnit.SECONDS)
-//
-//			if (this.buffer != null) this.buffer!!.release()
-//			this.buffer = buffer
-//
-//			if (!buffer.status.isSuccess) {
-//				if (!it.isDisposed) {
-//					it.onError(Exception(buffer.status.statusMessage))
-//				}
-//			}
-//
-//			for (autocompletePrediction in buffer) {
-//				predictions.add(autocompletePrediction)
-//			}
-//		}
-//		.map { it -> LocationMapper.predictionsToList(it) }
-//		.doOnSubscribe { disposable -> this.disposable = disposable }
-//		.subscribeOn(Schedulers.io())
+		return Single.fromCallable { findPlace(address) }
+					.doOnSubscribe { disposable -> this.disposable = disposable }
+					.subscribeOn(Schedulers.io())
 	}
 
-	private fun getPlaceByLatLng(lat: Double, lon: Double): Maybe<Location> {
-		return service
-				.getPlaceById(String.format(Locale.US, "%f,%f", lat, lon), context.getString(R.string.google_maps_key))
-				.subscribeOn(Schedulers.io())
+	fun findPlace(address: String): List<String> {
+		if (address.isEmpty()) {
+			return emptyList()
+		}
+
+		val result = Places.GeoDataApi.getAutocompletePredictions(googleApi!!, address, null, filter)
+
+		val predictions = ArrayList<AutocompletePrediction>()
+		val buffer = result.await(TIME_OUT_PLACES, TimeUnit.SECONDS)
+
+		if (this.buffer != null) this.buffer!!.release()
+		this.buffer = buffer
+
+		for (autocompletePrediction in buffer) {
+			predictions.add(autocompletePrediction)
+		}
+		return PlacesMapper.predictionsToList(predictions)
+	}
+
+	fun fromLocationRx(context: Context, lat: Double, lng: Double): Single<Location> {
+		disposable?.dispose()
+
+		return Single.fromCallable { fromLocation(context, lat, lng) }
 				.map {
-					if (it.results.isNotEmpty()) {
-						LocationMapper.geocodeToLocation(it.results[0])
+					if (it.isNotEmpty()) {
+						Location(it[0].locality ?: "", lat, lng)
 					} else {
-						Location("", lat, lon)
+						Location("", lat, lng)
 					}
 				}
+				.doOnSubscribe { disposable -> this.disposable = disposable }
+				.subscribeOn(Schedulers.io())
 	}
 
-	private fun fromLocation(context: Context, lat: Double, lng: Double): List<Address> {
+	fun fromLocation(context: Context, lat: Double, lng: Double): List<Address> {
 		if (Geocoder.isPresent()) {
 			val geocoder = Geocoder(context)
 			return try {
@@ -226,13 +195,13 @@ class LocationProvider(
 	}
 
 	fun findLocationForCityName(city: String): Single<Location> {
-		return Single.just(city).map {
+		return Single.fromCallable {
 			if (Geocoder.isPresent()) {
 				val geocoder = Geocoder(context)
 				try {
 					val result: List<Address> = geocoder.getFromLocationName(city, 1)
 					if (result.isNotEmpty()) {
-						Location(result[0].locality, result[0].latitude, result[0].longitude)
+						Location(result[0].locality ?: "", result[0].latitude, result[0].longitude)
 					} else {
 						Timber.e("Nothing found")
 						Location("", 0.0, 0.0)
@@ -245,6 +214,6 @@ class LocationProvider(
 				Timber.e("Geocoder is not present")
 				Location("", 0.0, 0.0)
 			}
-		}
+		}.subscribeOn(Schedulers.io())
 	}
 }

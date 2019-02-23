@@ -34,10 +34,19 @@ interface WeatherApi {
 	@GET("weather")
 	fun getWeather(@Query("q") city: String, @Query("APPID") apiKey: String): Single<WeatherResponse>
 
+	@GET("weather")
+	fun getWeather(@Query("lat") lat: String, @Query("lon") lon: String, @Query("APPID") apiKey: String): Single<WeatherResponse>
 
 	@GET("forecast/daily")
 	fun getWeatherFewDays(
 			@Query("q") city: String,
+			@Query("cnt") cnt: Int,
+			@Query("APPID") apiKey: String): Single<WeatherListResponse>
+
+	@GET("forecast/daily")
+	fun getWeatherFewDays(
+			@Query("lat") lat: String,
+			@Query("lon") lon: String,
 			@Query("cnt") cnt: Int,
 			@Query("APPID") apiKey: String): Single<WeatherListResponse>
 }
