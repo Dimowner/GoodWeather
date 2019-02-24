@@ -34,7 +34,7 @@ class LocationPresenter(
 		private val prefs: Prefs
 ) : LocationContract.UserActionsListener {
 
-	private val MAP_ZOOM = 12f
+	private val MAP_ZOOM = 11f
 	private var view: LocationContract.View? = null
 	private var isCitySelected: Boolean = false
 	private val compositeDisposable: CompositeDisposable = CompositeDisposable()

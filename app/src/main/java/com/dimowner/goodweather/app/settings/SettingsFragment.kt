@@ -27,28 +27,38 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.text.SpannableStringBuilder
-import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
 import com.dimowner.goodweather.AppConstants
 import com.dimowner.goodweather.R
 import com.dimowner.goodweather.GWApplication
 import kotlinx.android.synthetic.main.activity_settings.*
 import javax.inject.Inject
 
-class SettingsActivity : AppCompatActivity(), MetricsContract.View {
+class SettingsFragment : Fragment(), MetricsContract.View {
+
+	private val VERSION_UNAVAILABLE = "N/A"
+
+	companion object {
+
+		fun newInstance(): SettingsFragment {
+			return SettingsFragment()
+		}
+	}
 
 	@Inject
 	lateinit var presenter: MetricsContract.UserActionsListener
 
-	private val VERSION_UNAVAILABLE = "N/A"
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+		return inflater.inflate(R.layout.activity_settings, container, false)
+	}
 
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_settings)
-
-//		btnNavUp.setOnClickListener { finish() }
-
-		GWApplication.get(applicationContext).applicationComponent().inject(this)
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+		GWApplication.get(view.context).applicationComponent().inject(this)
 
 		pnlWind.setOnClickListener { presenter.switchWind() }
 		pnlTemperature.setOnClickListener { presenter.switchTemperature() }
@@ -56,22 +66,9 @@ class SettingsActivity : AppCompatActivity(), MetricsContract.View {
 		pnlTimeFormat.setOnClickListener { presenter.switchTimeFormat() }
 		btnRequest.setOnClickListener { requestFeature() }
 		btnRate.setOnClickListener { rateApp() }
+		txtAbout.text = getAboutContent()
 
 		presenter.bindView(this)
-
-		txtAbout.text = getAboutContent()
-	}
-
-	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-		if (item != null && item.itemId == android.R.id.home) {
-			finish()
-		}
-		return super.onOptionsItemSelected(item)
-	}
-
-	override fun onDestroy() {
-		super.onDestroy()
-		presenter.unbindView()
 	}
 
 	override fun showTemperatureFormat(format: String) {
@@ -90,10 +87,23 @@ class SettingsActivity : AppCompatActivity(), MetricsContract.View {
 		txtTimeFormat.text = format
 	}
 
-	override fun showProgress() {}
-	override fun hideProgress() {}
-	override fun showError(message: String) {}
-	override fun showError(resId: Int) {}
+	override fun showProgress() {
+//		progress.visibility = View.VISIBLE
+	}
+
+	override fun hideProgress() {
+//		progress.visibility = View.GONE
+	}
+
+	override fun showError(message: String) {
+		Toast.makeText(activity?.applicationContext, message, Toast.LENGTH_LONG).show()
+//		Snackbar.make(container, message, Snackbar.LENGTH_LONG).show()
+	}
+
+	override fun showError(resId: Int) {
+		Toast.makeText(activity?.applicationContext, resId, Toast.LENGTH_LONG).show()
+//		Snackbar.make(container, resId, Snackbar.LENGTH_LONG).show()
+	}
 
 	private fun requestFeature() {
 		val i = Intent(Intent.ACTION_SEND)
@@ -120,7 +130,7 @@ class SettingsActivity : AppCompatActivity(), MetricsContract.View {
 	}
 
 	private fun rateIntentForUrl(url: String): Intent {
-		val intent = Intent(Intent.ACTION_VIEW, Uri.parse(String.format("%s?id=%s", url, applicationContext.packageName)))
+		val intent = Intent(Intent.ACTION_VIEW, Uri.parse(String.format("%s?id=%s", url, context?.packageName)))
 		var flags = Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
 		flags = if (Build.VERSION.SDK_INT >= 21) {
 			flags or Intent.FLAG_ACTIVITY_NEW_DOCUMENT
@@ -133,11 +143,11 @@ class SettingsActivity : AppCompatActivity(), MetricsContract.View {
 
 	private fun getAboutContent(): SpannableStringBuilder {
 		// Get app version;
-		val packageName = packageName
+		val packageName = context?.packageName
 		var versionName: String
 		versionName = try {
-			val info = packageManager.getPackageInfo(packageName, 0)
-			info.versionName
+			val info = activity?.packageManager?.getPackageInfo(packageName, 0)
+			info?.versionName ?: ""
 		} catch (e: PackageManager.NameNotFoundException) {
 			VERSION_UNAVAILABLE
 		}
@@ -147,5 +157,4 @@ class SettingsActivity : AppCompatActivity(), MetricsContract.View {
 		aboutBody.append(Html.fromHtml(getString(R.string.about_body, versionName)))
 		return aboutBody
 	}
-
 }

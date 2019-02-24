@@ -28,6 +28,7 @@ import com.dimowner.goodweather.app.main.MainActivity
 import com.dimowner.goodweather.app.main.WeatherDetailsFragment
 import com.dimowner.goodweather.app.main.WeatherTwoWeeksFragment
 import com.dimowner.goodweather.app.settings.SettingsActivity
+import com.dimowner.goodweather.app.settings.SettingsFragment
 import com.dimowner.goodweather.app.welcome.WelcomeActivity
 import dagger.Component
 import javax.inject.Singleton
@@ -47,6 +48,8 @@ interface AppComponent {
 	fun inject(activity: WelcomeActivity)
 
 	fun inject(activity: SettingsActivity)
+
+	fun inject(activity: SettingsFragment)
 
 	fun inject(fragment: WeatherDetailsFragment)
 

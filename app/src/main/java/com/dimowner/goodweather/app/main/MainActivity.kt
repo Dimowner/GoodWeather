@@ -23,25 +23,28 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.MenuItem
-import androidx.fragment.app.FragmentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.dimowner.goodweather.R
 import com.dimowner.goodweather.GWApplication
 import com.dimowner.goodweather.data.Prefs
 import com.dimowner.goodweather.periodic.UpdateManager
 import com.dimowner.goodweather.app.location.LocationActivity
-import com.dimowner.goodweather.app.settings.SettingsActivity
+import com.dimowner.goodweather.app.settings.SettingsFragment
 import com.dimowner.goodweather.app.welcome.WelcomeActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main2.*
 import timber.log.Timber
 import java.util.ArrayList
 import javax.inject.Inject
 
-class MainActivity : FragmentActivity(), ViewPager.OnPageChangeListener {
+class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
-	private val ITEM_TODAY = 0
-	private val ITEM_TOMORROW = 1
-	private val ITEM_TWO_WEEKS = 2
+	companion object {
+		const val ITEM_SETTINGS = 0
+		const val ITEM_TODAY = 1
+		const val ITEM_TWO_WEEKS = 2
+	}
 
 	@Inject
 	lateinit var prefs: Prefs
@@ -51,32 +54,28 @@ class MainActivity : FragmentActivity(), ViewPager.OnPageChangeListener {
 	//TODO: Optimize request count to server
 	//TODO: Optimize ViewPager performance
 
-//	private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-//		item.isChecked = true
-//		when (item.itemId) {
-//			R.id.nav_today -> {
-//				pager.setCurrentItem(ITEM_TODAY, true)
-//			}
-//			R.id.nav_tomorrow -> {
-//				pager.setCurrentItem(ITEM_TOMORROW, true)
-//			}
-//			R.id.nav_two_weeks -> {
-//				pager.setCurrentItem(ITEM_TWO_WEEKS, true)
-//			}
-//		}
-//		false
-//	}
+	private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+		item.isChecked = true
+		when (item.itemId) {
+			R.id.nav_settings -> {
+				pager.setCurrentItem(ITEM_SETTINGS, true)
+			}
+			R.id.nav_today -> {
+				pager.setCurrentItem(ITEM_TODAY, true)
+			}
+			R.id.nav_two_weeks -> {
+				pager.setCurrentItem(ITEM_TWO_WEEKS, true)
+			}
+		}
+		false
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		setTheme(R.style.AppTheme)
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main2)
 
-//		setSupportActionBar(toolbar)
-
 		GWApplication.get(applicationContext).applicationComponent().inject(this)
-
-		btnSettings.setOnClickListener { startActivity(Intent(applicationContext, SettingsActivity::class.java)) }
 
 		if (prefs.isFirstRun() || !prefs.isInitialSettingApplied()) {
 			startActivity(Intent(applicationContext, WelcomeActivity::class.java))
@@ -86,13 +85,16 @@ class MainActivity : FragmentActivity(), ViewPager.OnPageChangeListener {
 			finish()
 		} else {
 			val fragments = ArrayList<Fragment>()
+			fragments.add(SettingsFragment.newInstance())
 			fragments.add(WeatherDetailsFragment.newInstance())
 			fragments.add(WeatherTwoWeeksFragment())
 			val adapter = MyStatePagerAdapter(supportFragmentManager, fragments)
 			pager.adapter = adapter
+			pager.currentItem = ITEM_TODAY
+			onPageSelected(ITEM_TODAY)
 			pager.addOnPageChangeListener(this)
 
-//			bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+			bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 		}
 
 		if (UpdateManager.checkPeriodicUpdatesRunning(applicationContext)) {
@@ -117,45 +119,14 @@ class MainActivity : FragmentActivity(), ViewPager.OnPageChangeListener {
 	override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
 	override fun onPageSelected(position: Int) {
-//		if (prevMenuItem != null) {
-//			prevMenuItem?.isChecked = false
-//		}
-//		else {
-//			bottomNavigation.menu.getItem(0).isChecked = false
-//		}
-//
-//		bottomNavigation.menu.getItem(position).isChecked = true
-//		prevMenuItem = bottomNavigation.menu.getItem(position)
-	}
+		if (prevMenuItem != null) {
+			prevMenuItem?.isChecked = false
+		}
+		else {
+			bottomNavigation.menu.getItem(0).isChecked = false
+		}
 
-//	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//		menuInflater.inflate(R.menu.menu_main, menu)
-//		return super.onCreateOptionsMenu(menu)
-//	}
-//
-//	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-//		if (item != null) {
-////			if (item.itemId == R.id.action_locate) {
-////				//Locate
-////				startActivity(Intent(applicationContext, WelcomeActivity::class.java))
-////			} else
-//			if (item.itemId == R.id.action_settings) {
-//				startActivity(Intent(applicationContext, SettingsActivity::class.java))
-//			}
-//		}
-//		return super.onOptionsItemSelected(item)
-//	}
-//
-//	private class MyPagerAdapter internal constructor(
-//			fm: FragmentManager,
-//			private val fragments: List<Fragment>) : MyStatePagerAdapter(fm) {
-//
-//		override fun getItem(position: Int): Fragment {
-//			return fragments[position]
-//		}
-//
-//		override fun getCount(): Int {
-//			return fragments.size
-//		}
-//	}
+		bottomNavigation.menu.getItem(position).isChecked = true
+		prevMenuItem = bottomNavigation.menu.getItem(position)
+	}
 }

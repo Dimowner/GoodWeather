@@ -25,16 +25,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
-import android.util.Log;
+import timber.log.Timber;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyStatePagerAdapter extends PagerAdapter {
-	private static final String TAG = "MyStatePagerAdapter";
-	private static final boolean DEBUG = false;
 
 	private final FragmentManager mFragmentManager;
 	private FragmentTransaction mCurTransaction = null;
@@ -62,15 +62,16 @@ public class MyStatePagerAdapter extends PagerAdapter {
 	}
 
 	@Override
-	public void startUpdate(ViewGroup container) {
+	public void startUpdate(@NotNull ViewGroup container) {
 		if (container.getId() == View.NO_ID) {
 			throw new IllegalStateException("ViewPager with adapter " + this
 					+ " requires a view id");
 		}
 	}
 
+	@NotNull
 	@Override
-	public Object instantiateItem(ViewGroup container, int position) {
+	public Object instantiateItem(@NotNull ViewGroup container, int position) {
 		// If we already have this item instantiated, there is nothing
 		// to do.  This can happen when we are restoring the entire pager
 		// from its saved state, where the fragment manager has already
@@ -106,12 +107,12 @@ public class MyStatePagerAdapter extends PagerAdapter {
 	}
 
 	@Override
-	public void destroyItem(ViewGroup container, int position, Object object) {
+	public void destroyItem(@NotNull ViewGroup container, int position, @NotNull Object object) {
 	}
 
 	@Override
 	@SuppressWarnings("ReferenceEquality")
-	public void setPrimaryItem(ViewGroup container, int position, Object object) {
+	public void setPrimaryItem(@NotNull ViewGroup container, int position, @NotNull Object object) {
 		Fragment fragment = (Fragment) object;
 		if (fragment != mCurrentPrimaryItem) {
 			if (mCurrentPrimaryItem != null) {
@@ -127,7 +128,7 @@ public class MyStatePagerAdapter extends PagerAdapter {
 	}
 
 	@Override
-	public void finishUpdate(ViewGroup container) {
+	public void finishUpdate(@NotNull ViewGroup container) {
 		if (mCurTransaction != null) {
 			mCurTransaction.commitNowAllowingStateLoss();
 			mCurTransaction = null;
@@ -135,7 +136,7 @@ public class MyStatePagerAdapter extends PagerAdapter {
 	}
 
 	@Override
-	public boolean isViewFromObject(View view, Object object) {
+	public boolean isViewFromObject(@NotNull View view, @NotNull Object object) {
 		return ((Fragment) object).getView() == view;
 	}
 
@@ -186,7 +187,7 @@ public class MyStatePagerAdapter extends PagerAdapter {
 						f.setMenuVisibility(false);
 						mFragments.set(index, f);
 					} else {
-						Log.w(TAG, "Bad fragment at key " + key);
+						Timber.w("Bad fragment at key %s", key);
 					}
 				}
 			}
