@@ -21,6 +21,7 @@ package com.dimowner.goodweather.app.main
 
 import android.content.Context
 import com.dimowner.goodweather.data.Prefs
+import com.dimowner.goodweather.data.PrefsImpl
 import com.dimowner.goodweather.data.local.room.WeatherEntity
 import com.dimowner.goodweather.data.repository.Repository
 import com.dimowner.goodweather.util.TimeUtils
@@ -38,8 +39,19 @@ class WeatherPresenter(
 
 	private val disposable: CompositeDisposable by lazy { CompositeDisposable() }
 
+	private var weatherEntity: WeatherEntity? = null
+
 	override fun bindView(view: WeatherContract.View) {
 		this.view = view
+
+		disposable.add(prefs.subscribePreferenceChanges().subscribe({ key ->
+			when (key) {
+				PrefsImpl.PREF_KEY_TIME_FORMAT -> view.showDate(TimeUtils.formatTime((weatherEntity?.dt ?: 0) * 1000, prefs.getTimeFormat()))
+				PrefsImpl.PREF_KEY_TEMP_FORMAT -> view.showTemperature(WeatherUtils.formatTemp(weatherEntity?.temp ?: 0f, prefs.getTempFormat(), context))
+				PrefsImpl.PREF_KEY_WIND_FORMAT -> view.showWind(WeatherUtils.formatWind(weatherEntity?.wind ?: 0f, prefs.getWindFormat(), context))
+				PrefsImpl.PREF_KEY_PRESSURE_FORMAT -> view.showPressure(WeatherUtils.formatPressure(weatherEntity?.pressure ?: 0f, prefs.getPressureFormat(), context))
+			}
+		}, { Timber.e(it)}))
 	}
 
 	override fun unbindView() {
@@ -84,8 +96,10 @@ class WeatherPresenter(
 	}
 
 	private fun showData(entity: WeatherEntity) {
+		weatherEntity = entity
+
 		view?.showDate(TimeUtils.formatTime(entity.dt * 1000, prefs.getTimeFormat()))
-		view?.showTemperature(WeatherUtils.formatTemp(entity.temp, prefs.getTempFormat(), context).toString())
+		view?.showTemperature(WeatherUtils.formatTemp(entity.temp, prefs.getTempFormat(), context))
 
 		view?.showWind(WeatherUtils.formatWind(entity.wind, prefs.getWindFormat(), context))
 		view?.showHumidity(WeatherUtils.formatHumidity(entity.humidity, context))

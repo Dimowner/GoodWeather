@@ -22,6 +22,10 @@ package com.dimowner.goodweather.data
 import android.content.Context
 import android.content.SharedPreferences
 import com.dimowner.goodweather.AppConstants
+import com.ironz.binaryprefs.BinaryPreferencesBuilder
+import com.ironz.binaryprefs.Preferences
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import kotlin.properties.Delegates
 
 /**
@@ -30,24 +34,37 @@ import kotlin.properties.Delegates
  */
 class PrefsImpl constructor(context: Context) : Prefs {
 
-	private val PREF_NAME = "com.dimowner.goodweather.data.Prefs"
+	companion object {
+		const val PREF_NAME = "com.dimowner.goodweather.data.Prefs"
 
-	private val PREF_KEY_IS_FIRST_RUN = "is_first_run"
-	private val PREF_KEY_TEMP_FORMAT = "temp_format"
-	private val PREF_KEY_WIND_FORMAT = "wind_format"
-	private val PREF_KEY_PRESSURE_FORMAT = "pressure_format"
-	private val PREF_KEY_TIME_FORMAT = "time_format"
-	private val PREF_KEY_CITY = "city"
-	private val PREF_KEY_LATITUDE = "latitude"
-	private val PREF_KEY_LONGITUDE = "longitude"
-	private val PREF_KEY_INITIAL_SETTINGS_APPLIED = "is_initial_settings_applied"
-	private val PREF_KEY_LOCATION_SELECTED = "is_location_selected"
-	private val PREF_KEY_IS_WEATHER_BY_COORDINATES = "is_weather_by_coordinates"
+		const val PREF_KEY_IS_FIRST_RUN = "is_first_run"
+		const val PREF_KEY_TEMP_FORMAT = "temp_format"
+		const val PREF_KEY_WIND_FORMAT = "wind_format"
+		const val PREF_KEY_PRESSURE_FORMAT = "pressure_format"
+		const val PREF_KEY_TIME_FORMAT = "time_format"
+		const val PREF_KEY_CITY = "city"
+		const val PREF_KEY_LATITUDE = "latitude"
+		const val PREF_KEY_LONGITUDE = "longitude"
+		const val PREF_KEY_INITIAL_SETTINGS_APPLIED = "is_initial_settings_applied"
+		const val PREF_KEY_LOCATION_SELECTED = "is_location_selected"
+		const val PREF_KEY_IS_WEATHER_BY_COORDINATES = "is_weather_by_coordinates"
+	}
 
-	private var preferences: SharedPreferences by Delegates.notNull()
+//	private var preferences: SharedPreferences by Delegates.notNull()
+	private var preferences: Preferences by Delegates.notNull()
+	private var flowable: Flowable<String> by Delegates.notNull()
 
 	init {
-		this.preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+//		this.preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+		this.preferences = BinaryPreferencesBuilder(context)
+				.name(PREF_NAME)
+				.build()
+
+		flowable = Flowable.create({
+			preferences.registerOnSharedPreferenceChangeListener { sharedPrefs, key ->
+				it.onNext(key)
+			}
+		}, BackpressureStrategy.LATEST)
 	}
 
 	override fun isFirstRun(): Boolean {
@@ -78,6 +95,10 @@ class PrefsImpl constructor(context: Context) : Prefs {
 			preferences.edit().putInt(PREF_KEY_WIND_FORMAT, AppConstants.WIND_FORMAT_METER_PER_HOUR).apply()
 			return AppConstants.WIND_FORMAT_METER_PER_HOUR
 		}
+	}
+
+	override fun subscribePreferenceChanges(): Flowable<String> {
+		return flowable
 	}
 
 	override fun switchPressureFormat(): Int {

@@ -30,7 +30,7 @@ import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
 
 class LocationPresenter(
-		private val locationDataModel: PlacesProvider,
+		private val placesProvider: PlacesProvider,
 		private val prefs: Prefs
 ) : LocationContract.UserActionsListener {
 
@@ -41,7 +41,7 @@ class LocationPresenter(
 
 	override fun bindView(view: LocationContract.View) {
 		this.view = view
-		locationDataModel.connect(
+		placesProvider.connect(
 				object : GoogleApiClient.ConnectionCallbacks {
 					override fun onConnected(bundle: Bundle?) {
 						Timber.v("onConnected")
@@ -64,12 +64,12 @@ class LocationPresenter(
 	override fun unbindView() {
 		view = null
 		compositeDisposable.clear()
-		locationDataModel.disconnect()
+		placesProvider.disconnect()
 	}
 
 	override fun locate() {
 		compositeDisposable.add(
-				locationDataModel.findCurrentLocation()
+				placesProvider.findCurrentLocation()
 						.observeOn(AndroidSchedulers.mainThread())
 						.subscribe({ location ->
 							isCitySelected = true
@@ -86,7 +86,7 @@ class LocationPresenter(
 	override fun findCity(city: String) {
 		if (!isCitySelected) {
 			compositeDisposable.add(
-					locationDataModel.findPlaceRx(city)
+					placesProvider.findPlaceRx(city)
 							.observeOn(AndroidSchedulers.mainThread())
 							.subscribe({
 								view?.showPredictions(it)
@@ -96,7 +96,7 @@ class LocationPresenter(
 
 	override fun findCity(context: Context, lat: Double, lng: Double) {
 		compositeDisposable.add(
-				locationDataModel.fromLocationRx(context, lat, lng)
+				placesProvider.fromLocationRx(context, lat, lng)
 						.observeOn(AndroidSchedulers.mainThread())
 						.subscribe({ location ->
 							Timber.v("Locations = %s", location.toString())
@@ -114,7 +114,7 @@ class LocationPresenter(
 		isCitySelected = true
 		view?.showSelectedCity(city)
 		compositeDisposable.add(
-				locationDataModel.findLocationForCityName(city)
+				placesProvider.findLocationForCityName(city)
 						.observeOn(AndroidSchedulers.mainThread())
 						.subscribe({ location ->
 							view?.showMapMarker(location.lat, location.lng)

@@ -19,6 +19,8 @@
 
 package com.dimowner.goodweather.data
 
+import io.reactivex.Flowable
+
 interface Prefs {
 
 	fun isFirstRun(): Boolean
@@ -44,6 +46,8 @@ interface Prefs {
 	fun getTempFormat(): Int
 
 	fun getWindFormat(): Int
+
+	fun subscribePreferenceChanges(): Flowable<String>
 
 	fun getPressureFormat(): Int
 
