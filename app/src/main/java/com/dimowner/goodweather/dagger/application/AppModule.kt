@@ -33,6 +33,8 @@ import com.dimowner.goodweather.data.repository.Repository
 import com.dimowner.goodweather.data.repository.RepositoryImpl
 import com.dimowner.goodweather.places.PlacesProvider
 import com.dimowner.goodweather.app.main.WeatherContract
+import com.dimowner.goodweather.app.main.WeatherListContract
+import com.dimowner.goodweather.app.main.WeatherListPresenter
 import com.dimowner.goodweather.app.main.WeatherPresenter
 import com.dimowner.goodweather.app.settings.MetricsContract
 import com.dimowner.goodweather.app.settings.MetricsPresenter
@@ -94,6 +96,11 @@ class AppModule(
 	@Provides
 	internal fun provideWeatherPresenter(repository: Repository, prefs: Prefs, context: Context): WeatherContract.UserActionsListener {
 		return WeatherPresenter(repository, prefs, context)
+	}
+
+	@Provides
+	internal fun provideWeatherListPresenter(repository: Repository, prefs: Prefs): WeatherListContract.UserActionsListener {
+		return WeatherListPresenter(repository, prefs)
 	}
 
 	@Provides

@@ -32,12 +32,18 @@ import com.dimowner.goodweather.data.local.room.WeatherEntity
 import kotlinx.android.synthetic.main.fragment_weather_two_weeks.*
 import javax.inject.Inject
 
-class WeatherTwoWeeksFragment : Fragment(), WeatherContract.View {
+class WeatherListFragment : Fragment(), WeatherListContract.View {
+
+	companion object {
+		fun newInstance(): WeatherListFragment {
+			return WeatherListFragment()
+		}
+	}
 
 	@Inject
-	lateinit var presenter: WeatherContract.UserActionsListener
+	lateinit var presenter: WeatherListContract.UserActionsListener
 
-	val adapter: WeatherRecyclerAdapter by lazy { WeatherRecyclerAdapter() }
+	val adapter: WeatherListAdapter by lazy { WeatherListAdapter() }
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		val view = inflater.inflate(R.layout.fragment_weather_two_weeks, container, false)
@@ -53,12 +59,7 @@ class WeatherTwoWeeksFragment : Fragment(), WeatherContract.View {
 
 		GWApplication.get(view.context).applicationComponent().inject(this)
 		presenter.bindView(this)
-		presenter.updateWeatherTwoWeeks()
-	}
-
-	override fun onResume() {
-		super.onResume()
-		presenter.updateTemperatureFormat()
+		presenter.loadWeatherList()
 	}
 
 	override fun onDestroyView() {
@@ -68,6 +69,14 @@ class WeatherTwoWeeksFragment : Fragment(), WeatherContract.View {
 
 	override fun showTwoWeeksWeather(list: List<WeatherEntity>) {
 		adapter.setData(list)
+	}
+
+	override fun updateTimeFormat(format: Int) {
+		adapter.updateTimeFormat(format)
+	}
+
+	override fun updateTemperatureFormat(format: Int) {
+		adapter.updateTemperatureFormat(format)
 	}
 
 	override fun showProgress() {
@@ -84,37 +93,5 @@ class WeatherTwoWeeksFragment : Fragment(), WeatherContract.View {
 	override fun showError(resId: Int) {
 		Toast.makeText(activity?.applicationContext, resId, Toast.LENGTH_LONG).show()
 //		Snackbar.make(container, resId, Snackbar.LENGTH_LONG).show()
-	}
-
-	override fun setTemperatureFormat(format: Int) {
-		adapter.setTemperatureFormat(format)
-	}
-
-	override fun showDate(date: String) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-	}
-
-	override fun showTemperature(temp: String) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-	}
-
-	override fun showWind(wind: String) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-	}
-
-	override fun showPressure(pressure: String) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-	}
-
-	override fun showHumidity(humidity: String) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-	}
-
-	override fun showWeatherIcon(url: String) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-	}
-
-	override fun showWeatherIconRes(resId: Int) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 }

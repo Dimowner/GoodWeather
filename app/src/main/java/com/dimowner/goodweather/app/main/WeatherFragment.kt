@@ -27,16 +27,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.dimowner.goodweather.R
 import com.dimowner.goodweather.GWApplication
-import com.dimowner.goodweather.data.local.room.WeatherEntity
 import kotlinx.android.synthetic.main.fragment_weather_details.*
 import javax.inject.Inject
 
-class WeatherDetailsFragment : Fragment(), WeatherContract.View {
+class WeatherFragment : Fragment(), WeatherContract.View {
 
 	companion object {
-
-		fun newInstance(): WeatherDetailsFragment {
-			return WeatherDetailsFragment()
+		fun newInstance(): WeatherFragment {
+			return WeatherFragment()
 		}
 	}
 
@@ -51,15 +49,8 @@ class WeatherDetailsFragment : Fragment(), WeatherContract.View {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		GWApplication.get(view.context).applicationComponent().inject(this)
-		weatherIcon.setOnClickListener {
-			presenter.updateWeather()
-		}
 		presenter.bindView(this)
-	}
-
-	override fun onResume() {
-		super.onResume()
-		presenter.updateWeather()
+		presenter.loadWeather()
 	}
 
 	override fun onDestroyView() {
@@ -87,23 +78,8 @@ class WeatherDetailsFragment : Fragment(), WeatherContract.View {
 		txtPressure.text = pressure
 	}
 
-	override fun showWeatherIcon(url: String) {
-//
-//		Glide.with(activity?.applicationContext)
-//				.load(url)
-//				.into(weatherIcon)
-	}
-
 	override fun showWeatherIconRes(resId: Int) {
 		weatherIcon.setImageResource(resId)
-	}
-
-	override fun showTwoWeeksWeather(list: List<WeatherEntity>) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-	}
-
-	override fun setTemperatureFormat(format: Int) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 
 	override fun showProgress() {

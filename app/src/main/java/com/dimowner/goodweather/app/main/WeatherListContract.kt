@@ -20,26 +20,22 @@
 package com.dimowner.goodweather.app.main
 
 import com.dimowner.goodweather.app.Contract
+import com.dimowner.goodweather.data.local.room.WeatherEntity
 
-interface WeatherContract {
+
+interface WeatherListContract {
 
 	interface View : Contract.View {
 
-		fun showDate(date: String)
+		fun showTwoWeeksWeather(list: List<WeatherEntity>)
 
-		fun showTemperature(temp: String)
+		fun updateTimeFormat(format: Int)
 
-		fun showWind(wind: String)
-
-		fun showPressure(pressure: String)
-
-		fun showHumidity(humidity: String)
-
-		fun showWeatherIconRes(resId: Int)
+		fun updateTemperatureFormat(format: Int)
 	}
 
 	interface UserActionsListener : Contract.UserActionsListener<View> {
 
-		fun loadWeather()
+		fun loadWeatherList()
 	}
 }

@@ -59,29 +59,7 @@ class WeatherPresenter(
 		this.disposable.dispose()
 	}
 
-	override fun locate() {
-		//TODO: waiting for implementation
-	}
-
-	override fun updateWeatherTwoWeeks() {
-		view?.showProgress()
-		disposable.add(repository.subscribeWeatherTwoWeeks(prefs.getCity())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe({ d ->
-					view?.showTwoWeeksWeather(d)
-					view?.hideProgress()
-				}, {
-					view?.hideProgress()
-					Timber.e(it)
-					view?.showError(it.message!!)
-				}))
-	}
-
-	override fun updateTemperatureFormat() {
-		view?.setTemperatureFormat(prefs.getTempFormat())
-	}
-
-	override fun updateWeather() {
+	override fun loadWeather() {
 		view?.showProgress()
 		disposable.add(repository.subscribeWeatherToday(prefs.getCity())
 				.observeOn(AndroidSchedulers.mainThread())
@@ -105,7 +83,6 @@ class WeatherPresenter(
 		view?.showHumidity(WeatherUtils.formatHumidity(entity.humidity, context))
 		view?.showPressure(WeatherUtils.formatPressure(entity.pressure, prefs.getPressureFormat(), context))
 
-//		view?.showWeatherIcon(Constants.WEATHER_ICON_URL + entity.icon + Constants.PNG)
 		view?.showWeatherIconRes(WeatherUtils.weatherIconCodeToResource(entity.icon))
 	}
 }

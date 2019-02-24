@@ -25,8 +25,8 @@ import com.dimowner.goodweather.dagger.location.LocationModule
 import com.dimowner.goodweather.periodic.JobSchedulerService
 import com.dimowner.goodweather.periodic.UpdatesReceiver
 import com.dimowner.goodweather.app.main.MainActivity
-import com.dimowner.goodweather.app.main.WeatherDetailsFragment
-import com.dimowner.goodweather.app.main.WeatherTwoWeeksFragment
+import com.dimowner.goodweather.app.main.WeatherFragment
+import com.dimowner.goodweather.app.main.WeatherListFragment
 import com.dimowner.goodweather.app.settings.SettingsActivity
 import com.dimowner.goodweather.app.settings.SettingsFragment
 import com.dimowner.goodweather.app.welcome.WelcomeActivity
@@ -51,9 +51,9 @@ interface AppComponent {
 
 	fun inject(activity: SettingsFragment)
 
-	fun inject(fragment: WeatherDetailsFragment)
+	fun inject(fragment: WeatherFragment)
 
-	fun inject(fragment: WeatherTwoWeeksFragment)
+	fun inject(fragment: WeatherListFragment)
 
 	fun inject(receiver: UpdatesReceiver)
 
