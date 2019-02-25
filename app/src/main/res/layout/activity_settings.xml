@@ -212,11 +212,30 @@
 	</FrameLayout>
 
 	<TextView
-			android:id="@+id/btnRate"
+			android:id="@+id/btnLicences"
 			style="@style/Text.NormalLabel"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="@dimen/spacing_normal"
+			android:background="?android:selectableItemBackground"
+			android:clickable="true"
+			android:drawableStart="@drawable/ic_dna"
+			android:drawableLeft="@drawable/ic_dna"
+			android:drawablePadding="@dimen/spacing_double"
+			android:focusable="true"
+			android:paddingStart="@dimen/spacing_normal"
+			android:paddingLeft="@dimen/spacing_normal"
+			android:paddingTop="@dimen/spacing_small"
+			android:paddingEnd="@dimen/spacing_normal"
+			android:paddingRight="@dimen/spacing_normal"
+			android:paddingBottom="@dimen/spacing_small"
+			android:text="@string/open_source_licences"
+			/>
+	<TextView
+			android:id="@+id/btnRate"
+			style="@style/Text.NormalLabel"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
 			android:background="?android:selectableItemBackground"
 			android:clickable="true"
 			android:drawableStart="@drawable/ic_thumbs"

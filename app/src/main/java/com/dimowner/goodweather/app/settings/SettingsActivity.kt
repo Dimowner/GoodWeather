@@ -32,6 +32,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.dimowner.goodweather.AppConstants
 import com.dimowner.goodweather.R
 import com.dimowner.goodweather.GWApplication
+import com.dimowner.goodweather.app.licences.LicenceActivity
 import kotlinx.android.synthetic.main.activity_settings.*
 import javax.inject.Inject
 
@@ -54,6 +55,7 @@ class SettingsActivity : AppCompatActivity(), MetricsContract.View {
 		pnlTemperature.setOnClickListener { presenter.switchTemperature() }
 		pnlPressure.setOnClickListener { presenter.switchPressure() }
 		pnlTimeFormat.setOnClickListener { presenter.switchTimeFormat() }
+		btnLicences.setOnClickListener { startActivity(Intent(applicationContext, LicenceActivity::class.java))}
 		btnRequest.setOnClickListener { requestFeature() }
 		btnRate.setOnClickListener { rateApp() }
 

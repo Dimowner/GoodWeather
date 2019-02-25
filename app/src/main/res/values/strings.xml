@@ -29,6 +29,7 @@
 	<string name="tittle_settings">Settings</string>
 	<string name="tittle_today">Today</string>
 	<string name="tittle_two_weeks">Two weeks</string>
+	<string name="open_source_licences">Open source licences</string>
 
 	<string name="metrics">Metrics</string>
 
@@ -65,5 +66,7 @@
     	<b>Good Weather 2019</b><br>
 		Version %s
 	]]></string>
+
+	<string name="licences_description">This application makes use of the following third party libraries.</string>
 
 </resources>

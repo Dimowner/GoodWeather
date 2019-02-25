@@ -72,6 +72,16 @@
 				android:name="com.dimowner.goodweather.app.settings.SettingsActivity"
 				android:screenOrientation="portrait"/>
 
+
+		<activity android:name="com.dimowner.goodweather.app.licences.LicenceActivity"
+					 android:label="@string/open_source_licences"
+					 android:theme="@style/AppTheme.Light"
+					 android:screenOrientation="portrait"/>
+
+		<activity android:name="com.dimowner.goodweather.app.licences.LicenceDetail"
+					 android:theme="@style/AppTheme.Light"
+					 android:screenOrientation="portrait"/>
+
 		<receiver
 				android:name="com.dimowner.goodweather.periodic.UpdatesReceiver"
 				android:exported="false">

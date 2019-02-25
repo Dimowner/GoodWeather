@@ -36,7 +36,7 @@
 				android:layout_height="@dimen/toolbar_height"
 				android:layout_gravity="center"
 				android:gravity="center_vertical"
-				android:textColor="@color/text_primary_light"
+				android:textColor="@color/colorAccent"
 				android:background="?android:selectableItemBackgroundBorderless"
 				android:clickable="true"
 				android:focusable="true"

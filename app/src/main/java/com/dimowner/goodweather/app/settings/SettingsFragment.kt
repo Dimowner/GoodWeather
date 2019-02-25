@@ -35,6 +35,7 @@ import android.widget.Toast
 import com.dimowner.goodweather.AppConstants
 import com.dimowner.goodweather.R
 import com.dimowner.goodweather.GWApplication
+import com.dimowner.goodweather.app.licences.LicenceActivity
 import kotlinx.android.synthetic.main.activity_settings.*
 import javax.inject.Inject
 
@@ -64,6 +65,7 @@ class SettingsFragment : Fragment(), MetricsContract.View {
 		pnlTemperature.setOnClickListener { presenter.switchTemperature() }
 		pnlPressure.setOnClickListener { presenter.switchPressure() }
 		pnlTimeFormat.setOnClickListener { presenter.switchTimeFormat() }
+		btnLicences.setOnClickListener { startActivity(Intent(context, LicenceActivity::class.java))}
 		btnRequest.setOnClickListener { requestFeature() }
 		btnRate.setOnClickListener { rateApp() }
 		txtAbout.text = getAboutContent()

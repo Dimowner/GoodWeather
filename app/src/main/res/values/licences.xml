@@ -1,0 +1,25 @@
+<resources>
+
+	<string-array name="licences_names">
+		<item>Android X</item>
+		<item>Kotlin</item>
+		<item>RxJava 2</item>
+		<item>RetroFit 2</item>
+		<item>OkHttp</item>
+		<item>Dagger 2</item>
+		<item>Binary Preferences</item>
+		<item>Timber</item>
+	</string-array>
+
+	<string-array name="licences_assets_locations">
+		<item>file:///android_asset/licences/android_x.html</item>
+		<item>file:///android_asset/licences/kotlin.html</item>
+		<item>file:///android_asset/licences/rx_java.html</item>
+		<item>file:///android_asset/licences/retrofit.html</item>
+		<item>file:///android_asset/licences/okhttp.html</item>
+		<item>file:///android_asset/licences/dagger2.html</item>
+		<item>file:///android_asset/licences/binaryprefs.html</item>
+		<item>file:///android_asset/licences/timber.html</item>
+	</string-array>
+
+</resources>
